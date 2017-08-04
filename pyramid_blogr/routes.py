@@ -7,3 +7,4 @@ def includeme(config):
     config.add_route('auth', '/sign/{action}')
     config.add_route('register', '/register')
     config.add_route('thanks', '/thanks')
+    config.add_route('question', '/question')

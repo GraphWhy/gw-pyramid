@@ -15,7 +15,7 @@ from ..models.user import User
 #    return {'paginator': paginator}
 
 
-
+#Paul, having trouble searching renderer, can i pass multiple templates?
 #function decorator
 @view_config(route_name='home',
              renderer='pyramid_blogr:templates/register.jinja2')
@@ -26,9 +26,26 @@ def index_page(request):
         new_user.set_password(form.password.data.encode('utf8'))
         request.dbsession.add(new_user)
         return HTTPFound(location=request.route_url('thanks'))
+    #elif request.method == 'POST':
+    #    return HTTPFound(location=request.route_url('home'))
+    return {'form': form}
+
+
+#question template/route
+#each route function must have a unique name
+@view_config(route_name='question',
+             renderer='pyramid_blogr:templates/question.jinja2')
+def question_page(request):
+    form = RegistrationForm(request.POST)
+    if request.method == 'POST' and form.validate():
+        new_user = User(name=form.username.data)
+        new_user.set_password(form.password.data.encode('utf8'))
+        request.dbsession.add(new_user)
+        return HTTPFound(location=request.route_url('thanks'))
     #elif request.method == 'POST': 
     #    return HTTPFound(location=request.route_url('home'))
     return {'form': form}
+
 
 @view_config(route_name='thanks',
              renderer='pyramid_blogr:templates/thanks.jinja2')
