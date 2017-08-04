@@ -16,7 +16,7 @@ from ..models.user import User
 
 
 
-
+#function decorator
 @view_config(route_name='home',
              renderer='pyramid_blogr:templates/register.jinja2')
 def index_page(request):
@@ -32,8 +32,16 @@ def index_page(request):
 
 @view_config(route_name='thanks',
              renderer='pyramid_blogr:templates/thanks.jinja2')
-#def index_page(request):
-#    return {'form': form}
+def thanks_page(request):
+    form = RegistrationForm(request.POST)
+    if request.method == 'POST' and form.validate():
+        new_user = User(name=form.username.data)
+        new_user.set_password(form.password.data.encode('utf8'))
+        request.dbsession.add(new_user)
+        return HTTPFound(location=request.route_url('thanks'))
+    #elif request.method == 'POST':
+    #    return HTTPFound(location=request.route_url('home'))
+    return {'form': form}
 
 @view_config(route_name='auth', match_param='action=in', renderer='string',
              request_method='POST')
