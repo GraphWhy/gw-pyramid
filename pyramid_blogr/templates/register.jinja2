@@ -3,7 +3,7 @@
 {% block content %}
     <h1>Register</h1>
 
-    <form action="{{request.route_url('thanks')}}" method="post" class="form">
+    <form action="{{request.route_url('home')}}" method="post" class="form">
 
         {% for error in form.username.errors %}
             <div class="error">{{ error }}</div>

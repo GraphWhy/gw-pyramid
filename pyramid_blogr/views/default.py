@@ -22,10 +22,15 @@ from ..models.user import User
 def index_page(request):
     form = RegistrationForm(request.POST)
     if request.method == 'POST' and form.validate():
+        tempname = form.username.data
         new_user = User(name=form.username.data)
         new_user.set_password(form.password.data.encode('utf8'))
-        request.dbsession.add(new_user)
-        return HTTPFound(location=request.route_url('thanks'))
+        flag = request.dbsession.query(User).filter_by(name=tempname).all()
+        if not flag:
+            request.dbsession.add(new_user)
+            return HTTPFound(location=request.route_url('thanks'))
+        else:
+            return HTTPFound(location=request.route_url('home'))
     #elif request.method == 'POST':
     #    return HTTPFound(location=request.route_url('home'))
     return {'form': form}
@@ -55,7 +60,10 @@ def thanks_page(request):
         new_user = User(name=form.username.data)
         new_user.set_password(form.password.data.encode('utf8'))
         request.dbsession.add(new_user)
-        return HTTPFound(location=request.route_url('thanks'))
+        try:
+            return HTTPFound(location=request.route_url('thanks'))
+        except:
+            return HTTPFound(location=request.route_url('home'))
     #elif request.method == 'POST':
     #    return HTTPFound(location=request.route_url('home'))
     return {'form': form}
