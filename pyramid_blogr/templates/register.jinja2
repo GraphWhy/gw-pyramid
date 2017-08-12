@@ -14,7 +14,7 @@
     <!-- REGISTRATION FORM-->
     <form action="{{request.route_url('home')}}" method="post" class="form">
         {% for error in form.username.errors %}
-            <div class="error">{{ error }}</div>
+            <div class="alert alert-danger">{{ error }}</div>
         {% endfor %}
         <div class="form-group">
             <label for="title">{{form.username.label}}</label>
@@ -22,7 +22,7 @@
         </div>
 
         {% for error in form.password.errors %}
-            <div class="error">{{error}}</div>
+            <div class="alert alert-danger">{{error}}</div>
         {% endfor %}
         <div class="form-group" style="display:none">
             <label for="body">{{form.password.label}}</label>

@@ -17,12 +17,29 @@ def index_page(request):
         new_user = User(name=form.username.data)
         new_user.set_password(form.password.data.encode('utf8'))
         flag = request.dbsession.query(User).filter_by(name=tempname).all()
+        if flag:
+            return HTTPFound(location=request.route_url('register-error'))
+        request.dbsession.add(new_user)
+        return HTTPFound(location=request.route_url('thanks'))
+    return {'form': form}
+
+
+@view_config(route_name='register-error',
+             renderer='pyramid_blogr:templates/register-error.jinja2')
+def unique_error_page(request):
+    form = RegistrationForm(request.POST)
+    if request.method == 'POST' and form.validate():
+        tempname = form.username.data
+        new_user = User(name=form.username.data)
+        new_user.set_password(form.password.data.encode('utf8'))
+        flag = request.dbsession.query(User).filter_by(name=tempname).all()
         if not flag:
             request.dbsession.add(new_user)
             return HTTPFound(location=request.route_url('thanks'))
         else:
-            return HTTPFound(location=request.route_url('home'))
+            return HTTPFound(location=request.route_url('register-error'))
     return {'form': form}
+
 
 @view_config(route_name='question',
              renderer='pyramid_blogr:templates/question.jinja2')
@@ -37,8 +54,9 @@ def question_page(request):
             request.dbsession.add(new_user)
             return HTTPFound(location=request.route_url('thanks'))
         else:
-            return HTTPFound(location=request.route_url('home'))
+            return HTTPFound(location=request.route_url('question'))
     return {'form': form}
+
 
 @view_config(route_name='thanks',
              renderer='pyramid_blogr:templates/thanks.jinja2')
@@ -47,16 +65,18 @@ def thanks_page(request):
     return {'form': form}
 
 
-
+# ROUTES NOT IN USE ---
+# ROUTES NOT IN USE ---
 # ROUTES NOT IN USE ---
 
-#original home view
-#@view_config(route_name='home',
+# original home view
+# @view_config(route_name='home',
 #             renderer='pyramid_blogr:templates/index.jinja2')
-#def index_page(request):
+# def index_page(request):
 #    page = int(request.params.get('page', 1))
 #    paginator = BlogRecordService.get_paginator(request, page)
 #    return {'paginator': paginator}
+
 
 @view_config(route_name='auth', match_param='action=in', renderer='string',
              request_method='POST')

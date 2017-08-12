@@ -2,17 +2,19 @@
 
 {% block content %}
     <div class="man-tabs">
-        <div class="man-tab">
+        <div class="man-tab man-active">
             <a href="{{request.route_url('home')}}">Register</a>
         </div>
-        <div class="man-tab man-active">
+        <div class="man-tab">
             <a href="{{request.route_url('question')}}">Question</a>
         </div>
     </div>
 
-    <h1>Question</h1>
-
-    <form action="{{request.route_url('thanks')}}" method="post" class="form">
+    <h1>Register</h1>
+    <!-- CUSTOM ERROR REGISTRATION FOR NON-UNIQUE ENTRIES -->
+    <p class="alert alert-danger">Error: Email has already been used, please enter a unique email address.</p>
+    <!-- REGISTRATION FORM-->
+    <form action="{{request.route_url('home')}}" method="post" class="form">
         {% for error in form.username.errors %}
             <div class="alert alert-danger">{{ error }}</div>
         {% endfor %}

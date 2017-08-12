@@ -39,6 +39,7 @@ div {
 /*  Mr.McNulty  */
 .man-tabs {
     width: 100%;
+    margin-bottom:45px;
 }
 .man-tab {
     display: inline-block;

@@ -6,5 +6,6 @@ def includeme(config):
                      factory='pyramid_blogr.security.BlogRecordFactory')
     config.add_route('auth', '/sign/{action}')
     config.add_route('register', '/register')
+    config.add_route('register-error', '/register-error')
     config.add_route('thanks', '/thanks')
     config.add_route('question', '/question')
