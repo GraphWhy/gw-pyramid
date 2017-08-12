@@ -9,13 +9,15 @@
     <link rel="shortcut icon" href="{{request.static_url('pyramid_blogr:static/pyramid-16x16.png')}}">
 
     <title>GraphWhy, See For Yourself</title>
-
     <!-- Bootstrap core CSS -->
     <link href="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Custom styles for this scaffold -->
-
+        <!--production CSS-->
+        {# <link href="{{request.static_url('pyramid_blogr:static/theme.css')}}" rel="stylesheet"> #}
+        <!--development CSS-->
+        <link href="../static/theme.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
     <!--[if lt IE 9]>
       <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="//oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
@@ -23,68 +25,16 @@
   </head>
 
   <body>
-	<style type="text/css">
-		h1	{color: #4682B4;
-			font-size: 45px;
-			font-family: helvetica;}
-		
-		body 	{
-			background-repeat: no-repeat;
-			width:100;
-			height:100vh;
-background: #74ebd5;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #ACB6E5, #74ebd5);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #ACB6E5, #74ebd5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-			margin:20px;
-			}
-
-		h2	{ color: #4682B4;
-			font-family: helvetica;
-			font-size: 17px;
-			}
-
-		p { color: #4682B4;
-			font-family: helvetica;
-			font-size: 16px;
-		}
-		form {
-		}
-		div {
-			color: white
-			font:helvetica;
-		}
-	</style>
-</head>
-<body>
     <h1>
-        <img src="static/gw_sm_logo.png" alt="logo" width="60px">
+        <img src="{{request.static_url('pyramid_blogr:static/gw_sm_logo.png')}}" alt="logo" width="60px">
         GraphWhy
     </h1>
 
-	<h2>Welcome to GraphWhy! Please join us in our mission to create a more informed public through self-curated graphs and statistics.
-	</h2>
-	
-	<p>In the meantime, this page will be used as a blog in order to update you with our progress.
-	</br>
-	</br>
-	Sign up below to receive updates or make suggestions. Everything is appreciated. Cheers!
-	</p>
-
-
     <div class="">
-      <div class="">
-        <div class="">
-          <div class="">
-            {% block content %}
-                <p>No content</p>
-            {% endblock content %}
-          </div>
-        </div>
-      </div>
+      {% block content %}
+        <p>No content</p>
+      {% endblock content %}
     </div>
-
-	<div>If already signed up....... sign in <a href="">here</a></div>
-
 
     <!-- Bootstrap core JavaScript
     ================================================== -->

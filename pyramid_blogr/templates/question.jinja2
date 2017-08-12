@@ -1,24 +1,29 @@
 {% extends "pyramid_blogr:templates/layout.jinja2" %}
 
 {% block content %}
-    <h1>Register</h1>
+    <div class="man-tabs">
+        <div class="man-tab">
+            <a href="{{request.route_url('home')}}">Register</a>
+        </div>
+        <div class="man-tab man-active">
+            <a href="{{request.route_url('question')}}">Question</a>
+        </div>
+    </div>
+
+    <h1>Question</h1>
 
     <form action="{{request.route_url('thanks')}}" method="post" class="form">
-
         {% for error in form.username.errors %}
             <div class="error">{{ error }}</div>
         {% endfor %}
-
         <div class="form-group">
             <label for="title">{{form.username.label}}</label>
             {{form.username(class_='form-control')}}
         </div>
 
-
         {% for error in form.password.errors %}
             <div class="error">{{error}}</div>
         {% endfor %}
-
         <div class="form-group" style="display:none">
             <label for="body">{{form.password.label}}</label>
             {{form.password(class_='form-control', value="badpassword")}}
@@ -28,8 +33,5 @@
             <label></label>
             <button type="submit" class="btn btn-default">Submit</button>
         </div>
-
-
     </form>
-    <p><a href="{{request.route_url('home')}}">Go Back</a></p>
 {% endblock %}

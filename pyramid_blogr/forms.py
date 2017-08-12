@@ -13,8 +13,7 @@ class BlogCreateForm(Form):
 class BlogUpdateForm(BlogCreateForm):
     id = HiddenField()
 
-
 class RegistrationForm(Form):
-    username = StringField('Username', [validators.Length(min=1, max=255)],
+    username = StringField('Email', [validators.Length(min=1, max=255)],
                            filters=[strip_filter], default=u'test')
     password = StringField('Password', [validators.Length(min=3)], default=u'test')

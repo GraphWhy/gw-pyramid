@@ -1,154 +1,54 @@
-@import url(//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700);
-body {
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 300;
-  color: #ffffff;
-  background: #bc2131;
+
+
+/*  Mr.Godinez  */
+h1{
+    color: #6373c5;
+    font-size: 40px;
 }
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 300;
+body {
+    background-repeat: no-repeat;
+    width: 100;
+    height: 100vh;
+    background: #74ebd5; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #ACB6E5, #74ebd5); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #ACB6E5, #74ebd5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    margin: 20px;
+    font-family: helvetica;
+}
+h2{
+    color: #6373c5;
+    font-family: helvetica;
+    font-size: 17px;
 }
 p {
-  font-weight: 300;
-}
-.font-normal {
-  font-weight: 400;
-}
-.font-semi-bold {
-  font-weight: 600;
-}
-.font-bold {
-  font-weight: 700;
-}
-.starter-template {
-  margin-top: 250px;
-}
-.starter-template .content {
-  margin-left: 10px;
-}
-.starter-template .content h1 {
-  margin-top: 10px;
-  font-size: 60px;
-}
-.starter-template .content h1 .smaller {
-  font-size: 40px;
-  color: #f2b7bd;
-}
-.starter-template .content .lead {
-  font-size: 25px;
-  color: #f2b7bd;
-}
-.starter-template .content .lead .font-normal {
-  color: #ffffff;
-}
-.starter-template .links {
-  float: right;
-  right: 0;
-  margin-top: 125px;
-}
-.starter-template .links ul {
-  display: block;
-  padding: 0;
-  margin: 0;
-}
-.starter-template .links ul li {
-  list-style: none;
-  display: inline;
-  margin: 0 10px;
-}
-.starter-template .links ul li:first-child {
-  margin-left: 0;
-}
-.starter-template .links ul li:last-child {
-  margin-right: 0;
-}
-.starter-template .links ul li.current-version {
-  color: #f2b7bd;
-  font-weight: 400;
-}
-.starter-template .links ul li a, a {
-  color: #f2b7bd;
-  text-decoration: underline;
-}
-.starter-template .links ul li a:hover, a:hover {
-  color: #ffffff;
-  text-decoration: underline;
-}
-.starter-template .links ul li .icon-muted {
-  color: #eb8b95;
-  margin-right: 5px;
-}
-.starter-template .links ul li:hover .icon-muted {
-  color: #ffffff;
-}
-.starter-template .copyright {
-  margin-top: 10px;
-  font-size: 0.9em;
-  color: #f2b7bd;
-  text-transform: lowercase;
-  float: right;
-  right: 0;
-}
-@media (max-width: 1199px) {
-  .starter-template .content h1 {
-    font-size: 45px;
-  }
-  .starter-template .content h1 .smaller {
-    font-size: 30px;
-  }
-  .starter-template .content .lead {
-    font-size: 20px;
-  }
-}
-@media (max-width: 991px) {
-  .starter-template {
-    margin-top: 0;
-  }
-  .starter-template .logo {
-    margin: 40px auto;
-  }
-  .starter-template .content {
-    margin-left: 0;
-    text-align: center;
-  }
-  .starter-template .content h1 {
-    margin-bottom: 20px;
-  }
-  .starter-template .links {
-    float: none;
-    text-align: center;
-    margin-top: 60px;
-  }
-  .starter-template .copyright {
-    float: none;
-    text-align: center;
-  }
-}
-@media (max-width: 767px) {
-  .starter-template .content h1 .smaller {
-    font-size: 25px;
-    display: block;
-  }
-  .starter-template .content .lead {
+    color: #6373c5;
+    font-family: helvetica;
     font-size: 16px;
-  }
-  .starter-template .links {
-    margin-top: 40px;
-  }
-  .starter-template .links ul li {
-    display: block;
-    margin: 0;
-  }
-  .starter-template .links ul li .icon-muted {
-    display: none;
-  }
-  .starter-template .copyright {
-    margin-top: 20px;
-  }
 }
+a {
+    color: #6373c5;
+    font-family: helvetica;
+    font-size: 16px;
+}
+form {
+}
+div {
+    color: white;
+}
+
+/*  Mr.McNulty  */
+.man-tabs {
+    width: 100%;
+}
+.man-tab {
+    display: inline-block;
+    padding:5px 42px;
+    border: 1px solid #6373c5;
+}
+.man-tab.man-active {
+    background-color :#6373c5;
+}
+.man-tab.man-active a{
+    color:white;
+}
+
