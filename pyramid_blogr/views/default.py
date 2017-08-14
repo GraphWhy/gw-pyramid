@@ -5,9 +5,28 @@ from ..services.user import UserService
 from ..services.blog_record import BlogRecordService
 from ..forms import RegistrationForm
 from ..models.user import User
+from pyramid.view import view_config
+from pyramid.httpexceptions import HTTPNotFound, HTTPFound
+from ..models.blog_record import BlogRecord
+from ..services.blog_record import BlogRecordService
+from ..forms import BlogCreateForm, BlogUpdateForm
 
 
 # ROUTES IN ACTIVE USE ---
+
+@view_config(route_name='question', match_param='action=create',
+             renderer='pyramid_blogr:templates/question.jinja2',
+             permission='create')
+def question_page(request):
+    entry = BlogRecord()
+    form = BlogCreateForm(request.POST)
+    if request.method == 'POST' and form.validate():
+        form.populate_obj(entry)
+        request.dbsession.add(entry)
+        return HTTPFound(location=request.route_url('home'))
+    return {'form': form, 'action': request.matchdict.get('action')}
+
+
 @view_config(route_name='home',
              renderer='pyramid_blogr:templates/register.jinja2')
 def index_page(request):
@@ -20,7 +39,8 @@ def index_page(request):
         if flag:
             return HTTPFound(location=request.route_url('register-error'))
         request.dbsession.add(new_user)
-        return HTTPFound(location=request.route_url('thanks'))
+        headers = remember(request, tempname)
+        return HTTPFound(location=request.route_url('thanks'), headers=headers)
     return {'form': form}
 
 
@@ -35,26 +55,10 @@ def unique_error_page(request):
         flag = request.dbsession.query(User).filter_by(name=tempname).all()
         if not flag:
             request.dbsession.add(new_user)
-            return HTTPFound(location=request.route_url('thanks'))
+            headers = remember(request, tempname)
+            return HTTPFound(location=request.route_url('thanks'), headers=headers)
         else:
             return HTTPFound(location=request.route_url('register-error'))
-    return {'form': form}
-
-
-@view_config(route_name='question',
-             renderer='pyramid_blogr:templates/question.jinja2')
-def question_page(request):
-    form = RegistrationForm(request.POST)
-    if request.method == 'POST' and form.validate():
-        tempname = form.username.data
-        new_user = User(name=form.username.data)
-        new_user.set_password(form.password.data.encode('utf8'))
-        flag = request.dbsession.query(User).filter_by(name=tempname).all()
-        if not flag:
-            request.dbsession.add(new_user)
-            return HTTPFound(location=request.route_url('thanks'))
-        else:
-            return HTTPFound(location=request.route_url('question'))
     return {'form': form}
 
 

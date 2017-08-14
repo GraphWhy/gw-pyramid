@@ -1,23 +1,31 @@
 {% extends "pyramid_blogr:templates/layout.jinja2" %}
 
 {% block content %}
+
     <div class="man-tabs">
         <div class="man-tab man-active">
             <a href="{{request.route_url('home')}}">Register</a>
         </div>
-        <div class="man-tab">
-            <a href="{{request.route_url('question')}}">Question</a>
-        </div>
+        {% if request.authenticated_userid %}
+            <div class="man-tab">
+                <a href="{{ request.route_url('question',action='create') }}">Question</a>
+            </div>
+        {% else %}
+            <div class="man-tab man-tab-disabled">
+                <a>Question</a>
+            </div>
+        {% endif %}
     </div>
 
-    <h1>Register</h1>
     <!-- REGISTRATION FORM-->
-    <form action="{{request.route_url('home')}}" method="post" class="form">
+    <form action="{{request.route_url('home')}}" method="post" class="form sg-form">
+        <h1 class="sg-p-color">Subscribe</h1>
+        <p class="sg-p-color">Enter your <b>email</b> address and we will contact you randomly... maybe.</p>    <!-- CUSTOM ERROR REGISTRATION FOR NON-UNIQUE ENTRIES -->
         {% for error in form.username.errors %}
             <div class="alert alert-danger">{{ error }}</div>
         {% endfor %}
         <div class="form-group">
-            <label for="title">{{form.username.label}}</label>
+            <label for="title" class="sg-a1-color">{{form.username.label}}</label>
             {{form.username(class_='form-control')}}
         </div>
 

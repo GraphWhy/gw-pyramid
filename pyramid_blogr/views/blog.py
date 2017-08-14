@@ -5,6 +5,7 @@ from ..services.blog_record import BlogRecordService
 from ..forms import BlogCreateForm, BlogUpdateForm
 
 
+
 @view_config(route_name='blog',
              renderer='pyramid_blogr:templates/view_blog.jinja2')
 def blog_view(request):

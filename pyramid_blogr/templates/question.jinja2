@@ -1,23 +1,61 @@
 {% extends "pyramid_blogr:templates/layout.jinja2" %}
 
 {% block content %}
+
     <div class="man-tabs">
         <div class="man-tab">
             <a href="{{request.route_url('home')}}">Register</a>
         </div>
-        <div class="man-tab man-active">
-            <a href="{{request.route_url('question')}}">Question</a>
-        </div>
+        {% if request.authenticated_userid %}
+            <div class="man-tab man-active">
+                <a href="{{ request.route_url('question',action='create') }}">Question</a>Question</a>
+            </div>
+        {% else %}
+            <div class="man-tab man-tab-disabled">
+                <a>Question</a>
+            </div>
+        {% endif %}
     </div>
 
-    <h1>Question</h1>
 
-    <form action="{{request.route_url('thanks')}}" method="post" class="form">
+    <form action="{{request.route_url('question',action=action)}}" method="post" class="form">
+        {% if action =='edit' %}
+            {{ form.id() }}
+        {% endif %}
+
+        {% for error in form.title.errors %}
+            <div class="error">{{ error }}</div>
+        {% endfor %}
+
+        <div class="form-group">
+            <label for="title">{{ form.title.label }}</label>
+            {{ form.title(class_='form-control') }}
+        </div>
+
+        {% for error in form.body.errors %}
+            <div class="error">{{ error }}</div>
+        {% endfor %}
+
+        <div class="form-group">
+            <label for="body">{{ form.body.label }}</label>
+            {{ form.body(class_='form-control') }}
+        </div>
+        <div class="form-group">
+            <label></label>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </div>
+    </form>
+
+    {#
+    <!--
+    <form action="{{request.route_url('thanks')}}" method="post" class="form sg-form">
+        <h1 class="sg-p-color">Question</h1>
+        <p class="sg-p-color">Enter a question you think is important, but don't think too much about it.</p>
         {% for error in form.username.errors %}
             <div class="alert alert-danger">{{ error }}</div>
         {% endfor %}
         <div class="form-group">
-            <label for="title">{{form.username.label}}</label>
+            <label for="title" class="sg-a1-color">{{form.username.label}}</label>
             {{form.username(class_='form-control')}}
         </div>
 
@@ -34,4 +72,6 @@
             <button type="submit" class="btn btn-default">Submit</button>
         </div>
     </form>
+    -->
+    #}
 {% endblock %}

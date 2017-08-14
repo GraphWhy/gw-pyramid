@@ -14,6 +14,6 @@ class BlogUpdateForm(BlogCreateForm):
     id = HiddenField()
 
 class RegistrationForm(Form):
-    username = StringField('Email', [validators.Length(min=1, max=255)],
-                           filters=[strip_filter], default=u'test')
+    username = StringField('Enter a temporary username here:', [validators.Length(min=1, max=255)],
+                           filters=[strip_filter], default=u'username')
     password = StringField('Password', [validators.Length(min=3)], default=u'test')

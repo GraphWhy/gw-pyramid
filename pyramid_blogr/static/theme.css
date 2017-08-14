@@ -2,7 +2,6 @@
 
 /*  Mr.Godinez  */
 h1{
-    color: #6373c5;
     font-size: 40px;
 }
 body {
@@ -14,29 +13,24 @@ body {
     background: linear-gradient(to right, #ACB6E5, #74ebd5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     margin: 20px;
     font-family: helvetica;
-}
-h2{
-    color: #6373c5;
-    font-family: helvetica;
-    font-size: 17px;
-}
-p {
-    color: #6373c5;
-    font-family: helvetica;
     font-size: 16px;
 }
 a {
     color: #6373c5;
-    font-family: helvetica;
-    font-size: 16px;
-}
-form {
-}
-div {
-    color: white;
 }
 
 /*  Mr.McNulty  */
+.sg-p-color{
+    color:#6373c5;
+}
+.sg-a1-color{
+    color:#5c5196;
+}
+.sg-form {
+    border:1px solid #6373c5;
+    padding:15px;
+    max-width: 520px;
+}
 .man-tabs {
     width: 100%;
     margin-bottom:45px;
@@ -45,11 +39,18 @@ div {
     display: inline-block;
     padding:5px 42px;
     border: 1px solid #6373c5;
+    margin-top:6px;
 }
 .man-tab.man-active {
     background-color :#6373c5;
 }
 .man-tab.man-active a{
     color:white;
+}
+.man-tab.man-tab-disabled {
+    border: 1px solid #aaa;
+}
+.man-tab.man-tab-disabled a{
+    color: #aaa;
 }
 
