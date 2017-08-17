@@ -8,7 +8,7 @@
         </div>
         {% if request.authenticated_userid %}
             <div class="man-tab man-active">
-                <a href="{{ request.route_url('question',action='create') }}">Question</a>Question</a>
+                <a href="{{ request.route_url('question_action',action='create') }}">Question</a>
             </div>
         {% else %}
             <div class="man-tab man-tab-disabled">
@@ -18,28 +18,40 @@
     </div>
 
 
-    <form action="{{request.route_url('question',action=action)}}" method="post" class="form">
+    <form action="{{request.route_url('question_action',action=action)}}" method="post" class="form">
         {% if action =='edit' %}
             {{ form.id() }}
         {% endif %}
 
-        {% for error in form.title.errors %}
+        {# Question form #}
+        {% for error in form.question.errors %}
             <div class="error">{{ error }}</div>
         {% endfor %}
-
         <div class="form-group">
-            <label for="title">{{ form.title.label }}</label>
-            {{ form.title(class_='form-control') }}
+            <label for="title">{{ form.question.label }}</label>
+            {{ form.question(class_='form-control') }}
         </div>
 
-        {% for error in form.body.errors %}
+        {# Type form #}
+        {% for error in form.type.errors %}
             <div class="error">{{ error }}</div>
         {% endfor %}
-
         <div class="form-group">
-            <label for="body">{{ form.body.label }}</label>
-            {{ form.body(class_='form-control') }}
+            <label for="body">{{ form.type.label }}</label>
+            {{ form.type(class_='form-control') }}
         </div>
+
+        {# Description form #}
+        {% for error in form.description.errors %}
+            <div class="error">{{ error }}</div>
+        {% endfor %}
+        <div class="form-group">
+            <label for="body">{{ form.description.label }}</label>
+            {{ form.description(class_='form-control') }}
+        </div>
+
+
+
         <div class="form-group">
             <label></label>
             <button type="submit" class="btn btn-default">Submit</button>

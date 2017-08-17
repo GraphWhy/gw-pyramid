@@ -1,32 +1,12 @@
 from pyramid.view import view_config
-from pyramid.httpexceptions import HTTPFound
+from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 from pyramid.security import remember, forget
 from ..services.user import UserService
-from ..services.blog_record import BlogRecordService
 from ..forms import RegistrationForm
 from ..models.user import User
-from pyramid.view import view_config
-from pyramid.httpexceptions import HTTPNotFound, HTTPFound
-from ..models.blog_record import BlogRecord
-from ..services.blog_record import BlogRecordService
-from ..forms import BlogCreateForm, BlogUpdateForm
 
 
 # ROUTES IN ACTIVE USE ---
-
-@view_config(route_name='question', match_param='action=create',
-             renderer='pyramid_blogr:templates/question.jinja2',
-             permission='create')
-def question_page(request):
-    entry = BlogRecord()
-    form = BlogCreateForm(request.POST)
-    if request.method == 'POST' and form.validate():
-        form.populate_obj(entry)
-        request.dbsession.add(entry)
-        return HTTPFound(location=request.route_url('home'))
-    return {'form': form, 'action': request.matchdict.get('action')}
-
-
 @view_config(route_name='home',
              renderer='pyramid_blogr:templates/register.jinja2')
 def index_page(request):

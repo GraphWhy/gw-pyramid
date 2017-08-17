@@ -8,7 +8,7 @@
         </div>
         {% if request.authenticated_userid %}
             <div class="man-tab">
-                <a href="{{ request.route_url('question',action='create') }}">Question</a>
+                <a href="{{ request.route_url('question_action',action='create') }}">Question</a>
             </div>
         {% else %}
             <div class="man-tab man-tab-disabled">
