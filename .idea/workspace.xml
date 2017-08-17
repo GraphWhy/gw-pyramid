@@ -2,18 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="67fcc475-6028-43ef-9598-843d632ad4da" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pyramid_blogr/models/question_record.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pyramid_blogr/services/question_record.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pyramid_blogr/templates/edit_question.jinja2" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pyramid_blogr/views/question.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pyramid_blogr/templates/question.jinja2" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pyramid_blogr/views/.default.py.swp" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pyramid_blogr/forms.py" afterPath="$PROJECT_DIR$/pyramid_blogr/forms.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pyramid_blogr/routes.py" afterPath="$PROJECT_DIR$/pyramid_blogr/routes.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pyramid_blogr/security.py" afterPath="$PROJECT_DIR$/pyramid_blogr/security.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pyramid_blogr/templates/register.jinja2" afterPath="$PROJECT_DIR$/pyramid_blogr/templates/register.jinja2" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pyramid_blogr/views/default.py" afterPath="$PROJECT_DIR$/pyramid_blogr/views/default.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -39,8 +28,8 @@
       <file leaf-file-name="initializedb.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pyramid_blogr/scripts/initializedb.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="29" column="15" lean-forward="false" selection-start-line="29" selection-start-column="15" selection-end-line="29" selection-end-column="15" />
+            <state relative-caret-position="270">
+              <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -194,16 +183,6 @@
             <path>
               <item name="gw-pyramid" type="b2602c69:ProjectViewProjectNode" />
               <item name="gw-pyramid" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="gw-pyramid" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gw-pyramid" type="462c0819:PsiDirectoryNode" />
-              <item name="bin" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="gw-pyramid" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gw-pyramid" type="462c0819:PsiDirectoryNode" />
-              <item name="docs" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="gw-pyramid" type="b2602c69:ProjectViewProjectNode" />
@@ -582,8 +561,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pyramid_blogr/scripts/initializedb.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" column="15" lean-forward="false" selection-start-line="29" selection-start-column="15" selection-end-line="29" selection-end-column="15" />
+        <state relative-caret-position="270">
+          <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
