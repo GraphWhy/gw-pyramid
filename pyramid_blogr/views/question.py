@@ -1,5 +1,6 @@
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPNotFound, HTTPFound
+from ..models.user import User
 from ..models.question_record import QuestionRecord
 from ..services.question_record import QuestionRecordService
 from ..forms import QuestionCreateForm, QuestionUpdateForm
@@ -27,8 +28,13 @@ def question_create(request):
         print(entry)
         print(entry.question)
         print(request.authenticated_userid)
-        # setattr(entry, entry.userid, request.authenticated_id)
-        setattr(entry, 'username', request.authenticated_userid)
+        print(request)
+        print(request.matchdict)
+        query = request.dbsession.query(User)
+        query = query.filter(User.name == request.authenticated_userid).first()
+        # user_id = query.id
+        setattr(entry, 'user_id', query.id)
+        # setattr(entry, 'username', request.authenticated_userid)
         request.dbsession.add(entry)
         return HTTPFound(location=request.route_url('home'))
     return {'form': form, 'action': request.matchdict.get('action')}
@@ -46,5 +52,5 @@ def question_update(request):
     if request.method == 'POST' and form.validate():
         form.populate_obj(entry)
         return HTTPFound(
-            location=request.route_url('question', id=entry.id,slug=entry.slug))
+            location=request.route_url('question', id=entry.id, slug=entry.slug))
     return {'form': form, 'action': request.matchdict.get('action')}
