@@ -11,8 +11,10 @@ from webhelpers2.text import urlify #<- will generate slugs
 from webhelpers2.date import distance_of_time_in_words #<- human friendly dates
 
 class QuestionRecord(Base):
-    __tablename__ = 'entries'
+    __tablename__ = 'questions'
     id = Column(Integer, primary_key=True)
+    # userid = Column(Integer)
+    username = Column(Unicode(255), nullable=False)
     question = Column(Unicode(255), nullable=False)
     description = Column(UnicodeText, default=u'Why is this question important?')
     type = Column(Unicode(255), nullable=False)

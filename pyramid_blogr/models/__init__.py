@@ -7,6 +7,7 @@ import zope.sqlalchemy
 # Base.metadata prior to any initialization routines
 from .user import User
 from .blog_record import BlogRecord
+from .question_record import QuestionRecord
 
 # run configure_mappers after defining all of the models to ensure
 # all relationships can be setup

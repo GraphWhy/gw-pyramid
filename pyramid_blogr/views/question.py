@@ -24,6 +24,11 @@ def question_create(request):
     form = QuestionCreateForm(request.POST)
     if request.method == 'POST' and form.validate():
         form.populate_obj(entry)
+        print(entry)
+        print(entry.question)
+        print(request.authenticated_userid)
+        # setattr(entry, entry.userid, request.authenticated_id)
+        setattr(entry, 'username', request.authenticated_userid)
         request.dbsession.add(entry)
         return HTTPFound(location=request.route_url('home'))
     return {'form': form, 'action': request.matchdict.get('action')}
