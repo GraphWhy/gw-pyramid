@@ -39,7 +39,7 @@ def question_create(request):
         query = query.filter(User.name == request.authenticated_userid).first()
         setattr(entry, 'user_id', query.id)
         request.dbsession.add(entry)
-        return HTTPFound(location=request.route_url('home'))
+        return HTTPFound(location=request.route_url('question_action_new'))
     return {'form': form, 'action': request.matchdict.get('action'), 'paginator': paginator}
 
 
