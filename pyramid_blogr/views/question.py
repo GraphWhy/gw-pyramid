@@ -3,6 +3,7 @@ from pyramid.httpexceptions import HTTPNotFound, HTTPFound
 from ..models.user import User
 from ..models.question_record import QuestionRecord
 from ..services.question_record import QuestionRecordService
+from ..services.user import UserService
 from ..forms import QuestionCreateForm, QuestionUpdateForm
 
 
@@ -24,6 +25,11 @@ def question_create(request):
     # template logic
     page = int(request.params.get('page', 1))
     paginator = QuestionRecordService.get_paginator(request, page)
+    # get author names
+    author_list = UserService.all_users(request)
+    for item in paginator.items:
+        item.author = lambda: None
+        item.author = author_list[item.user_id-1].name
     # question logic
     entry = QuestionRecord()
     form = QuestionCreateForm(request.POST)

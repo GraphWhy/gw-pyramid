@@ -3,11 +3,11 @@
 {% block content %}
 
     <div class="man-tabs">
-        <div class="man-tab">
+        <div class="man-tab man-active">
             <a href="{{request.route_url('home')}}">Register</a>
         </div>
         {% if request.authenticated_userid %}
-            <div class="man-tab man-active">
+            <div class="man-tab">
                 <a href="{{ request.route_url('question_action',action='create') }}">Question</a>
             </div>
         {% else %}
@@ -18,31 +18,25 @@
     </div>
     <div id="columns">
         <div class="pin">
-            <form action="{{request.route_url('question_action',action=action)}}" method="post" class="form">
+            {# <img src="{{request.static_url('pyramid_blogr:static/transparent.png')}}"> #}
+            <!-- REGISTRATION FORM-->
+            <form action="{{request.route_url('home')}}" method="post" class="form {#sg-form#}">
                 <h3 class="sg-p-color">Alias</h3>
                 <p class="sg-p-color">Enter a <b>username</b> to interact with the site</p>    <!-- CUSTOM ERROR REGISTRATION FOR NON-UNIQUE ENTRIES -->
-                {% if action =='edit' %}
-                    {{ form.id() }}
-                {% endif %}
-                {# Question form #}
-                {% for error in form.question.errors %}
-                    <div class="error">{{ error }}</div>
+                <div class="alert alert-success">You now have a username, click the question tab to contribute.</div>
+                {% for error in form.username.errors %}
+                    <div class="alert alert-danger">{{ error }}</div>
                 {% endfor %}
                 <div class="form-group">
-                    <label for="title" class="sg-a1-color">{{ form.question.label }}</label>
-                    {{ form.question(class_='form-control') }}
-                {# Type form #}
-                {% for error in form.type.errors %}
-                    <div class="error">{{ error }}</div>
+                    <label for="title" class="sg-a1-color">{{form.username.label}}</label>
+                    {{form.username(class_='form-control')}}
+                </div>
+                {% for error in form.password.errors %}
+                    <div class="alert alert-danger">{{error}}</div>
                 {% endfor %}
-                    <label for="body" class="sg-a1-color">{{ form.type.label }}</label>
-                    {{ form.type(class_='form-control') }}
-                {# Description form #}
-                {% for error in form.description.errors %}
-                    <div class="error">{{ error }}</div>
-                {% endfor %}
-                    <label for="body" class="sg-a1-color">{{ form.description.label }}</label>
-                    {{ form.description(class_='form-control', value_='hi') }}
+                <div class="form-group" style="display:none">
+                    <label for="body">{{form.password.label}}</label>
+                    {{form.password(class_='form-control', value="badpassword")}}
                 </div>
                 <div class="form-group">
                     <label></label>
@@ -62,9 +56,9 @@
                     {# </a> #}
                 </div>
             {% endfor %}
-        {{ paginator.pager() | safe }}
-        {% else %}
-            <p>No blog entries found.</p>
-        {% endif %}
+        {{ paginator.pager() |safe }}
+    {% else %}
+        <p>No blog entries found.</p>
+    {% endif %}
     </div>
 {% endblock %}

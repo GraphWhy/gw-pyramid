@@ -173,7 +173,7 @@ label{
 }
 
 /* McNulty's changes to columns */
-.pin div.alert.alert-danger{
+.pin div.alert{
     font: 12px/18px Arial, sans-serif;
     margin: 10px 0px;
 }

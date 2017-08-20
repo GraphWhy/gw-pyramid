@@ -8,15 +8,22 @@ from ..services.question_record import QuestionRecordService
 
 
 # ROUTES IN ACTIVE USE ---
-@view_config(route_name='register-error',
-             renderer='pyramid_blogr:templates/register-error.jinja2')
 @view_config(route_name='home',
              renderer='pyramid_blogr:templates/register.jinja2')
+@view_config(route_name='register-success',
+             renderer='pyramid_blogr:templates/register-success.jinja2')
+@view_config(route_name='register-error',
+             renderer='pyramid_blogr:templates/register-error.jinja2')
 def index_page(request):
     # template logic
     page = int(request.params.get('page', 1))
     paginator = QuestionRecordService.get_paginator(request, page)
-    # sign-in form
+    # get author names
+    author_list = UserService.all_users(request)
+    # why is ther a lambda here? what is lambda? https://stackoverflow.com/questions/2827623/python-create-object-and-add-attributes-to-it - atm to pdm
+    for item in paginator.items:
+        item.author = lambda: None
+        item.author = author_list[item.user_id-1].name    # sign-in form
     form = RegistrationForm(request.POST)
     if request.method == 'POST' and form.validate():
         # ensure no duplicate is sent to db
@@ -30,33 +37,8 @@ def index_page(request):
         request.dbsession.add(new_user)
         # if all is successful
         headers = remember(request, tempname)
-        return HTTPFound(location=request.route_url('thanks'), headers=headers)
+        return HTTPFound(location=request.route_url('register-success'), headers=headers)
     return {'form': form, 'paginator': paginator}
-
-'''
-@view_config(route_name='register-error',
-             renderer='pyramid_blogr:templates/register-error.jinja2')
-def unique_error_page(request):
-    form = RegistrationForm(request.POST)
-    if request.method == 'POST' and form.validate():
-        new_user = User(name=form.username.data)
-        new_user.set_password(form.password.data.encode('utf8'))
-        tempname = form.username.data
-        flag = request.dbsession.query(User).filter_by(name=tempname).all()
-        if not flag:
-            request.dbsession.add(new_user)
-            headers = remember(request, tempname)
-            return HTTPFound(location=request.route_url('thanks'), headers=headers)
-        else:
-            return HTTPFound(location=request.route_url('register-error'))
-    return {'form': form}
-'''
-
-@view_config(route_name='thanks',
-             renderer='pyramid_blogr:templates/thanks.jinja2')
-def thanks_page(request):
-    form = RegistrationForm(request.POST)
-    return {'form': form}
 
 
 # ROUTES NOT IN USE ---
@@ -85,7 +67,7 @@ def sign_in_out(request):
             headers = forget(request)
     else:
         headers = forget(request)
-    return HTTPFound(location=request.route_url('home'), headers=headers)
+    return HTTPFound(location=request.route_url('question'), headers=headers)
 
 
 @view_config(route_name='register',
