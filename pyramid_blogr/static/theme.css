@@ -7,9 +7,9 @@ body {
     background-repeat: no-repeat;
     width: 100;
     height: 100vh;
-    background: #74ebd5; /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #ACB6E5, #74ebd5); /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #ACB6E5, #74ebd5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: #9fe6e3; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #ACB6E5, #9fe6e3); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #ACB6E5, #9fe6e3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     margin: 20px;
     font-family: helvetica;
     font-size: 16px;

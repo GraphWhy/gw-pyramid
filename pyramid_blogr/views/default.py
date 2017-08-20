@@ -26,17 +26,25 @@ def index_page(request):
         item.author = author_list[item.user_id-1].name    # sign-in form
     form = RegistrationForm(request.POST)
     if request.method == 'POST' and form.validate():
-        # ensure no duplicate is sent to db
-        tempname = form.username.data
-        flag = request.dbsession.query(User).filter_by(name=tempname).all()
-        if flag:
+        # ensure people don't choose username over and over again
+        username = form.username.data
+        if username == 'username':
             return HTTPFound(location=request.route_url('register-error'))
+        # if user exists then log them in - LOG IN LOGIC
+        flag = request.dbsession.query(User).filter_by(name=username).all()
+        if flag:
+            user = UserService.by_name(username, request=request)
+            if user and user.verify_password(request.POST.get('password')):
+                headers = remember(request, user.name)
+            else:
+                headers = forget(request)
+            return HTTPFound(location=request.route_url('question_action_new'), headers=headers)
         # create account logic
-        new_user = User(name=form.username.data)
+        new_user = User(name=username)
         new_user.set_password(form.password.data.encode('utf8'))
         request.dbsession.add(new_user)
         # if all is successful
-        headers = remember(request, tempname)
+        headers = remember(request, username)
         return HTTPFound(location=request.route_url('register-success'), headers=headers)
     return {'form': form, 'paginator': paginator}
 
@@ -53,9 +61,9 @@ def index_page(request):
 #    paginator = BlogRecordService.get_paginator(request, page)
 #    return {'paginator': paginator}
 
-
-@view_config(route_name='auth', match_param='action=in', renderer='string',
-             request_method='POST')
+# log in logic is controlled in the index_page logic
+# @view_config(route_name='auth', match_param='action=in', renderer='string',
+#              request_method='POST')
 @view_config(route_name='auth', match_param='action=out', renderer='string')
 def sign_in_out(request):
     username = request.POST.get('username')
@@ -67,7 +75,7 @@ def sign_in_out(request):
             headers = forget(request)
     else:
         headers = forget(request)
-    return HTTPFound(location=request.route_url('question'), headers=headers)
+    return HTTPFound(location=request.route_url('home'), headers=headers)
 
 
 @view_config(route_name='register',

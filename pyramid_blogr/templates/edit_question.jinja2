@@ -4,7 +4,7 @@
 
     <div class="man-tabs">
         <div class="man-tab">
-            <a href="{{request.route_url('home')}}">Register</a>
+            <a href="{{request.route_url('home')}}">Alias</a>
         </div>
         {% if request.authenticated_userid %}
             <div class="man-tab man-active">
@@ -19,8 +19,8 @@
     <div id="columns">
         <div class="pin">
             <form action="{{request.route_url('question_action',action=action)}}" method="post" class="form">
-                <h3 class="sg-p-color">Alias</h3>
-                <p class="sg-p-color">Enter a <b>username</b> to interact with the site</p>    <!-- CUSTOM ERROR REGISTRATION FOR NON-UNIQUE ENTRIES -->
+                <h3 class="sg-p-color">Question</h3>
+                <p class="sg-p-color">Enter a <b>question</b> to contribute to our list.</p>    <!-- CUSTOM ERROR REGISTRATION FOR NON-UNIQUE ENTRIES -->
                 {% if action =='edit' %}
                     {{ form.id() }}
                 {% endif %}
