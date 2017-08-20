@@ -49,8 +49,9 @@
                 <div class="pin">
                     {# <a href="{{ request.route_url('question', id=entry.id, slug=entry.slug) }}">  #}
                         <h5>{{ entry.question }}</h5>
-                        <p>{{ entry.description }}</p>
                         <hr/>
+                        <h6>by <b>{{ entry.type }}</b></h6>
+                        <p>{{ entry.description }}</p>
                         <h6>{{ entry.type }}</h6>
                     {# </a> #}
                 </div>
