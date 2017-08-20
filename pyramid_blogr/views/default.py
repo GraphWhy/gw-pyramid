@@ -4,34 +4,44 @@ from pyramid.security import remember, forget
 from ..services.user import UserService
 from ..forms import RegistrationForm
 from ..models.user import User
+from ..services.question_record import QuestionRecordService
 
 
 # ROUTES IN ACTIVE USE ---
+@view_config(route_name='register-error',
+             renderer='pyramid_blogr:templates/register-error.jinja2')
 @view_config(route_name='home',
              renderer='pyramid_blogr:templates/register.jinja2')
 def index_page(request):
+    # template logic
+    page = int(request.params.get('page', 1))
+    paginator = QuestionRecordService.get_paginator(request, page)
+    # sign-in form
     form = RegistrationForm(request.POST)
     if request.method == 'POST' and form.validate():
+        # ensure no duplicate is sent to db
         tempname = form.username.data
-        new_user = User(name=form.username.data)
-        new_user.set_password(form.password.data.encode('utf8'))
         flag = request.dbsession.query(User).filter_by(name=tempname).all()
         if flag:
             return HTTPFound(location=request.route_url('register-error'))
+        # create account logic
+        new_user = User(name=form.username.data)
+        new_user.set_password(form.password.data.encode('utf8'))
         request.dbsession.add(new_user)
+        # if all is successful
         headers = remember(request, tempname)
         return HTTPFound(location=request.route_url('thanks'), headers=headers)
-    return {'form': form}
+    return {'form': form, 'paginator': paginator}
 
-
+'''
 @view_config(route_name='register-error',
              renderer='pyramid_blogr:templates/register-error.jinja2')
 def unique_error_page(request):
     form = RegistrationForm(request.POST)
     if request.method == 'POST' and form.validate():
-        tempname = form.username.data
         new_user = User(name=form.username.data)
         new_user.set_password(form.password.data.encode('utf8'))
+        tempname = form.username.data
         flag = request.dbsession.query(User).filter_by(name=tempname).all()
         if not flag:
             request.dbsession.add(new_user)
@@ -40,7 +50,7 @@ def unique_error_page(request):
         else:
             return HTTPFound(location=request.route_url('register-error'))
     return {'form': form}
-
+'''
 
 @view_config(route_name='thanks',
              renderer='pyramid_blogr:templates/thanks.jinja2')

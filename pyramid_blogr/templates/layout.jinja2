@@ -25,20 +25,20 @@
   </head>
 
   <body>
-    <h1 class="sg-p-color">
-        <img src="{{request.static_url('pyramid_blogr:static/gw_sm_logo.png')}}" alt="logo" width="60px">
-        GraphWhy
-    </h1>
-    {% if request.authenticated_userid %}
-        <h5 class="sg-a1-color">
-            Welcome <strong>{{request.authenticated_userid}}</strong>
-            <a href="{{request.route_url('auth',action='out')}}">Sign Out</a>
-        </h5>
-    {% endif %}
-    <div class="">
-      {% block content %}
-        <p>No content</p>
-      {% endblock content %}
+    <div id="wrapper">
+        <h1 class="sg-p-color">
+            <img src="{{request.static_url('pyramid_blogr:static/gw_sm_logo.png')}}" alt="logo" width="60px">
+            GraphWhy
+        </h1>
+        {% if request.authenticated_userid %}
+            <h5 class="sg-a1-color">
+                Welcome <strong>{{request.authenticated_userid}}</strong>
+                <a href="{{request.route_url('auth',action='out')}}">Sign Out</a>
+            </h5>
+        {% endif %}
+        {% block content %}
+            <p>No content</p>
+        {% endblock content %}
     </div>
 
     <!-- Bootstrap core JavaScript

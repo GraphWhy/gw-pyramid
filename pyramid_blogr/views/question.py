@@ -21,23 +21,20 @@ def question_view(request):
              renderer='pyramid_blogr:templates/edit_question.jinja2',
              permission='create')
 def question_create(request):
+    # template logic
+    page = int(request.params.get('page', 1))
+    paginator = QuestionRecordService.get_paginator(request, page)
+    # question logic
     entry = QuestionRecord()
     form = QuestionCreateForm(request.POST)
     if request.method == 'POST' and form.validate():
         form.populate_obj(entry)
-        print(entry)
-        print(entry.question)
-        print(request.authenticated_userid)
-        print(request)
-        print(request.matchdict)
         query = request.dbsession.query(User)
         query = query.filter(User.name == request.authenticated_userid).first()
-        # user_id = query.id
         setattr(entry, 'user_id', query.id)
-        # setattr(entry, 'username', request.authenticated_userid)
         request.dbsession.add(entry)
         return HTTPFound(location=request.route_url('home'))
-    return {'form': form, 'action': request.matchdict.get('action')}
+    return {'form': form, 'action': request.matchdict.get('action'), 'paginator': paginator}
 
 
 @view_config(route_name='question_action', match_param='action=edit',

@@ -26,5 +26,5 @@ class QuestionRecordService(object):
             query_params['page'] = link_page
             return request.current_route_url(_query=query_params)
 
-        return SqlalchemyOrmPage(query, page, items_per_page=5,
+        return SqlalchemyOrmPage(query, page, items_per_page=40,
                                  url_maker=url_maker)
