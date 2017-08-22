@@ -17,11 +17,11 @@ class BlogUpdateForm(BlogCreateForm):
 
 # spawned question forms
 class QuestionCreateForm(Form):
-    question = StringField('question', [validators.Length(min=1, max=255)],
+    question = TextAreaField('question', [validators.Length(min=1, max=255)],
                         filters=[strip_filter])
-    type = StringField('type', [validators.Length(min=1, max=255)],
+    type = TextAreaField('type', [validators.Length(min=1, max=255)],
                         filters=[strip_filter])
-    description = TextAreaField('description', [validators.Length(min=1)],
+    description = TextAreaField('description', [validators.Length(max=500)],
                          filters=[strip_filter])
 
 
