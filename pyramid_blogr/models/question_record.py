@@ -18,7 +18,7 @@ class QuestionRecord(Base):
     user_id = Column(Integer, ForeignKey(User.id))
     # username = Column(Unicode(255), nullable=False)
     question = Column(Unicode(255), nullable=False)
-    description = Column(UnicodeText, default=u'Why is this question important?')
+    description = Column(UnicodeText, default=u'No description')
     type = Column(Unicode(255), nullable=False)
     created = Column(DateTime, default=datetime.datetime.utcnow)
     edited = Column(DateTime, default=datetime.datetime.utcnow)
