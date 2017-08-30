@@ -4,7 +4,7 @@ from pyramid.security import remember, forget
 from ..services.user import UserService
 from ..forms import RegistrationForm
 from ..models.user import User
-from ..services.question_record import QuestionRecordService
+from ..services.question_templating import QuestionTemplateService
 
 
 # ROUTES IN ACTIVE USE ---
@@ -15,15 +15,8 @@ from ..services.question_record import QuestionRecordService
 @view_config(route_name='register-error',
              renderer='pyramid_blogr:templates/register-error.jinja2')
 def index_page(request):
-    # template logic
-    page = int(request.params.get('page', 1))
-    paginator = QuestionRecordService.get_paginator(request, page)
-    # get author names
-    author_list = UserService.all_users(request)
-    # why is ther a lambda here? what is lambda? https://stackoverflow.com/questions/2827623/python-create-object-and-add-attributes-to-it - atm to pdm
-    for item in paginator.items:
-        item.author = lambda: None
-        item.author = author_list[item.user_id-1].name    # sign-in form
+    paginator = QuestionTemplateService.author_names(request)
+    # sign-in form
     form = RegistrationForm(request.POST)
     if request.method == 'POST' and form.validate():
         # ensure people don't choose username over and over again
