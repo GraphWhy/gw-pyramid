@@ -8,17 +8,6 @@ from ..services.question_templating import QuestionTemplateService
 
 
 
-
-@view_config(route_name='question',
-             renderer='pyramid_blogr:templates/view_question.jinja2')
-def question_view(request):
-    question_id = int(request.matchdict.get('id', -1))
-    entry = QuestionRecordService.by_id(question_id, request)
-    if not entry:
-        return HTTPNotFound()
-    return {'entry': entry}
-
-
 @view_config(route_name='register-success', match_param='action=create',
              renderer='pyramid_blogr:templates/edit_question_success.jinja2',
              permission='create')
@@ -37,19 +26,3 @@ def question_create(request):
         request.dbsession.add(entry)
         return HTTPFound(location=request.route_url('question_action_new'))
     return {'form': form, 'action': request.matchdict.get('action'), 'paginator': paginator}
-
-
-@view_config(route_name='question_action', match_param='action=edit',
-             renderer='pyramid_blogr:templates/edit_question.jinja2',
-             permission='create')
-def question_update(request):
-    question_id = int(request.params.get('id', -1))
-    entry = QuestionRecordService.by_id(question_id, request)
-    if not entry:
-        return HTTPNotFound()
-    form = QuestionUpdateForm(request.POST, entry)
-    if request.method == 'POST' and form.validate():
-        form.populate_obj(entry)
-        return HTTPFound(
-            location=request.route_url('question', id=entry.id, slug=entry.slug))
-    return {'form': form, 'action': request.matchdict.get('action')}

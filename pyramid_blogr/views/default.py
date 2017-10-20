@@ -40,21 +40,6 @@ def index_page(request):
     return {'form': form, 'paginator': paginator}
 
 
-# ROUTES NOT IN USE ---
-# ROUTES NOT IN USE ---
-# ROUTES NOT IN USE ---
-
-# original home view
-# @view_config(route_name='home',
-#             renderer='pyramid_blogr:templates/index.jinja2')
-# def index_page(request):
-#    page = int(request.params.get('page', 1))
-#    paginator = BlogRecordService.get_paginator(request, page)
-#    return {'paginator': paginator}
-
-# log in logic is controlled in the index_page logic
-# @view_config(route_name='auth', match_param='action=in', renderer='string',
-#              request_method='POST')
 @view_config(route_name='auth', match_param='action=out', renderer='string')
 def sign_in_out(request):
     username = request.POST.get('username')
