@@ -50,6 +50,7 @@
                 </div>
             </form>
         </div>
+        
         {% if paginator.items %}
             {% for entry in paginator.items %}
                 <div class="pin">
@@ -64,7 +65,8 @@
             {% endfor %}
         {{ paginator.pager() | safe }}
         {% else %}
-            <p>No blog entries found.</p>
+            <p>No question entries found.</p>
         {% endif %}
+        
     </div>
 {% endblock %}
