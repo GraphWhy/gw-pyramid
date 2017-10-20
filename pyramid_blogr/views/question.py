@@ -9,10 +9,10 @@ from ..services.question_templating import QuestionTemplateService
 
 
 @view_config(route_name='register-success', match_param='action=create',
-             renderer='pyramid_blogr:templates/edit_question_success.jinja2',
+             renderer='pyramid_blogr:templates/questions_success.jinja2',
              permission='create')
 @view_config(route_name='question_action', match_param='action=create',
-             renderer='pyramid_blogr:templates/edit_question.jinja2',
+             renderer='pyramid_blogr:templates/questions.jinja2',
              permission='create')
 def question_create(request):
     paginator = QuestionTemplateService.author_names(request)
