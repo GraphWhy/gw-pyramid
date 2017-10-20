@@ -19,6 +19,9 @@ def question_view(request):
     return {'entry': entry}
 
 
+@view_config(route_name='register-success', match_param='action=create',
+             renderer='pyramid_blogr:templates/edit_question_success.jinja2',
+             permission='create')
 @view_config(route_name='question_action', match_param='action=create',
              renderer='pyramid_blogr:templates/edit_question.jinja2',
              permission='create')

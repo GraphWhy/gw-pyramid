@@ -10,8 +10,6 @@ from ..services.question_templating import QuestionTemplateService
 # ROUTES IN ACTIVE USE ---
 @view_config(route_name='home',
              renderer='pyramid_blogr:templates/register.jinja2')
-@view_config(route_name='register-success',
-             renderer='pyramid_blogr:templates/register-success.jinja2')
 @view_config(route_name='register-error',
              renderer='pyramid_blogr:templates/register-error.jinja2')
 def index_page(request):
@@ -38,7 +36,7 @@ def index_page(request):
         request.dbsession.add(new_user)
         # if all is successful
         headers = remember(request, username)
-        return HTTPFound(location=request.route_url('register-success'), headers=headers)
+        return HTTPFound(location=request.route_url('register-success',action='create'), headers=headers)
     return {'form': form, 'paginator': paginator}
 
 
