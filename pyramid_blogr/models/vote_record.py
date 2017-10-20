@@ -1,26 +1,26 @@
 import datetime #<- will be used to set default dates on models
 from pyramid_blogr.models.meta import Base  #<- we need to import our sqlalchemy metadata from which model classes will inherit
+from pyramid_blogr.models.user import User  #<- we need to import our sqlalchemy metadata from which model classes will inherit
 from sqlalchemy import (
     Column,
     Integer,
     Unicode,     #<- will provide Unicode field
     UnicodeText, #<- will provide Unicode text field
     DateTime,    #<- time abstraction field
+    ForeignKey,
 )
-from webhelpers2.text import urlify #<- will generate slugs
+
 from webhelpers2.date import distance_of_time_in_words #<- human friendly dates
 
-class BlogRecord(Base):
-    __tablename__ = 'entries'
+class VoteRecord(Base):
+    __tablename__ = 'votes'
     id = Column(Integer, primary_key=True)
-    title = Column(Unicode(255), unique=True, nullable=False)
-    body = Column(UnicodeText, default=u'')
+    user_id = Column(Integer, ForeignKey(User.id))
+    question_id = Column(Integer, ForeignKey(User.id))
+    vote = Column(Integer, nullable=False)
     created = Column(DateTime, default=datetime.datetime.utcnow)
     edited = Column(DateTime, default=datetime.datetime.utcnow)
-
-    @property
-    def slug(self):
-        return urlify(self.title)
+    __table_args__ = {'extend_existing': True}
 
     @property
     def created_in_words(self):
