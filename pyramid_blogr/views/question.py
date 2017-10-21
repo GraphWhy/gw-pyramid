@@ -2,16 +2,10 @@ from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPNotFound, HTTPFound
 from ..models.user import User
 from ..models.question_record import QuestionRecord
+from ..models.vote_record import VoteRecord
 from ..services.question_record import QuestionRecordService
-from ..forms import QuestionCreateForm, QuestionUpdateForm
+from ..forms import QuestionCreateForm, QuestionUpdateForm #, VoteCreateForm
 from ..services.question_templating import QuestionTemplateService
-
-
-@view_config(route_name='question_upvote', match_param='action=create',
-             renderer='pyramid_blogr:templates/questions_success.jinja2',
-             permission='create')
-def upvote(request):
-    return HTTPFound(location=request.route_url('question_action_new'))
     
     
 @view_config(route_name='question_downvote', match_param='action=create',
@@ -20,6 +14,20 @@ def upvote(request):
 def downvote(request):
     return HTTPFound(location=request.route_url('question_action_new'))
 
+
+@view_config(route_name='question_upvote', match_param='action=create',
+             renderer='pyramid_blogr:templates/questions_success.jinja2',
+             permission='create')
+def upvote(request):
+    vote = VoteRecord()
+    query = request.dbsession.query(User)
+    query = query.filter(User.name == request.authenticated_userid).first()
+    setattr(vote, 'user_id', query.id)
+    setattr(vote, 'question_id', 1) # tempvalue
+    setattr(vote, 'vote', 1)
+    request.dbsession.add(vote)
+    return HTTPFound(location=request.route_url('question_action_new'))
+    
 
 @view_config(route_name='register-success', match_param='action=create',
              renderer='pyramid_blogr:templates/questions_success.jinja2',

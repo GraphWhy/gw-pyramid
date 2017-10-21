@@ -16,7 +16,6 @@ class QuestionRecord(Base):
     __tablename__ = 'questions'
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey(User.id))
-    # username = Column(Unicode(255), nullable=False)
     question = Column(Unicode(255), nullable=False)
     description = Column(UnicodeText, default=u'No description')
     type = Column(Unicode(255), nullable=False)

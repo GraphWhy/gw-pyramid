@@ -16,7 +16,7 @@ class VoteRecord(Base):
     __tablename__ = 'votes'
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey(User.id))
-    question_id = Column(Integer, ForeignKey(User.id))
+    question_id = Column(Integer)
     vote = Column(Integer, nullable=False)
     created = Column(DateTime, default=datetime.datetime.utcnow)
     edited = Column(DateTime, default=datetime.datetime.utcnow)

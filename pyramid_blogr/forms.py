@@ -1,4 +1,4 @@
-from wtforms import Form, StringField, TextAreaField, validators
+from wtforms import Form, StringField, TextAreaField, IntegerField, validators
 from wtforms import HiddenField, PasswordField
 
 strip_filter = lambda x: x.strip() if x else None
@@ -12,6 +12,10 @@ class QuestionCreateForm(Form):
     description = TextAreaField('description', [validators.Length(max=500)],
                          filters=[strip_filter])
 
+
+# class VoteCreateForm(Form):
+#     vote = IntegerField('question', [validators.required()])
+                        
 
 class QuestionUpdateForm(QuestionCreateForm):
     id = HiddenField()
