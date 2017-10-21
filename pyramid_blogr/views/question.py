@@ -7,6 +7,19 @@ from ..forms import QuestionCreateForm, QuestionUpdateForm
 from ..services.question_templating import QuestionTemplateService
 
 
+@view_config(route_name='question_upvote', match_param='action=create',
+             renderer='pyramid_blogr:templates/questions_success.jinja2',
+             permission='create')
+def upvote(request):
+    return HTTPFound(location=request.route_url('question_action_new'))
+    
+    
+@view_config(route_name='question_downvote', match_param='action=create',
+             renderer='pyramid_blogr:templates/questions.jinja2',
+             permission='create')
+def downvote(request):
+    return HTTPFound(location=request.route_url('question_action_new'))
+
 
 @view_config(route_name='register-success', match_param='action=create',
              renderer='pyramid_blogr:templates/questions_success.jinja2',

@@ -10,5 +10,11 @@ def includeme(config):
                      factory='pyramid_blogr.security.QuestionRecordFactory')
     config.add_route('question_action_new', '/question/create',
                      factory='pyramid_blogr.security.QuestionRecordFactory')
+                     
+    config.add_route('question_upvote', '/upvote/{action}',
+                     factory='pyramid_blogr.security.QuestionRecordFactory')
+    config.add_route('question_downvote', '/downvote/{action}',
+                     factory='pyramid_blogr.security.QuestionRecordFactory')
+                     
     config.add_route('auth', '/sign/{action}')
     config.add_route('thanks', '/thanks')

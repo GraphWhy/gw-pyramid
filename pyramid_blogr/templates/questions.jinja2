@@ -55,6 +55,8 @@
             {% for entry in paginator.items %}
                 <div class="pin">
                     {# <a href="{{ request.route_url('question', id=entry.id, slug=entry.slug) }}">  #}
+                        <a href="{{ request.route_url('question_upvote', action='create') }}">up</a>
+                        <a href="{{ request.route_url('question_downvote', action='create') }}">down</a>
                         <h5>{{ entry.question }}</h5>
                         <hr/>
                         <h6>by <b>{{ entry.author }}</b></h6>
