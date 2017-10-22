@@ -12,6 +12,14 @@ from ..services.question_templating import QuestionTemplateService
              renderer='pyramid_blogr:templates/questions.jinja2',
              permission='create')
 def downvote(request):
+    vote = VoteRecord()
+    query = request.dbsession.query(User)
+    query = query.filter(User.name == request.authenticated_userid).first()
+    setattr(vote, 'user_id', query.id)
+    question_id = int(request.matchdict.get('id',-1))
+    setattr(vote, 'question_id', question_id)
+    setattr(vote, 'vote', -1)
+    request.dbsession.add(vote)
     return HTTPFound(location=request.route_url('question_action_new'))
 
 
@@ -23,7 +31,8 @@ def upvote(request):
     query = request.dbsession.query(User)
     query = query.filter(User.name == request.authenticated_userid).first()
     setattr(vote, 'user_id', query.id)
-    setattr(vote, 'question_id', 1) # tempvalue
+    question_id = int(request.matchdict.get('id',-1))
+    setattr(vote, 'question_id', question_id)
     setattr(vote, 'vote', 1)
     request.dbsession.add(vote)
     return HTTPFound(location=request.route_url('question_action_new'))
