@@ -1,6 +1,7 @@
 import datetime #<- will be used to set default dates on models
 from pyramid_blogr.models.meta import Base  #<- we need to import our sqlalchemy metadata from which model classes will inherit
 from pyramid_blogr.models.user import User  #<- we need to import our sqlalchemy metadata from which model classes will inherit
+from pyramid_blogr.models.question_record import QuestionRecord  #<- we need to import our sqlalchemy metadata from which model classes will inherit
 from sqlalchemy import (
     Column,
     Integer,
@@ -16,7 +17,7 @@ class VoteRecord(Base):
     __tablename__ = 'votes'
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey(User.id))
-    question_id = Column(Integer)
+    question_id = Column(Integer, ForeignKey(QuestionRecord.id))
     vote = Column(Integer, nullable=False)
     created = Column(DateTime, default=datetime.datetime.utcnow)
     edited = Column(DateTime, default=datetime.datetime.utcnow)
