@@ -57,6 +57,7 @@
                     {# <a href="{{ request.route_url('question', id=entry.id, slug=entry.slug) }}">  #}
                         <a href="{{ request.route_url('question_upvote', action='create', id=entry.id) }}">up</a>
                         <a href="{{ request.route_url('question_downvote', action='create', id=entry.id) }}">down</a>
+                        <span> {{entry.totalVotes}} </span>
                         <h5>{{ entry.question }}</h5>
                         <hr/>
                         <h6>by <b>{{ entry.author }}</b></h6>

@@ -29,6 +29,7 @@
         {% if request.authenticated_userid %}
             <h5 class="sg-a1-color">
                 Welcome <strong>{{request.authenticated_userid}}</strong>
+                ({{paginator.totalUserVotes}})
                 <a href="{{request.route_url('auth',action='out')}}">Sign Out</a>
             </h5>
         {% endif %}

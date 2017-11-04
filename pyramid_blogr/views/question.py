@@ -45,7 +45,7 @@ def upvote(request):
              renderer='pyramid_blogr:templates/questions.jinja2',
              permission='create')
 def question_create(request):
-    paginator = QuestionTemplateService.author_names(request)
+    paginator = QuestionTemplateService.template_prep(request)
     entry = QuestionRecord()
     form = QuestionCreateForm(request.POST)
     if request.method == 'POST' and form.validate():
@@ -54,5 +54,6 @@ def question_create(request):
         query = query.filter(User.name == request.authenticated_userid).first()
         setattr(entry, 'user_id', query.id)
         request.dbsession.add(entry)
+        paginator = QuestionTemplateService.template_prep(request)
         return HTTPFound(location=request.route_url('question_action_new'))
     return {'form': form, 'action': request.matchdict.get('action'), 'paginator': paginator}

@@ -13,7 +13,7 @@ from ..services.question_templating import QuestionTemplateService
 @view_config(route_name='register-error',
              renderer='pyramid_blogr:templates/register-error.jinja2')
 def index_page(request):
-    paginator = QuestionTemplateService.author_names(request)
+    paginator = QuestionTemplateService.template_prep(request)
     # sign-in form
     form = RegistrationForm(request.POST)
     if request.method == 'POST' and form.validate():
