@@ -28,6 +28,14 @@ label{
 
 /*--------*/
 /*  Mr.McNulty  */
+.voter-bar{
+    background-color: #ffffff61;
+    padding: 1px 7px;
+    display: inline-block;
+}
+.voter-bar span{
+    padding:0 10px;
+}
 .sg-p-color{
     color:#6373c5;
 }
