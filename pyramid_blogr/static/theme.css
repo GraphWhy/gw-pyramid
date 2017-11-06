@@ -33,8 +33,12 @@ label{
     padding: 1px 7px;
     display: inline-block;
 }
-.voter-bar span{
+.voter-bar .tightSpace{
     padding:0 10px;
+}
+.voter-bar .customDisabled{
+    color: #999;
+    padding:0 0;
 }
 .sg-p-color{
     color:#6373c5;

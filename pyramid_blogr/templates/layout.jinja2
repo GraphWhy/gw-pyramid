@@ -34,10 +34,68 @@
                 <a href="{{request.route_url('auth',action='out')}}">Sign Out</a>
             </h5>
         {% endif %}
-        {% block content %}
-            <p>No content</p>
-        {% endblock content %}
-    </div>
+        
+        <div class="man-tabs">
+          <div class="man-tab man-active">
+              <a href="{{request.route_url('home')}}">Alias</a>
+          </div>
+          {% if request.authenticated_userid %}
+              <div class="man-tab">
+                  <a href="{{ request.route_url('question_action',action='create') }}">Question</a>
+              </div>
+          {% else %}
+              <div class="man-tab man-tab-disabled">
+                  <a>Question</a>
+              </div>
+          {% endif %}
+        </div>
+            
+        <div id="columns">
+            <div class="pin">
+            
+              {% block content %}
+                  <p>No content</p>
+              {% endblock content %}
+            
+            </div>
+                    
+            {% if paginator.items %}
+                {% for entry in paginator.items %}
+                    <div class="pin">
+                        {# <a href="{{ request.route_url('question', id=entry.id, slug=entry.slug) }}">  #}
+                            <div class="voter-bar pull-right">
+                              {% if request.authenticated_userid %}
+                                <a href="{{ request.route_url('question_downvote', action='create', id=entry.id) }}">
+                                    -
+                                </a>
+                              {% else %}
+                                <span class='customDisabled'>-</span>
+                              {% endif %} 
+                              
+                              <span class='tightSpace'> {{entry.totalVotes}} </span>
+                              {% if request.authenticated_userid %}
+                                <a href="{{ request.route_url('question_upvote', action='create', id=entry.id) }}">
+                                    +
+                                </a>
+                              {% else %}
+                                <span class='customDisabled'>+</span>
+                              {% endif %}
+                            </div>
+                            <h5 style="margin:2px 0 0 0; padding:0 0 0px 0;">{{ entry.question }}</h5>
+                            <hr/>
+                            <h6>by <b>{{ entry.author }}</b></h6>
+                            <p>{{ entry.description }}</p>
+                            <h6>{{ entry.type }}</h6>
+                        {# </a> #}
+                    </div>
+                {% endfor %}
+            {{ paginator.pager() | safe }}
+            {% else %}
+                <p>No question entries found.</p>
+            {% endif %}
+            
+            
+        </div>
 
     <!-- Bootstrap core JavaScript -->
     <script src="//oss.maxcdn.com/libs/jquery/1.10.2/jquery.min.js"></script>

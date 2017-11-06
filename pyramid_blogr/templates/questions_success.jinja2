@@ -2,81 +2,37 @@
 
 {% block content %}
 
-    <div class="man-tabs">
-        <div class="man-tab">
-            <a href="{{request.route_url('home')}}">Alias</a>
-        </div>
-        {% if request.authenticated_userid %}
-            <div class="man-tab man-active">
-                <a href="{{ request.route_url('question_action',action='create') }}">Question</a>
-            </div>
-        {% else %}
-            <div class="man-tab man-tab-disabled">
-                <a>Question</a>
-            </div>
+    <form action="{{request.route_url('question_action',action=action)}}" method="post" class="form">
+        <h3 class="sg-p-color">Question</h3>
+        <div class="alert alert-success"><p>You now have a alias!</p></div>
+        <p class="sg-p-color">Enter a <b>question</b> to contribute to our list.</p>    <!-- CUSTOM ERROR REGISTRATION FOR NON-UNIQUE ENTRIES -->
+        {% if action =='edit' %}
+            {{ form.id() }}
         {% endif %}
-    </div>
-    <div id="columns">
-        <div class="pin">
-            <form action="{{request.route_url('question_action',action=action)}}" method="post" class="form">
-                <h3 class="sg-p-color">Question</h3>
-                <div class="alert alert-success"><p>You now have a alias!</p></div>
-                <p class="sg-p-color">Enter a <b>question</b> to contribute to our list.</p>    <!-- CUSTOM ERROR REGISTRATION FOR NON-UNIQUE ENTRIES -->
-                {% if action =='edit' %}
-                    {{ form.id() }}
-                {% endif %}
-                {# Question form #}
-                <div class="form-group">
-                    <label for="title" class="sg-a1-color">{{ form.question.label }}</label>
-                    {% for error in form.question.errors %}
-                        <div class="alert alert-danger">{{ error }}</div>
-                    {% endfor %}
-                    {{ form.question(class_='form-control') }}
-                    {# Type form #}
-                    <label for="body" class="sg-a1-color">{{ form.type.label }}</label>
-                    {% for error in form.type.errors %}
-                        <div class="alert alert-danger">{{ error }}</div>
-                    {% endfor %}
-                    {{ form.type(class_='form-control') }}
-                    {# Description form #}
-                    <label for="body" class="sg-a1-color">{{ form.description.label }}</label>
-                    {% for error in form.description.errors %}
-                        <div class="alert alert-danger">{{ error }}</div>
-                    {% endfor %}
-                    {{ form.description(class_='form-control', value_='hi') }}
-                </div>
-                <div class="form-group">
-                    <label></label>
-                    <button type="submit" class="btn btn-default">Submit</button>
-                </div>
-            </form>
-        </div>
-        
-        {% if paginator.items %}
-            {% for entry in paginator.items %}
-                <div class="pin">
-                    {# <a href="{{ request.route_url('question', id=entry.id, slug=entry.slug) }}">  #}
-                        <div class="voter-bar pull-right">
-                            <a href="{{ request.route_url('question_downvote', action='create', id=entry.id) }}">
-                                -
-                            </a>
-                            <span> {{entry.totalVotes}} </span>
-                            <a href="{{ request.route_url('question_upvote', action='create', id=entry.id) }}">
-                                +
-                            </a>
-                        </div>
-                        <h5 style="margin:2px 0 0 0; padding:0 0 0px 0;">{{ entry.question }}</h5>
-                        <hr/>
-                        <h6>by <b>{{ entry.author }}</b></h6>
-                        <p>{{ entry.description }}</p>
-                        <h6>{{ entry.type }}</h6>
-                    {# </a> #}
-                </div>
+        {# Question form #}
+        <div class="form-group">
+            <label for="title" class="sg-a1-color">{{ form.question.label }}</label>
+            {% for error in form.question.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
             {% endfor %}
-        {{ paginator.pager() | safe }}
-        {% else %}
-            <p>No question entries found.</p>
-        {% endif %}
-        
-    </div>
+            {{ form.question(class_='form-control') }}
+            {# Type form #}
+            <label for="body" class="sg-a1-color">{{ form.type.label }}</label>
+            {% for error in form.type.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endfor %}
+            {{ form.type(class_='form-control') }}
+            {# Description form #}
+            <label for="body" class="sg-a1-color">{{ form.description.label }}</label>
+            {% for error in form.description.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endfor %}
+            {{ form.description(class_='form-control', value_='hi') }}
+        </div>
+        <div class="form-group">
+            <label></label>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </div>
+    </form>
+    
 {% endblock %}
