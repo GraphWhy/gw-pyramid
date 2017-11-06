@@ -43,13 +43,21 @@
                 </div>
             </form>
         </div>
+        
         {% if paginator.items %}
             {% for entry in paginator.items %}
                 <div class="pin">
                     {# <a href="{{ request.route_url('question', id=entry.id, slug=entry.slug) }}">  #}
-                        <a href="{{ request.route_url('question_upvote', action='create', id=entry.id) }}">up</a>
-                        <a href="{{ request.route_url('question_downvote', action='create', id=entry.id) }}">down</a>
-                        <h5>{{ entry.question }}</h5>
+                        <div class="voter-bar pull-right">
+                            <a href="{{ request.route_url('question_downvote', action='create', id=entry.id) }}">
+                                -
+                            </a>
+                            <span> {{entry.totalVotes}} </span>
+                            <a href="{{ request.route_url('question_upvote', action='create', id=entry.id) }}">
+                                +
+                            </a>
+                        </div>
+                        <h5 style="margin:2px 0 0 0; padding:0 0 0px 0;">{{ entry.question }}</h5>
                         <hr/>
                         <h6>by <b>{{ entry.author }}</b></h6>
                         <p>{{ entry.description }}</p>
@@ -59,7 +67,8 @@
             {% endfor %}
         {{ paginator.pager() | safe }}
         {% else %}
-            <p>No blog entries found.</p>
+            <p>No question entries found.</p>
         {% endif %}
+        
     </div>
 {% endblock %}
