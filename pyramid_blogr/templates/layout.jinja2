@@ -21,12 +21,14 @@
   </head>
 
   <body>
+    
     <div id="wrapper">
         <h1 class="sg-p-color">
-            <img src="{{request.static_url('pyramid_blogr:static/gw_sm_logo.png')}}" alt="logo" width="60px">
-            GraphWhy
+            <a class="noHover" href={{request.route_url('home')}}>
+              <img src="{{request.static_url('pyramid_blogr:static/gw_sm_logo.png')}}" alt="logo" width="60px">
+              GraphWhy
+            </a>
         </h1>
-        {# where does request.authenticated_userid from from? - atm to pdm #}
         {% if request.authenticated_userid %}
             <h5 class="sg-a1-color">
                 Welcome <strong>{{request.authenticated_userid}}</strong>
@@ -35,20 +37,19 @@
             </h5>
         {% endif %}
         
-        <div class="man-tabs">
-          <div class="man-tab man-active">
-              <a href="{{request.route_url('home')}}">Alias</a>
-          </div>
-          {% if request.authenticated_userid %}
-              <div class="man-tab">
-                  <a href="{{ request.route_url('question_action',action='create') }}">Question</a>
-              </div>
-          {% else %}
-              <div class="man-tab man-tab-disabled">
-                  <a>Question</a>
-              </div>
-          {% endif %}
-        </div>
+    {% set navigation_bar = [
+      ('/', 'alias', 'Alias'),
+      ('/question/create', 'question', 'Question'),
+    ] -%}
+  {% set active_page = request.active_page|default('alias') -%}
+
+  <div class="man-tabs">
+  {% for href, id, caption in navigation_bar %}
+    <div class="man-tab {% if id == active_page %}man-active{% endif%}">
+      <a href="{{ href|e }}">{{ caption|e }}</a>
+    </div>
+  {% endfor %}
+  </div>
             
         <div id="columns">
             <div class="pin">

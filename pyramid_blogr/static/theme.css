@@ -28,6 +28,9 @@ label{
 
 /*--------*/
 /*  Mr.McNulty  */
+.noHover{
+    Text-Decoration: None !important;
+}
 .voter-bar{
     background-color: #ffffff61;
     padding: 1px 7px;

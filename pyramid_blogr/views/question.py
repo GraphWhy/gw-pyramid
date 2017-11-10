@@ -45,6 +45,7 @@ def upvote(request):
              renderer='pyramid_blogr:templates/questions.jinja2',
              permission='create')
 def question_create(request):
+    request.active_page = 'question'
     paginator = QuestionTemplateService.template_prep(request)
     entry = QuestionRecord()
     form = QuestionCreateForm(request.POST)
