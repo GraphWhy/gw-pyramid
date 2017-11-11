@@ -37,6 +37,27 @@ def upvote(request):
     request.dbsession.add(vote)
     return HTTPFound(location=request.route_url('question_action_new'))
     
+    
+
+
+@view_config(route_name='question_set', match_param='action=create',
+             renderer='pyramid_blogr:templates/questions.jinja2',
+             permission='create')
+def owner_view_set(request):
+    request.active_page = 'sets'
+    paginator = QuestionTemplateService.template_prep(request)
+    entry = QuestionRecord()
+    form = QuestionCreateForm(request.POST)
+    if request.method == 'POST' and form.validate():
+        form.populate_obj(entry)
+        query = request.dbsession.query(User)
+        query = query.filter(User.name == request.authenticated_userid).first()
+        setattr(entry, 'user_id', query.id)
+        request.dbsession.add(entry)
+        paginator = QuestionTemplateService.template_prep(request)
+        return HTTPFound(location=request.route_url('question_action_new'))
+    return {'form': form, 'action': request.matchdict.get('action'), 'paginator': paginator}
+
 
 @view_config(route_name='register-success', match_param='action=create',
              renderer='pyramid_blogr:templates/questions_success.jinja2',

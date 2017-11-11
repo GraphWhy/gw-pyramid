@@ -3,11 +3,10 @@ from ..services.question_record import QuestionRecordService
 from ..models.vote_record import VoteRecord
 
 
-#what is thi object I am passing in?
 class QuestionTemplateService(object):
 
     @classmethod
-    def template_prep(cls, request):
+    def template_prep(cls,request):
         page = int(request.params.get('page', 1))
         paginator = QuestionRecordService.get_paginator(request, page)
         author_list = UserService.all_users(request)
@@ -26,6 +25,7 @@ class QuestionTemplateService(object):
         for vote in query:
             if author_list[vote.user_id-1].name == request.authenticated_userid:
                 paginator.totalUserVotes += 1
+        paginator.setAuthors = setAuthor(request)
         return paginator
         
 def setAuthor(request):

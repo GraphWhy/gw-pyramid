@@ -11,8 +11,8 @@
     <title>GraphWhy, See For Yourself</title>
     <!-- Bootstrap core CSS -->
     <link href="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../static/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="../static/theme.css" rel="stylesheet">
+    <link href="{{request.static_url('pyramid_blogr:static/font-awesome-4.7.0/css/font-awesome.min.css')}}" rel="stylesheet">
+    <link href="{{request.static_url('pyramid_blogr:static/theme.css')}}" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -32,7 +32,7 @@
         {% if request.authenticated_userid %}
             <h5 class="sg-a1-color">
                 Welcome <strong>{{request.authenticated_userid}}</strong>
-                ({{paginator.totalUserVotes}})
+                ( {{paginator.totalUserVotes}} )
                 <a href="{{request.route_url('auth',action='out')}}">Sign Out</a>
             </h5>
         {% endif %}
@@ -50,8 +50,8 @@
                 <div id="set_tab" class="man-tab {% if id == active_page %}man-active{% endif%}">
                     <a>{{ caption|e }}</a>
                     <div id="author_set">
-                        {% for author in menu %}
-                            <a href="{{ href|e }}">{{author.name}}</a>
+                        {% for author in paginator.setAuthors %}
+                            <a href="/set/create/{{author.id}}">{{author.name}}</a>
                         {% endfor %}
                     </div>
                 </div>
