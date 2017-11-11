@@ -5,7 +5,7 @@ from ..models.question_record import QuestionRecord
 from ..models.vote_record import VoteRecord
 from ..services.question_record import QuestionRecordService
 from ..forms import QuestionCreateForm, QuestionUpdateForm #, VoteCreateForm
-from ..services.question_templating import QuestionTemplateService
+from ..services.frontend_services import QuestionTemplateService
     
     
 @view_config(route_name='question_downvote', match_param='action=create',

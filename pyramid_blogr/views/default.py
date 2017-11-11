@@ -4,7 +4,7 @@ from pyramid.security import remember, forget
 from ..services.user import UserService
 from ..forms import RegistrationForm
 from ..models.user import User
-from ..services.question_templating import QuestionTemplateService
+from ..services.frontend_services import QuestionTemplateService, setAuthor
 
 
 # ROUTES IN ACTIVE USE ---
@@ -15,6 +15,7 @@ from ..services.question_templating import QuestionTemplateService
 def index_page(request):
     request.active_page = 'alias'
     paginator = QuestionTemplateService.template_prep(request)
+    menu = setAuthor(request)
     # sign-in form
     form = RegistrationForm(request.POST)
     if request.method == 'POST' and form.validate():
@@ -38,7 +39,7 @@ def index_page(request):
         # if all is successful
         headers = remember(request, username)
         return HTTPFound(location=request.route_url('register-success',action='create'), headers=headers)
-    return {'form': form, 'paginator': paginator}
+    return {'menu':menu ,'form': form, 'paginator': paginator}
 
 
 @view_config(route_name='auth', match_param='action=out', renderer='string')

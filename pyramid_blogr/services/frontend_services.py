@@ -2,6 +2,8 @@ from ..services.user import UserService
 from ..services.question_record import QuestionRecordService
 from ..models.vote_record import VoteRecord
 
+
+#what is thi object I am passing in?
 class QuestionTemplateService(object):
 
     @classmethod
@@ -26,3 +28,15 @@ class QuestionTemplateService(object):
                 paginator.totalUserVotes += 1
         return paginator
         
+def setAuthor(request):
+        setAuthors = []
+        user_list = UserService.all_users(request)
+        # i need to sort the users for users that have written a question set
+        # i can do this by sorting out the questions, and checking if their author ids match
+        question_list = QuestionRecordService.all(request)
+        for user in user_list:
+            for question in question_list:
+                if user.id == question.user_id:
+                    setAuthors.append(user)
+        return setAuthors
+            
