@@ -5,8 +5,6 @@
     {# <img src="{{request.static_url('pyramid_blogr:static/transparent.png')}}"> #}
     <!-- REGISTRATION FORM-->
     <form action="{{request.route_url('home')}}" method="post" class="form {#sg-form#}">
-        <h3 class="sg-p-color">Alias</h3>
-        <p class="sg-p-color">Enter a <b>username</b> to interact with the site</p>    <!-- CUSTOM ERROR REGISTRATION FOR NON-UNIQUE ENTRIES -->
         {% for error in form.username.errors %}
             <div class="alert alert-danger">{{ error }}</div>
         {% endfor %}

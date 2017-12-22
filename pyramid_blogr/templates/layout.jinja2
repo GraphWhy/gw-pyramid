@@ -23,43 +23,67 @@
   <body>
     
     <div id="wrapper">
-        <h1 class="sg-p-color">
-            <a class="noHover" href={{request.route_url('home')}}>
-              <img src="{{request.static_url('pyramid_blogr:static/gw_sm_logo.png')}}" alt="logo" width="60px">
-              GraphWhy
-            </a>
-        </h1>
-        {% if request.authenticated_userid %}
-            <h5 class="sg-a1-color">
-                Welcome <strong>{{request.authenticated_userid}}</strong>
-                ({{paginator.totalUserVotes}})
-                <a href="{{request.route_url('auth',action='out')}}">Sign Out</a>
-            </h5>
-        {% endif %}
-        
-    {% set navigation_bar = [
-      ('/', 'alias', 'Alias'),
-      ('/question/create', 'question', 'Question'),
-    ] -%}
-  {% set active_page = request.active_page|default('alias') -%}
-
-  <div class="man-tabs">
-  {% for href, id, caption in navigation_bar %}
-    <div class="man-tab {% if id == active_page %}man-active{% endif%}">
-      <a href="{{ href|e }}">{{ caption|e }}</a>
-    </div>
-  {% endfor %}
-  </div>
+        <div class="customHeader">
+            <span class="xsmall-header"></span>
+            <img class="headerimage" src="{{request.static_url('pyramid_blogr:static/gw_sm_logo.png')}}" alt="logo" width="75px">
+            <h2 class="sg-p-color inline">
+                <a class="noHover" href={{request.route_url('home')}}>
+                  GraphWhy
+                </a>
+                {% if request.authenticated_userid %}
+                    <span class="sg-a1-color subtext">
+                        Welcome <strong>{{request.authenticated_userid}}</strong>
+                        ({{paginator.totalUserVotes}})
+                        <a href="{{request.route_url('auth',action='out')}}">Sign Out</a>
+                    </span>
+                {% endif %}
+            </h2>
+                
             
-        <div id="columns">
-            <div class="pin">
-            
-              {% block content %}
-                  <p>No content</p>
-              {% endblock content %}
-            
+                {% set navigation_bar = [
+                  ('/', 'alias', 'Alias'),
+                  ('/question/create', 'question', 'Question'),
+                ] -%}
+                {% set active_page = request.active_page|default('alias') -%}
+                
+                <div class="man-tabs">
+                {% for href, id, caption in navigation_bar %}
+                    <div class="man-tab sg-a1-color {% if id == active_page %}man-active has-success{% endif%}">
+                        {% if id == active_page %}
+                        <div class="paddingbottom" onclick="hide1()">
+                             <span  class="xsmall-header" ref="{{ href|e }}">{{ caption|e }}</span>
+                            <i class="fa fa-sort pull-right xsmall-header" aria-hidden="true"></i>
+                        </div>
+                        <div class="lining11 hidden" id="lining1">
+                            <div class="xsmall-header">
+                                {% block content %}
+                                    <p>No content</p>
+                                {% endblock content %}
+                            </div>
+                        </div>
+                            
+                        {% else%}
+                           <a  class="xsmall-header solo" href="{{ href|e }}">{{ caption|e }}</a>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                </div>
             </div>
-                    
+            
+        <div id="columns" class="xsmall-header">
+            <p class="clean-small-header">
+                A list of questions in &nbsp;
+                <select>
+                    <option value="Most Recent">Most Recent<option>
+                    <option value="Least Recent">Least Recent</option>
+                    <option value="Most Popular">Most Popular</option>
+                    <option value="Least Popular">Least Popular</option>
+                    <option value="Most Controversial">Most Controversial</option>
+                    <option value="Least Controversial">Least Controversial</option>
+                </select>
+                &nbsp; chonological order.
+            </p>
+            
             {% if paginator.items %}
                 {% for entry in paginator.items %}
                     <div class="pin">
@@ -98,8 +122,20 @@
             
         </div>
 
+    <script>
+       function hide1() {
+            var x = document.getElementById("lining1");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
     <!-- Bootstrap core JavaScript -->
     <script src="//oss.maxcdn.com/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    
+ 
   </body>
 </html>
