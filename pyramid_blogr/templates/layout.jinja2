@@ -66,10 +66,27 @@
                         {% else%}
                            <a  class="xsmall-header solo" href="{{ href|e }}">{{ caption|e }}</a>
                         {% endif %}
+                          <div class="man-tabs">
+                            {% for href, id, caption in navigation_bar %}
+                                {% if id == 'sets' %}
+                                        <div id="set_tab" class="man-tab {% if id == active_page %}man-active{% endif%}">
+                                            <a>{{ caption|e }}</a>
+                                            <div id="author_set">
+                                                {% for author in paginator.setAuthors %}
+                                                    <a href="/set/view/{{author.id}}">{{author.name}}</a>
+                                                {% endfor %}
                     </div>
                 {% endfor %}
                 </div>
             </div>
+        {% else %}
+            <div class="man-tab {% if id == active_page %}man-active{% endif%}">
+                <a href="{{ href|e }}">{{ caption|e }}</a>
+            </div> 
+        {% endif %}
+     {% endfor %}
+  </div>
+
 
         <div id="columns" class="xsmall-header">
             <p class="clean-small-header">
@@ -117,7 +134,6 @@
             
             
         </div>
-
     <script>
        function hide1() {
             var x = document.getElementById("lining1");
@@ -128,6 +144,18 @@
             }
         }
     </script>
+
+    <script>
+        document.getElementById('set_tab').addEventListener("click", function(){
+            sets = document.getElementById('author_set')
+                if (sets.style.display === "none") {
+                    sets.style.display = "block";
+                } else {
+                    sets.style.display = "none";
+                }
+        });
+    </script>
+
     <!-- Bootstrap core JavaScript -->
     <script src="//oss.maxcdn.com/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>

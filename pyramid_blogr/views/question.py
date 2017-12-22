@@ -40,7 +40,7 @@ def upvote(request):
     
 
 
-@view_config(route_name='question_set', match_param='action=create',
+@view_config(route_name='question_set', match_param='action=view',
              renderer='pyramid_blogr:templates/questions.jinja2',
              permission='create')
 def owner_view_set(request):

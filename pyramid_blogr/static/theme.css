@@ -110,6 +110,9 @@ body{
 .man-tab.man-tab-disabled a{
     color: #aaa;
 }
+#author_set{
+    display:none;
+}
 /*--------*/
 
 .pin:first-child{
