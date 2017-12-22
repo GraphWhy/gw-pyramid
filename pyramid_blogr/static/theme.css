@@ -76,6 +76,9 @@ label{
 .man-tab.man-tab-disabled a{
     color: #aaa;
 }
+#author_set{
+    display:none;
+}
 /*--------*/
 /* css 'pins' http://cssdeck.com/labs/css-only-pinterest-style-columns-layout -- modified -- */
 #wrapper {

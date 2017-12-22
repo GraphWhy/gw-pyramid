@@ -51,7 +51,7 @@
                     <a>{{ caption|e }}</a>
                     <div id="author_set">
                         {% for author in paginator.setAuthors %}
-                            <a href="/set/create/{{author.id}}">{{author.name}}</a>
+                            <a href="/set/view/{{author.id}}">{{author.name}}</a>
                         {% endfor %}
                     </div>
                 </div>
@@ -62,23 +62,8 @@
         {% endif %}
      {% endfor %}
   </div>
-          
-<style>
-    #author_set{
-        display: none;
-    }
-</style>
 
-<script>
-    document.getElementById('set_tab').addEventListener("click", function(){
-        sets = document.getElementById('author_set')
-            if (sets.style.display === "none") {
-                sets.style.display = "block";
-            } else {
-                sets.style.display = "none";
-            }
-    });
-</script>
+
 
         <div id="columns">
             <div class="pin">
@@ -126,6 +111,18 @@
             
             
         </div>
+
+    
+    <script>
+        document.getElementById('set_tab').addEventListener("click", function(){
+            sets = document.getElementById('author_set')
+                if (sets.style.display === "none") {
+                    sets.style.display = "block";
+                } else {
+                    sets.style.display = "none";
+                }
+        });
+    </script>
 
     <!-- Bootstrap core JavaScript -->
     <script src="//oss.maxcdn.com/libs/jquery/1.10.2/jquery.min.js"></script>
