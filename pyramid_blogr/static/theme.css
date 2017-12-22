@@ -43,32 +43,65 @@ label{
     color: #999;
     padding:0 0;
 }
+.xsmall-header{
+    padding:0px 42px;
+}
+.xsmall-header.solo{
+    display: block;
+}
 .sg-p-color{
     color:#6373c5;
 }
+body{
+    margin:0px;
+}
 .sg-a1-color{
     color:#5c5196;
+}
+.lining11{
+    border-top:1px solid #6373c5;
+    padding:4px;
+}
+.paddingbottom{
+    padding-bottom:8px;
 }
 .sg-form {
     border:1px solid #6373c5;
     padding:15px;
     max-width: 520px;
 }
+.inline{
+    display:inline-block;
+}
 .man-tabs {
     width: 100%;
     margin-bottom:45px;
+    display: inline-block;
+    padding-bottom: 10px;
+}
+.man-tabs hr{
 }
 .man-tab {
-    display: inline-block;
-    padding:5px 42px;
     border: 1px solid #6373c5;
     margin-top:6px;
 }
+.customHeader{
+    background-color: inherit;
+}
+.subtext{
+    font-size:12px;
+    padding:10px 5px;
+    display: block;
+}
+.headerimage{
+    vertical-align: text-bottom;
+}
 .man-tab.man-active {
-    background-color :#6373c5;
+    background-color :#ffffff80;
+    padding-top:12px;
 }
 .man-tab.man-active a{
-    color:white;
+    color:inherit;
 }
 .man-tab.man-tab-disabled {
     border: 1px solid #aaa;
@@ -77,7 +110,34 @@ label{
     color: #aaa;
 }
 /*--------*/
+
+.pin:first-child{
+    border-radius:2px;
+    padding:7px;
+    background-color:#fff6;
+    margin: 20px 5px;
+    width:100%;
+}
+.pin{
+    border-radius:2px;
+    padding:7px;
+    background-color:#fff6;
+    margin: 20px 5px;
+    width:90%;
+}
+
+.clean-small-header{
+    font-weight: 300;
+    padding:10px 18px 4px;
+    margin-top:28px;
+    margin-bottom:10px;
+    line-height: 25px;
+    border-bottom:1px solid #666;
+    width:90%;
+}
+
 /* css 'pins' http://cssdeck.com/labs/css-only-pinterest-style-columns-layout -- modified -- */
+/*
 #wrapper {
 	width: 90%;
 	max-width: 1100px;
@@ -111,7 +171,6 @@ label{
 	-moz-transition: all .2s ease;
 	-o-transition: all .2s ease;
 	transition: all .2s ease;
-    /* mcnulty addition */
     width:100%;
 }
 
@@ -188,8 +247,10 @@ label{
 	opacity: 0.9;
 }
 
-/* McNulty's changes to columns */
+
 .pin div.alert{
     font: 12px/18px Arial, sans-serif;
     margin: 10px 0px;
 }
+
+*/
