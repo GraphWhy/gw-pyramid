@@ -4,7 +4,7 @@ from pyramid.security import remember, forget
 from ..services.user import UserService
 from ..forms import RegistrationForm
 from ..models.user import User
-from ..services.frontend_services import QuestionTemplateService, setAuthor
+from ..services.frontend_services import QuestionTemplateService, setAuthors
 
 
 # ROUTES IN ACTIVE USE ---

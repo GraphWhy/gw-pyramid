@@ -25,10 +25,10 @@ class QuestionTemplateService(object):
         for vote in query:
             if author_list[vote.user_id-1].name == request.authenticated_userid:
                 paginator.totalUserVotes += 1
-        paginator.setAuthors = setAuthor(request)
+        paginator.setAuthors = setAuthors(request)
         return paginator
         
-def setAuthor(request):
+def setAuthors(request):
         setAuthors = []
         user_list = UserService.all_users(request)
         # i need to sort the users for users that have written a question set
@@ -39,4 +39,6 @@ def setAuthor(request):
                 if user.id == question.user_id:
                     setAuthors.append(user)
         return setAuthors
+        
+
             
