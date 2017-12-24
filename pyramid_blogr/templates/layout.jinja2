@@ -12,9 +12,10 @@
     <!-- Bootstrap core CSS -->
     <link href="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
     <!--
+        <link href="static/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
         <link href="{{request.static_url('pyramid_blogr:static/font-awesome-4.7.0/css/font-awesome.min.css')}}" rel="stylesheet">
     -->
-    <link href="static/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{{request.static_url('pyramid_blogr:static/font-awesome-4.7.0/css/font-awesome.min.css')}}" rel="stylesheet">
     <link href="{{request.static_url('pyramid_blogr:static/theme.css')}}" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -53,9 +54,12 @@
         <div class="line"></div>
         {% for href, id, caption in navigation_bar %}
             {% if id == 'sets' %}
+            </br>
+            <div class="line"></div>
             <div class="man-tab sg-a1-color man-active">
                  <div id="set_tab" class="xsmall-header">
                     <a>{{ caption|e }}</a>
+                    <i style="padding-top:3px" class="pull-right fa fa-sort" aria-hidden="true"></i>
                  </div>
             </div>
              <div  id="author_set" class="xsmall-header sg-a1-color lining11 active-color">
@@ -68,21 +72,29 @@
                 </ul>
             </div>
             {% elif id == active_page %}
-            <div id="active_tab">
-                <div class="hidding man-tab man-active">
-                     <span  class="sg-a1-color xsmall-header" ref="{{ href|e }}"><b>{{ caption|e }}</b></span>
-                     <i style="padding-top:3px;" class="fa fa-sort sg-a1-color pull-right xsmall-header" aria-hidden="true"></i>
-                </div>
-            </div>
-            <div class="man-tab lining11 sg-a1-color active-color" id="lining1">
-                <div class="xsmall-header">
-                    {% block content %}
-                        <p>No content</p>
-                    {% endblock content %}
-                </div>
-            </div>
+                    <div id="active_tab">
+                        <div class="man-tab man-active xsmall-header">
+                             <span  class="sg-a1-color" ref="{{ href|e }}"><b>{{ caption|e }}</b></span>
+                             <i style="padding-top:3px;" class="fa fa-sort sg-a1-color pull-right" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div class="man-tab lining11 sg-a1-color active-color" id="lining1">
+                        <div class="xsmall-header">
+                            {% block content %}
+                                <p>No content</p>
+                            {% endblock content %}
+                        </div>
+                    </div>
             {% else %}
-               <a  class="man-tab man-active xsmall-header solo sg-a1-color" href="{{ href|e }}">{{ caption|e }}</a>
+                {% if id == 'question' %}
+                    {% if request.authenticated_userid %}
+                        <a  class="man-tab man-active xsmall-header solo sg-a1-color" href="{{ href|e }}">{{ caption|e }}<i style="padding-top:3px" class="pull-right fa fa-sort" aria-hidden="true"></i></a>
+                    {% else %}
+                    <a  class="click-through disabled man-tab xsmall-header man-active solo sg-a1-color" href="{{ href|e }}">{{ caption|e }}<i style="padding-top:3px" class="pull-right fa fa-sort" aria-hidden="true"></i></a>
+                    {% endif %}
+                {% else %}
+                <a  class="man-tab man-active xsmall-header solo sg-a1-color" href="{{ href|e }}">{{ caption|e }}<i style="padding-top:3px" class="pull-right fa fa-sort" aria-hidden="true"></i></a>
+                {% endif %}
             {% endif %}
         {% endfor %}
         

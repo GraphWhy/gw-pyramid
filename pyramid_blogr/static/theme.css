@@ -96,6 +96,9 @@ body{
 #author_set{
     display:none;
 }
+.disabled{
+    background-color :#ffffff50;
+}
 .lining11{
     border-bottom:1px solid #6373c5;
 }
@@ -108,7 +111,10 @@ body{
 .headerimage{
     vertical-align: text-bottom;
 }
-.man-tab.man-active {
+.man-tab.man-active.disabled{
+    background-color :#ffffff50;
+}
+.man-tab.man-active{
     background-color :#ffffff80;
 }
 .man-tab.man-active a{

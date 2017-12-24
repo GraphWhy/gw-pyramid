@@ -56,7 +56,7 @@ def owner_view_set(request):
         request.dbsession.add(entry)
         paginator = QuestionTemplateService.template_prep(request)
         return HTTPFound(location=request.route_url('question_action_new'))
-    return {'form': form, 'action': request.matchdict.get('action'), 'paginator': paginator}
+    return {'form': form, 'paginator': paginator}
 
 
 @view_config(route_name='register-success', match_param='action=create',
@@ -78,4 +78,4 @@ def question_create(request):
         request.dbsession.add(entry)
         paginator = QuestionTemplateService.template_prep(request)
         return HTTPFound(location=request.route_url('question_action_new'))
-    return {'form': form, 'action': request.matchdict.get('action'), 'paginator': paginator}
+    return {'form': form, 'paginator': paginator}
