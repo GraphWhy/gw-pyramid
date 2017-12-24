@@ -93,8 +93,14 @@ body{
     padding:10px 5px;
     display: block;
 }
-.lining1{
+#author_set{
     display:none;
+}
+.lining11{
+    border-bottom:1px solid #6373c5;
+}
+.line{
+    border-bottom:1px solid #6373c5;
 }
 .man-active{
         border-bottom: 1px solid #6373c5;

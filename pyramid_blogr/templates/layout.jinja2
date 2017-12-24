@@ -11,7 +11,10 @@
     <title>GraphWhy, See For Yourself</title>
     <!-- Bootstrap core CSS -->
     <link href="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{request.static_url('pyramid_blogr:static/font-awesome-4.7.0/css/font-awesome.min.css')}}" rel="stylesheet">
+    <!--
+        <link href="{{request.static_url('pyramid_blogr:static/font-awesome-4.7.0/css/font-awesome.min.css')}}" rel="stylesheet">
+    -->
+    <link href="static/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="{{request.static_url('pyramid_blogr:static/theme.css')}}" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -39,50 +42,50 @@
                 {% endif %}
             </h2>
         </div>        
-            
-                {% set navigation_bar = [
-                  ('/', 'alias', 'Alias'),
-                  ('/question/create', 'question', 'Question'),
-                   ('/', 'sets', 'Sets'),
-                ] -%}
-                {% set active_page = request.active_page|default('alias') -%}
-                
-                {% for href, id, caption in navigation_bar %}
-                    {% if id == 'sets' %}
-                    <div id="set_tab" class="man-tab sg-a1-color man-active">
-                         <div class="xsmall-header">
-                            <a>{{ caption|e }}</a>
-                         </div>
-                    </div>
-                    <div class="lining1 sg-a1-color xsmall-header man-tab man-active">
-                         <div  id="author_set" class="xsmall-header">
-                            <ul>
-                            {% for author in paginator.setAuthors %}
-                                <li>
-                                    <a class="xsmall-header sg-a1-color" href="/set/view/{{author.id}}">{{author.name}}</a>
-                                </li>
-                            {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                    {% elif id == active_page %}
-                    <div id="active_tab">
-                        <div class="hidding man-tab man-active">
-                             <span  class="xsmall-header" ref="{{ href|e }}">{{ caption|e }}</span>
-                             <i class="fa fa-sort pull-right xsmall-header" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <div class="man-tab lining11 sg-a1-color active-color" id="lining1">
-                        <div class="xsmall-header">
-                            {% block content %}
-                                <p>No content</p>
-                            {% endblock content %}
-                        </div>
-                    </div>
-                    {% else %}
-                       <a  class="man-tab man-active xsmall-header solo sg-a1-color" href="{{ href|e }}">{{ caption|e }}</a>
-                    {% endif %}
-            {% endfor %}
+    
+        {% set navigation_bar = [
+          ('/', 'alias', 'Alias'),
+          ('/question/create', 'question', 'Question'),
+           ('/', 'sets', 'Sets'),
+        ] -%}
+        {% set active_page = request.active_page|default('alias') -%}
+        
+        <div class="line"></div>
+        {% for href, id, caption in navigation_bar %}
+            {% if id == 'sets' %}
+            <div class="man-tab sg-a1-color man-active">
+                 <div id="set_tab" class="xsmall-header">
+                    <a>{{ caption|e }}</a>
+                 </div>
+            </div>
+             <div  id="author_set" class="xsmall-header sg-a1-color lining11 active-color">
+                <ul>
+                {% for author in paginator.setAuthors %}
+                    <li>
+                        <a class="xsmall-header sg-a1-color" href="/set/view/{{author.id}}">{{author.name}}</a>
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
+            {% elif id == active_page %}
+            <div id="active_tab">
+                <div class="hidding man-tab man-active">
+                     <span  class="sg-a1-color xsmall-header" ref="{{ href|e }}"><b>{{ caption|e }}</b></span>
+                     <i style="padding-top:3px;" class="fa fa-sort sg-a1-color pull-right xsmall-header" aria-hidden="true"></i>
+                </div>
+            </div>
+            <div class="man-tab lining11 sg-a1-color active-color" id="lining1">
+                <div class="xsmall-header">
+                    {% block content %}
+                        <p>No content</p>
+                    {% endblock content %}
+                </div>
+            </div>
+            {% else %}
+               <a  class="man-tab man-active xsmall-header solo sg-a1-color" href="{{ href|e }}">{{ caption|e }}</a>
+            {% endif %}
+        {% endfor %}
+        
 
 
         <div id="columns" class="xsmall-header">
@@ -93,7 +96,6 @@
                 </select>
                 &nbsp; order.
             </p>
-            
             {% if paginator.items %}
                 {% for entry in paginator.items %}
                     <div class="pin">
@@ -106,7 +108,6 @@
                               {% else %}
                                 <span class='customDisabled'>-</span>
                               {% endif %} 
-                              
                               <span class='tightSpace'> {{entry.totalVotes}} </span>
                               {% if request.authenticated_userid %}
                                 <a href="{{ request.route_url('question_upvote', action='create', id=entry.id) }}">
