@@ -85,11 +85,6 @@ body{
 }
 .man-tabs hr{
 }
-.man-tab {
-    border: 1px solid #6373c5;
-    border-right:0px;
-    border-left:0px;
-}
 .customHeader{
     background-color: inherit;
 }
@@ -97,6 +92,9 @@ body{
     font-size:12px;
     padding:10px 5px;
     display: block;
+}
+.man-active{
+        border-bottom: 1px solid #6373c5;
 }
 .headerimage{
     vertical-align: text-bottom;

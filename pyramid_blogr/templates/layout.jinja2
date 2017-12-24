@@ -49,13 +49,13 @@
                 
                 {% for href, id, caption in navigation_bar %}
                     {% if id == 'sets' %}
-                    <div id="set_tab" class="man-tab sg-a1-color {% if id == active_page %}man-active"{% endif%}" {% if id == active_page %} id="active_tab"{% endif%}>
-                         <div class="xsmall-header man-tab man-active">
+                    <div id="set_tab" class="man-tab sg-a1-color man-active">
+                         <div class="xsmall-header">
                             <a>{{ caption|e }}</a>
                          </div>
                     </div>
-                    <div class="man-tab lining1 sg-a1-color{% if id == active_page %}man-active has-success{% endif%}">
-                         <div  id="author_set" class="xsmall-header man-tab man-active">
+                    <div class="lining1 sg-a1-color xsmall-header man-tab man-active">
+                         <div  id="author_set" class="xsmall-header">
                             <ul>
                             {% for author in paginator.setAuthors %}
                                 <li>
@@ -66,13 +66,13 @@
                         </div>
                     </div>
                     {% elif id == active_page %}
-                    <div class="{% if id == active_page %}has-success"{% endif%} {% if id == active_page %} id="active_tab"{% endif%}>
+                    <div id="active_tab">
                         <div class="hidding man-tab man-active">
                              <span  class="xsmall-header" ref="{{ href|e }}">{{ caption|e }}</span>
                              <i class="fa fa-sort pull-right xsmall-header" aria-hidden="true"></i>
                         </div>
                     </div>
-                    <div class="man-tab lining11 sg-a1-color man-active" id="lining1">
+                    <div class="man-tab lining11 sg-a1-color active-color" id="lining1">
                         <div class="xsmall-header">
                             {% block content %}
                                 <p>No content</p>
