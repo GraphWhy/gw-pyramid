@@ -38,7 +38,7 @@
                     </span>
                 {% endif %}
             </h2>
-                
+        </div>        
             
                 {% set navigation_bar = [
                   ('/', 'alias', 'Alias'),
@@ -47,39 +47,43 @@
                 ] -%}
                 {% set active_page = request.active_page|default('alias') -%}
                 
-                <div class="man-tabs">
                 {% for href, id, caption in navigation_bar %}
-                    <div class="man-tab sg-a1-color {% if id == active_page %}man-active has-success"{% endif%} {% if id == active_page %} id="active_tab"{% endif%}">
-                        {% if id == 'sets' %}
-
-                         <div id="set_tab" class="xsmall-header hidding">
+                    {% if id == 'sets' %}
+                    <div id="set_tab" class="man-tab sg-a1-color {% if id == active_page %}man-active"{% endif%}" {% if id == active_page %} id="active_tab"{% endif%}>
+                         <div class="xsmall-header man-tab man-active">
                             <a>{{ caption|e }}</a>
-                            <div id="author_set" >
-                                {% for author in paginator.setAuthors %}
-                                    <a href="/set/view/{{author.id}}">{{author.name}}</a>
-                                {% endfor %}
-                            </div>
+                         </div>
+                    </div>
+                    <div class="man-tab lining1 sg-a1-color{% if id == active_page %}man-active has-success{% endif%}">
+                         <div  id="author_set" class="xsmall-header man-tab man-active">
+                            <ul>
+                            {% for author in paginator.setAuthors %}
+                                <li>
+                                    <a class="xsmall-header sg-a1-color" href="/set/view/{{author.id}}">{{author.name}}</a>
+                                </li>
+                            {% endfor %}
+                            </ul>
                         </div>
-                        {% elif id == active_page %}
-                        <div class="paddingbottom">
+                    </div>
+                    {% elif id == active_page %}
+                    <div class="{% if id == active_page %}has-success"{% endif%} {% if id == active_page %} id="active_tab"{% endif%}>
+                        <div class="hidding man-tab man-active">
                              <span  class="xsmall-header" ref="{{ href|e }}">{{ caption|e }}</span>
                              <i class="fa fa-sort pull-right xsmall-header" aria-hidden="true"></i>
                         </div>
-                        <div class="lining11" id="lining1">
-                            <div class="xsmall-header">
-                                {% block content %}
-                                    <p>No content</p>
-                                {% endblock content %}
-                            </div>
-                        </div>
-                        {% else %}
-                           <a  class="xsmall-header solo" href="{{ href|e }}">{{ caption|e }}</a>
-                        {% endif %}
                     </div>
-                {% endfor %}
-                </div>
-                        
-</div>
+                    <div class="man-tab lining11 sg-a1-color man-active" id="lining1">
+                        <div class="xsmall-header">
+                            {% block content %}
+                                <p>No content</p>
+                            {% endblock content %}
+                        </div>
+                    </div>
+                    {% else %}
+                       <a  class="man-tab man-active xsmall-header solo sg-a1-color" href="{{ href|e }}">{{ caption|e }}</a>
+                    {% endif %}
+            {% endfor %}
+
 
         <div id="columns" class="xsmall-header">
             <p class="clean-small-header">
@@ -131,19 +135,20 @@
        document.getElementById('active_tab').addEventListener("click", function(){
             console.log('what');
             x = document.getElementById("lining1");
-            if (x.style.display === "none") {
+            if (x.style.display == "none") {
                 x.style.display = "block";
             } else {
                 x.style.display = "none";
             }
         });
         document.getElementById('set_tab').addEventListener("click", function(){
-            sets = document.getElementById('author_set')
-                if (sets.style.display === "none") {
+            var sets = document.getElementById('author_set')
+                if (sets.style.display == "none") {
                     sets.style.display = "block";
                 } else {
                     sets.style.display = "none";
                 }
+        
         });
     </script>
 
@@ -151,6 +156,5 @@
     <script src="//oss.maxcdn.com/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
     
- 
   </body>
 </html>

@@ -59,6 +59,9 @@ body{
 .sg-a1-color{
     color:#5c5196;
 }
+.active-color{
+    background-color :#ffffff80;
+}
 .lining11{
     border-top:1px solid #6373c5;
     padding:4px;
@@ -84,7 +87,8 @@ body{
 }
 .man-tab {
     border: 1px solid #6373c5;
-    margin-top:6px;
+    border-right:0px;
+    border-left:0px;
 }
 .customHeader{
     background-color: inherit;
@@ -99,7 +103,6 @@ body{
 }
 .man-tab.man-active {
     background-color :#ffffff80;
-    padding-top:12px;
 }
 .man-tab.man-active a{
     color:inherit;
