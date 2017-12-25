@@ -54,11 +54,13 @@
         <div class="line"></div>
         {% for href, id, caption in navigation_bar %}
             {% if id == 'sets' %}
+            <!--
             </br>
             <div class="line"></div>
+            -->
                 {% if request.authenticated_userid %}
                     <div class="man-tab sg-a1-color man-active">
-                {% elif %}
+                {% else %}
                     <div class="disabled click-through man-tab sg-a1-color man-active">
                 {% endif %}
                  <div id="set_tab" class="xsmall-header">
@@ -165,7 +167,6 @@
                 } else {
                     sets.style.display = "none";
                 }
-        
         });
     </script>
 

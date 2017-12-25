@@ -83,8 +83,6 @@ body{
     display: inline-block;
     padding-bottom: 10px;
 }
-.man-tabs hr{
-}
 .customHeader{
     background-color: inherit;
 }
@@ -97,7 +95,7 @@ body{
     display:none;
 }
 .disabled{
-    background-color :#ffffff50;
+    background-color:#74747433;
 }
 .lining11{
     border-bottom:1px solid #6373c5;
