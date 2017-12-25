@@ -56,7 +56,11 @@
             {% if id == 'sets' %}
             </br>
             <div class="line"></div>
-            <div class="man-tab sg-a1-color man-active">
+                {% if request.authenticated_userid %}
+                    <div class="man-tab sg-a1-color man-active">
+                {% elif %}
+                    <div class="disabled click-through man-tab sg-a1-color man-active">
+                {% endif %}
                  <div id="set_tab" class="xsmall-header">
                     <a>{{ caption|e }}</a>
                     <i style="padding-top:3px" class="pull-right fa fa-sort" aria-hidden="true"></i>
@@ -148,7 +152,7 @@
        document.getElementById('active_tab').addEventListener("click", function(){
             console.log('what');
             x = document.getElementById("lining1");
-            if (x.style.display == "none") {
+            if (x.style.display !== "block") {
                 x.style.display = "block";
             } else {
                 x.style.display = "none";
@@ -156,7 +160,7 @@
         });
         document.getElementById('set_tab').addEventListener("click", function(){
             var sets = document.getElementById('author_set')
-                if (sets.style.display == "none") {
+                if (sets.style.display !== "block") {
                     sets.style.display = "block";
                 } else {
                     sets.style.display = "none";
