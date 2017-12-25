@@ -45,14 +45,14 @@
         </div>        
     
         {% set navigation_bar = [
-          ('/', 'alias', 'Alias'),
-          ('/question/create', 'question', 'Question'),
-           ('/', 'sets', 'Sets'),
+          ('/', 'alias', 'Alias', 'necessary'),
+          ('/question/create', 'question', 'Question', 'not'),
+           ('/', 'sets', 'Sets', 'not'),
         ] -%}
         {% set active_page = request.active_page|default('alias') -%}
         
         <div class="line"></div>
-        {% for href, id, caption in navigation_bar %}
+        {% for href, id, caption , need in navigation_bar %}
             {% if id == 'sets' %}
             <!--
             </br>
@@ -80,7 +80,15 @@
             {% elif id == active_page %}
                     <div id="active_tab">
                         <div class="man-tab man-active xsmall-header">
-                             <span  class="sg-a1-color" ref="{{ href|e }}"><b>{{ caption|e }}</b></span>
+                             <span  class="sg-a1-color" ref="{{ href|e }}">
+                                {% if need == 'necessary' %}
+                                    {% if request.authenticated_userid %}
+                                    {% else %}
+                                        <i class="fa fa-circle fa-circle-red" aria-hidden="true"></i>
+                                    {% endif %}
+                                {% endif %} 
+                                <b>{{ caption|e }}</b>
+                            </span>
                              <i style="padding-top:3px;" class="fa fa-sort sg-a1-color pull-right" aria-hidden="true"></i>
                         </div>
                     </div>

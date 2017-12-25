@@ -94,6 +94,10 @@ body{
 #author_set{
     display:none;
 }
+.fa-circle-red{
+    color:#fa3e3e;
+    font-size:13px;
+}
 .disabled{
     background-color:#74747433;
 }
