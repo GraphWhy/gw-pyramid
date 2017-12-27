@@ -38,6 +38,7 @@ def setAuthors(request):
             for question in question_list:
                 if user.id == question.user_id:
                     setAuthors.append(user)
+                    break
         return setAuthors
         
 
