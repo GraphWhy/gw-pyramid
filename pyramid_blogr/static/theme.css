@@ -50,7 +50,7 @@ label{
     display: block;
 }
 label{
-    font-weight: 700;
+    font-weight: 500;
 }
 .sg-p-color{
     color:#6373c5;
@@ -118,6 +118,14 @@ body{
 .lining11{
     border-bottom:1px solid #6373c5;
     background-color :#ffffffc2;
+}
+.internal-form-group{
+    display: inline-block;
+    background-color:#bdbdbd4f; 
+}
+.internal-form-group label{
+    width:75px;
+    text-align: center;
 }
 .line{
     border-bottom:1px solid #6373c5;

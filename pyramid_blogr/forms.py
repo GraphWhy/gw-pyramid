@@ -5,11 +5,11 @@ strip_filter = lambda x: x.strip() if x else None
 
 # spawned question forms
 class QuestionCreateForm(Form):
-    question = TextAreaField('question', [validators.Length(min=1, max=255)],
+    question = TextAreaField('Question', [validators.Length(min=1, max=255)],
                         filters=[strip_filter])
-    type = TextAreaField('type', [validators.Length(min=1, max=255)],
+    type = TextAreaField('Type', [validators.Length(min=1, max=255)],
                         filters=[strip_filter])
-    description = TextAreaField('description', [validators.Length(max=4000)],
+    description = TextAreaField('Description', [validators.Length(max=4000)],
                          filters=[strip_filter])
 
 
