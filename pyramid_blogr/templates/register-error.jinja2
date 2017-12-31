@@ -12,14 +12,14 @@
         {% endfor %}
         <div class="form-group">
             <label for="title" class="sg-a1-color">{{form.username.label}}</label>
-            {{form.username(class_='form-control')}}
+            {{form.username(class_='ripped1')}}
         </div>
         {% for error in form.password.errors %}
             <div class="alert alert-danger">{{error}}</div>
         {% endfor %}
         <div class="form-group" style="display:none">
             <label for="body">{{form.password.label}}</label>
-            {{form.password(class_='form-control', value="badpassword")}}
+            {{form.password(class_='ripped1', value="badpassword")}}
         </div>
         <div class="form-group">
             <label></label>

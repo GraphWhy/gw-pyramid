@@ -1,4 +1,4 @@
-from pyramid.view import view_config
+from pyramid.view import view_config, notfound_view_config
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 from pyramid.security import remember, forget
 from ..services.user import UserService
@@ -65,3 +65,12 @@ def register(request):
         request.dbsession.add(new_user)
         return HTTPFound(location=request.route_url('home'))
     return {'form': form}
+
+
+
+@notfound_view_config(renderer='pyramid_blogr:templates/register.jinja2')
+def notfound_view(request):
+    form = RegistrationForm(request.POST)
+    paginator = QuestionTemplateService.template_prep(request)
+    request.response.status = 404
+    return {'form': form, 'paginator': paginator}

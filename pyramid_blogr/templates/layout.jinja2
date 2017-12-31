@@ -59,16 +59,16 @@
             <div class="line"></div>
             -->
                 {% if request.authenticated_userid %}
-                    <div class="man-tab sg-a1-color man-active">
+                    <div class="man-tab sg-a1-color active-color border-bottom">
                 {% else %}
-                    <div class="disabled click-through man-tab sg-a1-color man-active">
+                    <div class="disabled border-bottom click-through man-tab sg-a1-color">
                 {% endif %}
                  <div id="set_tab" class="xsmall-header">
-                    <a>{{ caption|e }}</a>
+                    <a class="sg-a1-color">{{ caption|e }}</a>
                     <i style="padding-top:3px" class="pull-right fa fa-sort" aria-hidden="true"></i>
                  </div>
             </div>
-             <div  id="author_set" class="xsmall-header sg-a1-color lining11 active-color">
+             <div  id="author_set" class="xsmall-header sg-a1-color active-color">
                 <ul>
                 {% for author in paginator.setAuthors %}
                     <li>
@@ -92,7 +92,7 @@
                              <i style="padding-top:3px;" class="fa fa-sort sg-a1-color pull-right" aria-hidden="true"></i>
                         </div>
                     </div>
-                    <div class="man-tab lining11 sg-a1-color active-color" id="lining1">
+                    <div class="man-tab lining11 sg-a1-color" id="lining1">
                         <div class="xsmall-header">
                             {% block content %}
                                 <p>No content</p>
@@ -102,12 +102,12 @@
             {% else %}
                 {% if id == 'question' %}
                     {% if request.authenticated_userid %}
-                        <a  class="man-tab man-active xsmall-header solo sg-a1-color" href="{{ href|e }}">{{ caption|e }}<i style="padding-top:3px" class="pull-right fa fa-sort" aria-hidden="true"></i></a>
+                        <a  class="man-tab border-bottom active-color xsmall-header solo sg-a1-color" href="{{ href|e }}">{{ caption|e }}<i style="padding-top:3px" class="pull-right fa fa-sort" aria-hidden="true"></i></a>
                     {% else %}
-                    <a  class="click-through disabled man-tab xsmall-header man-active solo sg-a1-color" href="{{ href|e }}">{{ caption|e }}<i style="padding-top:3px" class="pull-right fa fa-sort" aria-hidden="true"></i></a>
+                    <a  class="click-through border-bottom man-tab xsmall-header solo sg-a1-color disabled" href="{{ href|e }}">{{ caption|e }}<i style="padding-top:3px" class="pull-right fa fa-sort" aria-hidden="true"></i></a>
                     {% endif %}
                 {% else %}
-                <a  class="man-tab man-active xsmall-header solo sg-a1-color" href="{{ href|e }}">{{ caption|e }}<i style="padding-top:3px" class="pull-right fa fa-sort" aria-hidden="true"></i></a>
+                <a  class="man-tab active-color border-bottom xsmall-header solo sg-a1-color" href="{{ href|e }}">{{ caption|e }}<i style="padding-top:3px" class="pull-right fa fa-sort" aria-hidden="true"></i></a>
                 {% endif %}
             {% endif %}
         {% endfor %}
@@ -124,7 +124,7 @@
             </p>
             {% if paginator.items %}
                 {% for entry in paginator.items %}
-                    <div class="pin">
+                    <div class="pin active-color">
                         {# <a href="{{ request.route_url('question', id=entry.id, slug=entry.slug) }}">  #}
                             <div class="voter-bar pull-right">
                               {% if request.authenticated_userid %}
@@ -162,7 +162,7 @@
        document.getElementById('active_tab').addEventListener("click", function(){
             console.log('what');
             x = document.getElementById("lining1");
-            if (x.style.display !== "block") {
+                if (x.style.display !== "block") {
                 x.style.display = "block";
             } else {
                 x.style.display = "none";

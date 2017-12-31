@@ -9,7 +9,7 @@ class QuestionCreateForm(Form):
                         filters=[strip_filter])
     type = TextAreaField('type', [validators.Length(min=1, max=255)],
                         filters=[strip_filter])
-    description = TextAreaField('description', [validators.Length(max=500)],
+    description = TextAreaField('description', [validators.Length(max=4000)],
                          filters=[strip_filter])
 
 
@@ -23,6 +23,6 @@ class QuestionUpdateForm(QuestionCreateForm):
 
 # original registrationForm
 class RegistrationForm(Form):
-    username = StringField('Enter a username here:', [validators.Length(min=1, max=255)],
+    username = StringField('Enter a Temporary Username:', [validators.Length(min=1, max=255)],
                            filters=[strip_filter], default=u'')
     password = StringField('Password', [validators.Length(min=3)], default=u'test')

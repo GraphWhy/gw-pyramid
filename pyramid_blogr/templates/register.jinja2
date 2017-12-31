@@ -9,19 +9,29 @@
             <div class="alert alert-danger">{{ error }}</div>
         {% endfor %}
         <div class="form-group">
-            <label for="title" class="sg-a1-color">{{form.username.label}}</label>
-            {{form.username(class_='form-control')}}
-        </div>
-        {% for error in form.password.errors %}
+            <div class="customLabel">
+                <p>Please sign in here.</p>
+                <div class="details-color">
+                    <p>After signing in you can:</p>
+                    <ul>
+                        <li>Upvote/Downvote questions</li>
+                        <li>Add a question to the list</li>
+                        <li>See question sets</li>
+                    </ul>
+                </div>
+            </div>
+            <label for="title" class="sg-a1-color bold">
+                {{form.username.label}}
+            </label>
+            {{form.username(class_='ripped1')}}
+            {% for error in form.password.errors %}
             <div class="alert alert-danger">{{error}}</div>
-        {% endfor %}
-        <div class="form-group" style="display:none">
-            <label for="body">{{form.password.label}}</label>
-            {{form.password(class_='form-control', value="badpassword")}}
-        </div>
-        <div class="form-group">
-            <label></label>
-            <button type="submit" class="btn btn-default">Submit</button>
+            {% endfor %}
+            <div class="hidden">    
+                <label for="body">{{form.password.label}}</label>
+                {{form.password(class_='ripped1', value="badpassword")}}
+            </div>
+            <button type="submit" class="">Sign In</button>
         </div>
     </form>
     

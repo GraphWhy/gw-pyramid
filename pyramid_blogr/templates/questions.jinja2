@@ -7,29 +7,35 @@
         {% if action =='edit' %}
             {{ form.id() }}
         {% endif %}
-        {# Question form #}
         <div class="form-group">
-            <label for="title" class="sg-a1-color">{{ form.question.label }}</label>
-            {% for error in form.question.errors %}
-                <div class="alert alert-danger">{{ error }}</div>
-            {% endfor %}
-            {{ form.question(class_='form-control') }}
-            {# Type form #}
-            <label for="body" class="sg-a1-color">{{ form.type.label }}</label>
-            {% for error in form.type.errors %}
-                <div class="alert alert-danger">{{ error }}</div>
-            {% endfor %}
-            {{ form.type(class_='form-control') }}
-            {# Description form #}
-            <label for="body" class="sg-a1-color">{{ form.description.label }}</label>
-            {% for error in form.description.errors %}
-                <div class="alert alert-danger">{{ error }}</div>
-            {% endfor %}
-            {{ form.description(class_='form-control', value_='hi') }}
+            <div class="internal-form-group">
+                {# Question form #}
+                <label for="title" class="sg-a1-color">{{ form.question.label }}</label>
+                {% for error in form.question.errors %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+                {{ form.question(class_='') }}
+            </div>
+            <div class="internal-form-group">
+                {# Type form #}
+                <label for="body" class="sg-a1-color">{{ form.type.label }}</label>
+                {% for error in form.type.errors %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+                {{ form.type(class_='') }}
+            </div>
+            <div class="internal-form-group">
+                {# Description form #}
+                <label for="body" class="sg-a1-color">{{ form.description.label }}</label>
+                {% for error in form.description.errors %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+                {{ form.description(class_='', value_='hi') }}
+            </div>
         </div>
         <div class="form-group">
             <label></label>
-            <button type="submit" class="btn btn-default">Submit</button>
+            <button type="submit" class="btn btn-default">Submit Question</button>
         </div>
     </form>
         

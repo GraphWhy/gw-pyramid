@@ -20,7 +20,7 @@ def downvote(request):
     setattr(vote, 'question_id', question_id)
     setattr(vote, 'vote', -1)
     request.dbsession.add(vote)
-    return HTTPFound(location=request.route_url('question_action_new'))
+    return HTTPFound(location=request.route_url('question_action_new', action='create'))
 
 
 @view_config(route_name='question_upvote', match_param='action=create',
@@ -35,7 +35,7 @@ def upvote(request):
     setattr(vote, 'question_id', question_id)
     setattr(vote, 'vote', 1)
     request.dbsession.add(vote)
-    return HTTPFound(location=request.route_url('question_action_new'))
+    return HTTPFound(location=request.route_url('question_action_new', action='create'))
     
     
 
@@ -55,7 +55,7 @@ def owner_view_set(request):
         setattr(entry, 'user_id', query.id)
         request.dbsession.add(entry)
         paginator = QuestionTemplateService.template_prep(request)
-        return HTTPFound(location=request.route_url('question_action_new'))
+        return HTTPFound(location=request.route_url('question_action_new', action='create'))
     return {'form': form, 'paginator': paginator}
 
 
@@ -63,6 +63,9 @@ def owner_view_set(request):
              renderer='pyramid_blogr:templates/questions_success.jinja2',
              permission='create')
 @view_config(route_name='question_action', match_param='action=create',
+             renderer='pyramid_blogr:templates/questions.jinja2',
+             permission='create')
+@view_config(route_name='question_action_new', match_param='action=create',
              renderer='pyramid_blogr:templates/questions.jinja2',
              permission='create')
 def question_create(request):
@@ -77,5 +80,5 @@ def question_create(request):
         setattr(entry, 'user_id', query.id)
         request.dbsession.add(entry)
         paginator = QuestionTemplateService.template_prep(request)
-        return HTTPFound(location=request.route_url('question_action_new'))
+        return HTTPFound(location=request.route_url('question_action_new', action='create'))
     return {'form': form, 'paginator': paginator}

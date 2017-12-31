@@ -35,8 +35,9 @@ def setAuthors(request):
         # i can do this by sorting out the questions, and checking if their author ids match
         question_list = QuestionRecordService.all(request)
         for user in user_list:
+            i = 0
             for question in question_list:
-                if user.id == question.user_id:
+                if user.id == question.user_id and i < 1:
                     setAuthors.append(user)
         return setAuthors
         

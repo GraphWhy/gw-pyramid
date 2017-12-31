@@ -8,7 +8,7 @@ def includeme(config):
     config.add_route('question', '/question/{id:\d+}/{slug}')
     config.add_route('question_action', '/question/{action}',
                      factory='pyramid_blogr.security.QuestionRecordFactory')
-    config.add_route('question_action_new', '/question/create',
+    config.add_route('question_action_new', '/question/{action}',
                      factory='pyramid_blogr.security.QuestionRecordFactory')
                      
     config.add_route('question_upvote', '/upvote/{action}/{id:\d+}',
