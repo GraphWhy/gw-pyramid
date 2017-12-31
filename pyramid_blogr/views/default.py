@@ -30,7 +30,7 @@ def index_page(request):
                 headers = remember(request, user.name)
             else:
                 headers = forget(request)
-            return HTTPFound(location=request.route_url('question_action_new'), headers=headers)
+            return HTTPFound(location=request.route_url('question_action_new', action='create'), headers=headers)
         # create account logic
         new_user = User(name=username)
         new_user.set_password(form.password.data.encode('utf8'))
