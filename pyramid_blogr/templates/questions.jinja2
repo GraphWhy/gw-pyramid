@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <form action="{{request.route_url('question_action',action=action)}}" method="post" class="form">
+    <form action="{{request.route_url('question_action',action='create')}}" method="post" class="form">
         <p class="sg-p-color">Enter a <b>question</b> to contribute to our list.</p>    <!-- CUSTOM ERROR REGISTRATION FOR NON-UNIQUE ENTRIES -->
         {% if action =='edit' %}
             {{ form.id() }}
