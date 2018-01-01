@@ -72,7 +72,7 @@
                 <ul>
                 {% for author in paginator.setAuthors %}
                     <li>
-                        <a class="xsmall-header sg-a1-color" href="/set/view/{{author.id}}">{{author.name}}</a>
+                        <a class="xsmall-header sg-a1-color" href="/set/view/{{author.id}}/mostrecent">{{author.name}}</a>
                     </li>
                 {% endfor %}
                 </ul>
@@ -118,7 +118,8 @@
             <p class="clean-small-header">
                 A list of questions in &nbsp;
                 <select>
-                    <option value="Most Recent">Most Recent<option>
+                    <option value="Most Recent"><a href="/set/view/{{author.id}}/mostrecent">Most Recent</a><option> 
+                    <option value="Most Recent"><a href="/set/view/{{author.id}}/leastrecent">Least Recent</a><option>
                 </select>
                 &nbsp; order.
             </p>

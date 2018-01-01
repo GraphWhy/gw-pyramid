@@ -16,7 +16,7 @@ def includeme(config):
     config.add_route('question_downvote', '/downvote/{action}/{id:\d+}',
                      factory='pyramid_blogr.security.QuestionRecordFactory')
                      
-    config.add_route('question_set', '/set/{action}/{user_id:\d+}',
+    config.add_route('question_set', '/set/{action}/{user_id:\d+}/{order}',
                      factory='pyramid_blogr.security.QuestionRecordFactory')
                      
     config.add_route('auth', '/sign/{action}')
