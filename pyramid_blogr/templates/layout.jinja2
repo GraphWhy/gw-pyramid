@@ -47,10 +47,13 @@
         {% set navigation_bar = [
           ('/', 'alias', 'Alias', 'necessary'),
           ('/question/create', 'question', 'Question', 'not'),
-           ('/', 'sets', 'Sets', 'not'),
         ] -%}
         {% set active_page = request.active_page|default('alias') -%}
-        
+       
+        <!-- 
+           ('/', 'sets', 'Sets', 'not'),
+        -->
+ 
         <div class="line"></div>
         {% for href, id, caption , need in navigation_bar %}
             {% if id == 'sets' %}
