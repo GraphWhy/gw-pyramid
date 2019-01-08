@@ -1,0 +1,30 @@
+{% extends "graphwhy:templates/layout.jinja2" %}
+
+{% block content %}
+
+    {# <img src="{{request.static_url('graphwhy:static/transparent.png')}}"> #}
+    <!-- REGISTRATION FORM-->
+    <form action="{{request.route_url('home')}}" method="post" class="form {#sg-form#}">
+        <h3 class="sg-p-color">Alias</h3>
+        <p class="sg-p-color">Enter a <b>username</b> to interact with the site</p>    <!-- CUSTOM ERROR REGISTRATION FOR NON-UNIQUE ENTRIES -->
+        {% for error in form.username.errors %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endfor %}
+        <div class="form-group">
+            <label for="title" class="sg-a1-color">{{form.username.label}}</label>
+            {{form.username(class_='form-control')}}
+        </div>
+        {% for error in form.password.errors %}
+            <div class="alert alert-danger">{{error}}</div>
+        {% endfor %}
+        <div class="form-group" style="display:none">
+            <label for="body">{{form.password.label}}</label>
+            {{form.password(class_='form-control', value="badpassword")}}
+        </div>
+        <div class="form-group">
+            <label></label>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </div>
+    </form>
+    
+  {% endblock %}

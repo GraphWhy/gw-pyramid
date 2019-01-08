@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="{{request.locale_name}}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="pyramid web application">
+    <meta name="author" content="Pylons Project">
+    <link rel="shortcut icon" href="{{request.static_url('graphwhy:static/pyramid-16x16.png')}}">
+
+    <title>GraphWhy, See For Yourself</title>
+    <!-- Bootstrap core CSS -->
+    <link href="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../static/theme.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="//oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    
+    <div id="wrapper">
+        <h1 class="sg-p-color">
+            <a class="noHover" href={{request.route_url('home')}}>
+              <img src="{{request.static_url('graphwhy:static/gw_sm_logo.png')}}" alt="logo" width="60px">
+              GraphWhy
+            </a>
+        </h1>
+        {% if request.authenticated_userid %}
+            <h5 class="sg-a1-color">
+                Welcome <strong>{{request.authenticated_userid}}</strong>
+                ({{paginator.totalUserVotes}})
+                <a href="{{request.route_url('auth',action='out')}}">Sign Out</a>
+            </h5>
+        {% endif %}
+        
+    {% set navigation_bar = [
+      ('/', 'alias', 'Alias'),
+      ('/question/create', 'question', 'Question'),
+    ] -%}
+  {% set active_page = request.active_page|default('alias') -%}
+
+  <div class="man-tabs">
+  {% for href, id, caption in navigation_bar %}
+   
+        {% if id == 'question' %}
+            {% if request.authenticated_userid %}
+                <a  class="man-tab border-bottom active-color xsmall-header solo sg-a1-color" href="{{ href|e }}">{{ caption|e }}</a>
+            {% else %}
+            <a  class="click-through border-bottom man-tab xsmall-header solo sg-a1-color" style="cursor: not-allowed;pointer-events: none;border-color:gray" href="{{ href|e }}">{{ caption|e }}</a>
+            {% endif %}
+        {% else %}
+        <a  class="man-tab active-color border-bottom xsmall-header solo sg-a1-color" href="{{ href|e }}">{{ caption|e }}</a>
+        {% endif %}
+  {% endfor %}
+  </div>
+            
+        <div id="columns">
+            <div class="pin">
+            
+              {% block content %}
+                  <p>No content</p>
+              {% endblock content %}
+            
+            </div>
+                    
+            {% if paginator.items %}
+                {% for entry in paginator.items %}
+                    <div class="pin">
+                        {# <a href="{{ request.route_url('question', id=entry.id, slug=entry.slug) }}">  #}
+                            <div class="voter-bar pull-right">
+                              {% if request.authenticated_userid %}
+                                <a href="{{ request.route_url('question_downvote', action='create', id=entry.id) }}">
+                                    -
+                                </a>
+                              {% else %}
+                                <span class='customDisabled'>-</span>
+                              {% endif %} 
+                              
+                              <span class='tightSpace'> {{entry.totalVotes}} </span>
+                              {% if request.authenticated_userid %}
+                                <a href="{{ request.route_url('question_upvote', action='create', id=entry.id) }}">
+                                    +
+                                </a>
+                              {% else %}
+                                <span class='customDisabled'>+</span>
+                              {% endif %}
+                            </div>
+                            <h5 style="margin:2px 0 0 0; padding:0 0 0px 0;">{{ entry.question }}</h5>
+                            <hr/>
+                            <h6>by <b>{{ entry.author }}</b></h6>
+                            <p>{{ entry.description }}</p>
+                            <h6>{{ entry.type }}</h6>
+                        {# </a> #}
+                    </div>
+                {% endfor %}
+            {{ paginator.pager() | safe }}
+            {% else %}
+                <p>No question entries found.</p>
+            {% endif %}
+            
+            
+        </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="//oss.maxcdn.com/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+  </body>
+</html>
