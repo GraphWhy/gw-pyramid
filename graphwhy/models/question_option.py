@@ -15,7 +15,7 @@ class AnswerOption(Base):
     option_text = Column(Text, nullable=False)
     #(for views maybe) data = Column(Text, nullable=False)
     
-    question_id = Column(ForeignKey('QuestionRecord.id'), nullable=False)
+    question_id = Column(ForeignKey('questions.id'), nullable=False)
     question = relationship('QuestionRecord', backref='answer_options')
 
     creator_id = Column(ForeignKey('users.id'), nullable=False)
