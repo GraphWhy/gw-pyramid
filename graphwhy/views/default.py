@@ -54,7 +54,7 @@ def sign_in_out(request):
         headers = forget(request)
     return HTTPFound(location=request.route_url('home'), headers=headers)
 
-
+#I don't think this view is being hit
 @view_config(route_name='register',
              renderer='graphwhy:templates/register.jinja2')
 def register(request):

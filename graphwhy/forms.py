@@ -1,6 +1,7 @@
 from wtforms import Form, StringField, TextAreaField, IntegerField, validators
 from wtforms import HiddenField, PasswordField
 
+# used to remove all whitespace from beginning and end of question
 strip_filter = lambda x: x.strip() if x else None
 
 # spawned question forms
@@ -15,7 +16,10 @@ class QuestionCreateForm(Form):
 
 # class VoteCreateForm(Form):
 #     vote = IntegerField('question', [validators.required()])
-                        
+
+
+class QuestionOptionFrom(Form):
+    question = TextAreaField('question_option', [validators.Length(min=1, max=255)], filters=[strip_filter]) 
 
 class QuestionUpdateForm(QuestionCreateForm):
     id = HiddenField()
