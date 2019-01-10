@@ -24,7 +24,7 @@ def downvote(request):
 
 
 @view_config(route_name='question_upvote', match_param='action=create',
-             renderer='graphwhy:templates/questions_success.jinja2',
+             renderer='graphwhy:templates/questions.jinja2',
              permission='create')
 def upvote(request):
     vote = VoteRecord()
@@ -39,7 +39,7 @@ def upvote(request):
     
 
 @view_config(route_name='register-success', match_param='action=create',
-             renderer='graphwhy:templates/questions_success.jinja2',
+             renderer='graphwhy:templates/questions.jinja2',
              permission='create')
 @view_config(route_name='question_action', match_param='action=create',
              renderer='graphwhy:templates/questions.jinja2',
