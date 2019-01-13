@@ -1,5 +1,5 @@
 from wtforms import Form, StringField, TextAreaField, IntegerField, validators
-from wtforms import HiddenField, PasswordField
+from wtforms import HiddenField, PasswordField, FieldList
 
 # used to remove all whitespace from beginning and end of question
 strip_filter = lambda x: x.strip() if x else None
@@ -12,14 +12,14 @@ class QuestionCreateForm(Form):
                         filters=[strip_filter])
     description = TextAreaField('description', [validators.Length(max=500)],
                          filters=[strip_filter])
-
+    question_option = FieldList(TextAreaField('question_option', [validators.Length(min=1, max=255)], filters=[strip_filter]), min_entries=0, max_entries=101)  
 
 # class VoteCreateForm(Form):
 #     vote = IntegerField('question', [validators.required()])
 
 
 class QuestionOptionFrom(Form):
-    question = TextAreaField('question_option', [validators.Length(min=1, max=255)], filters=[strip_filter]) 
+    question_option = FieldList(TextAreaField('question_option', [validators.Length(min=1, max=255)], filters=[strip_filter]), min_entries=1, max_entries=101)  
 
 class QuestionUpdateForm(QuestionCreateForm):
     id = HiddenField()

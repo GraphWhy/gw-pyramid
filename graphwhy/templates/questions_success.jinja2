@@ -9,6 +9,7 @@
         {% if action =='edit' %}
             {{ form.id() }}
         {% endif %}
+   
         {# Question form #}
         <div class="form-group">
             <label for="title" class="sg-a1-color">{{ form.question.label }}</label>
@@ -16,18 +17,27 @@
                 <div class="alert alert-danger">{{ error }}</div>
             {% endfor %}
             {{ form.question(class_='form-control') }}
+            
             {# Type form #}
             <label for="body" class="sg-a1-color">{{ form.type.label }}</label>
             {% for error in form.type.errors %}
                 <div class="alert alert-danger">{{ error }}</div>
             {% endfor %}
             {{ form.type(class_='form-control') }}
+            
             {# Description form #}
             <label for="body" class="sg-a1-color">{{ form.description.label }}</label>
             {% for error in form.description.errors %}
                 <div class="alert alert-danger">{{ error }}</div>
             {% endfor %}
             {{ form.description(class_='form-control', value_='hi') }}
+
+            {# Question options form #}
+            <label for="body" class="sg-a1-color">{{ form.question_option.label }}</label>
+            {% for error in form.question_option.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endfor %}
+            {{ form.question_option(class_='form-control', value_='hi') }}
         </div>
         <div class="form-group">
             <label></label>
