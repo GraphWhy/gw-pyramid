@@ -36,17 +36,17 @@
                 <div class="alert alert-danger">{{ error }}</div>
             {% endfor %}
 
-            {{ form.question_option() }}
-            {{ form.question_option.type }}
+            
+            <ol>
+                {% if form.question_option.type == 'FieldList' %}
+                    {% for subfield in form.question_option.entries %}
+                        <li> 
+                            {{ subfield.question_option(class_='form-control', value_='hi') }}
+                        </li>
+                    {% endfor %}
+                {% endif %}
+            </ol>
 
-            {% if form.question_option.type == 'FieldList' %}
-                {{ form.question_option }}
-                {{ form.question_option.entries|length }}
-                {% for subfield in form.question_option.entries %}
-                        1
-                    {{ subfield() }}
-                {% endfor %}
-            {% endif %}
         </div>
 
         <div class="form-group">
