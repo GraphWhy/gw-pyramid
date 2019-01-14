@@ -2,6 +2,7 @@ from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPNotFound, HTTPFound
 from ..models.user import User
 from ..models.question_record import QuestionRecord
+from ..models.question_option import AnswerOption
 from ..models.vote_record import VoteRecord
 from ..services.question_record import QuestionRecordService
 from ..forms import QuestionCreateForm, QuestionUpdateForm #, VoteCreateForm
@@ -48,13 +49,23 @@ def question_create(request):
     request.active_page = 'question'
     paginator = QuestionTemplateService.template_prep(request)
     entry = QuestionRecord()
+    entry_options = AnswerOption()
     form = QuestionCreateForm(request.POST)
     if request.method == 'POST' and form.validate():
         form.populate_obj(entry)
+        form.populate_obj(entry_options)
         query = request.dbsession.query(User)
         query = query.filter(User.name == request.authenticated_userid).first()
-        setattr(entry, 'user_id', query.id)
+        setattr(entry, 'user_id', query.id)      
         request.dbsession.add(entry)
+        
+        # populate question_options (answer_options)
+        setattr(entry_options, 'creator_id', query.id)
+        query = request.dbsession.query(QuestionRecord)
+        query = query.filter(QuestionRecord.question == request.POST.get('question')).first()
+        setattr(entry_options, 'question_id', query.id)
+        request.dbsession.add(entry_options)
+
         paginator = QuestionTemplateService.template_prep(request)
         return HTTPFound(location=request.route_url('question_action_new'))
     return {'form': form, 'action': request.matchdict.get('action'), 'paginator': paginator}
