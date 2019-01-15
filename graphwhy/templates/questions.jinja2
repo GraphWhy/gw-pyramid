@@ -45,8 +45,9 @@
                         </li>
                     {% endfor %}
                 {% endif %}
+                <inserthere id="options"></inserthere>
             </ol>
-
+            <a onclick="appendOption()" style="cursor:pointer; padding-left:20px;">Add Answer Option</a>       
         </div>
 
         <div class="form-group">
@@ -55,4 +56,22 @@
         </div>
     </form>
         
+
+    <script>    
+       iPrime = 2;
+       function appendOption() {
+          var newItem = document.createElement("LI");
+          var optionTextArea = document.createElement("textarea");
+          optionTextArea.className = "form-control";
+          optionTextArea.setAttribute("name", "question_option-"+iPrime+"-question_option");
+          optionTextArea.setAttribute("id", "question_option-"+iPrime+"-question_option");
+          newItem.appendChild(optionTextArea);
+
+          var list = document.getElementById("options");
+          list.insertBefore(newItem, list.childNodes[iPrime++]);
+       }
+    </script>
+
+
+
 {% endblock %}
