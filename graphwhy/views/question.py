@@ -60,28 +60,42 @@ def question_create(request):
         log.debug("\n\n\n\n\n\n\n\n\n\n\n\n %s \n\n\n\n\n", str(form))
         debugString = pprint.pformat(vars(form), indent=4)
         log.debug("\n\n\n\n\n\n\n\n\n\n\n\n %s \n\n\n\n\n", debugString)
-        debugString = pprint.pformat(vars(form.question), indent=4)
+        debugString = pprint.pformat(vars(form.description), indent=4)
         log.debug("\n\n\n\n\n\n\n\n\n\n\n\n %s \n\n\n\n\n", debugString)
-        debugString = pprint.pformat(vars(form.question_option), indent=4)
+        debugString = pprint.pformat(vars(form.question_option.entries[0].form._fields['question_option']), indent=4)
         log.debug("\n\n\n\n\n\n\n\n\n\n\n\n %s \n\n\n\n\n", debugString)
  
-
-        """
-        form.populate_obj([entry, entry_options])
-        # form.populate_obj(entry_options)
+        
+        '''
+        form.description.data (check if empty)
+        form.question.data
+        form.question_option.entries (array)
+        form.type.data               
+        '''
+         
+        setattr(entry, 'question', form.question.data)
+        setattr(entry, 'type', form.type.data)
+        #if(form.description.data != "")
+        setattr(entry, 'descripion', form.description.data)
+   
         query = request.dbsession.query(User)
         query = query.filter(User.name == request.authenticated_userid).first()
         setattr(entry, 'user_id', query.id)      
         request.dbsession.add(entry)
         
+        
         # populate question_options (answer_options)
-        setattr(entry_options, 'creator_id', query.id)
+        userid = query.id
         query = request.dbsession.query(QuestionRecord)
         query = query.filter(QuestionRecord.question == request.POST.get('question')).first()
-        setattr(entry_options, 'question_id', query.id)
-        request.dbsession.add(entry_options)
-
+        for val in form.question_option.entries:
+            entry_options = AnswerOption()
+            setattr(entry_options, 'option_text', val.form._fields['question_option'].data)
+            setattr(entry_options, 'creator_id', userid)
+            setattr(entry_options, 'question_id', query.id)
+            request.dbsession.add(entry_options)
+        
         paginator = QuestionTemplateService.template_prep(request)
-        """
+   
         return HTTPFound(location=request.route_url('question_action_new'))
     return {'form': form, 'action': request.matchdict.get('action'), 'paginator': paginator}
