@@ -7,7 +7,10 @@ from ..models.vote_record import VoteRecord
 from ..services.question_record import QuestionRecordService
 from ..forms import QuestionCreateForm, QuestionUpdateForm #, VoteCreateForm
 from ..services.question_templating import QuestionTemplateService
-    
+
+import pprint
+import logging
+log = logging.getLogger(__name__)    
     
 @view_config(route_name='question_downvote', match_param='action=create',
              renderer='graphwhy:templates/questions.jinja2',
@@ -52,8 +55,20 @@ def question_create(request):
     entry_options = AnswerOption()
     form = QuestionCreateForm(request.POST)
     if request.method == 'POST' and form.validate():
-        form.populate_obj(entry)
-        form.populate_obj(entry_options)
+
+        #print("\n\n\n\n\n {} \n\n\n\n\n".format(form))
+        log.debug("\n\n\n\n\n\n\n\n\n\n\n\n %s \n\n\n\n\n", str(form))
+        debugString = pprint.pformat(vars(form), indent=4)
+        log.debug("\n\n\n\n\n\n\n\n\n\n\n\n %s \n\n\n\n\n", debugString)
+        debugString = pprint.pformat(vars(form.question), indent=4)
+        log.debug("\n\n\n\n\n\n\n\n\n\n\n\n %s \n\n\n\n\n", debugString)
+        debugString = pprint.pformat(vars(form.question_option), indent=4)
+        log.debug("\n\n\n\n\n\n\n\n\n\n\n\n %s \n\n\n\n\n", debugString)
+ 
+
+        """
+        form.populate_obj([entry, entry_options])
+        # form.populate_obj(entry_options)
         query = request.dbsession.query(User)
         query = query.filter(User.name == request.authenticated_userid).first()
         setattr(entry, 'user_id', query.id)      
@@ -67,5 +82,6 @@ def question_create(request):
         request.dbsession.add(entry_options)
 
         paginator = QuestionTemplateService.template_prep(request)
+        """
         return HTTPFound(location=request.route_url('question_action_new'))
     return {'form': form, 'action': request.matchdict.get('action'), 'paginator': paginator}
