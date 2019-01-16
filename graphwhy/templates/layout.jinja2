@@ -94,6 +94,12 @@
                             <h6>by <b>{{ entry.author }}</b></h6>
                             <p>{{ entry.description }}</p>
                             <h6>{{ entry.type }}</h6>
+                            <hr>
+                            <div class="btn-group">
+                                {% for option in entry.answer_options %}
+                                    <button class="button"> {{ option.option_text }} </button>
+                                {% endfor %}
+                            </div>
                         {# </a> #}
                     </div>
                 {% endfor %}
