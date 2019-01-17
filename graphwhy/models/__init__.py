@@ -9,6 +9,7 @@ from .user import User
 from .vote_record import VoteRecord
 from .question_record import QuestionRecord
 from .question_option import AnswerOption
+from .option_vote import OptionVote
 
 # run configure_mappers after defining all of the models to ensure
 # all relationships can be setup
