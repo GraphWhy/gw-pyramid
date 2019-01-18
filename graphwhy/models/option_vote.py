@@ -1,8 +1,10 @@
+import datetime
 from sqlalchemy import (
     Column,
     ForeignKey,
     Integer,
     Text,
+    DateTime,
 )
 from sqlalchemy.orm import relationship
 

@@ -30,6 +30,15 @@ label{
 /*  Mr.McNulty  */
 
 
+.btn-group{
+    width:100%;
+}
+.button{
+    width:100%;
+    margin-bottom:5px;
+}
+
+
 .noHover{
     Text-Decoration: None !important;
 }
