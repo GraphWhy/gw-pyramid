@@ -97,7 +97,10 @@
                             <hr>
                             <div class="btn-group">
                                 {% for option in entry.answer_options %}
-                                    <button class="button"> {{ option.option_text }} </button>
+                                    <form action="{{ request.route_url('submit_vote', action='create',
+                                                                   questionid = entry.id, optionid = option.id") }}>
+                                        <button type="submit" class="button"> {{ option.option_text }} </button>
+                                    </form>
                                 {% endfor %}
                             </div>
                         {# </a> #}
