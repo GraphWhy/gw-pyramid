@@ -42,6 +42,14 @@ def upvote(request):
     return HTTPFound(location=request.route_url('question_action_new'))
     
 
+@view_config(route_name='submit_vote', match_param='action=create',
+             renderer='graphwhy:templates/questions.jinja2',
+             permission='create')
+def question_option_vote(request):
+    return HTTPFound(location=request.route_url('question_action_new'))
+
+
+
 @view_config(route_name='register-success', match_param='action=create',
              renderer='graphwhy:templates/questions.jinja2',
              permission='create')
