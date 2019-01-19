@@ -3,6 +3,7 @@ from pyramid.httpexceptions import HTTPNotFound, HTTPFound
 from ..models.user import User
 from ..models.question_record import QuestionRecord
 from ..models.question_option import AnswerOption
+from ..models.option_vote import OptionVote
 from ..models.vote_record import VoteRecord
 from ..services.question_record import QuestionRecordService
 from ..forms import QuestionCreateForm, QuestionUpdateForm #, VoteCreateForm
@@ -46,6 +47,13 @@ def upvote(request):
              renderer='graphwhy:templates/questions.jinja2',
              permission='create')
 def question_option_vote(request):
+    option_vote = OptionVote()
+    query = request.dbsession.query(User)
+    query = query.filter(User.name == request.authenticated_userid).first()
+    setattr(option_vote, 'creator_id', query.id)
+    setattr(option_vote, 'option_id', int(request.matchdict.get('optionid', -1)))
+    setattr(option_vote, 'question_id', int(request.matchdict.get('questionid', -1)))
+    request.dbsession.add(option_vote)
     return HTTPFound(location=request.route_url('question_action_new'))
 
 
