@@ -17,7 +17,7 @@ class OptionVote(Base):
     created = Column(DateTime, default=datetime.datetime.utcnow)
  
     option_id = Column(ForeignKey('answer_options.id'), nullable=False)
-    question = relationship('AnswerOption', backref='votes')
+    option = relationship('AnswerOption', backref='votes')
 
     question_id = Column(ForeignKey('questions.id'), nullable=False)
     question = relationship('QuestionRecord', backref='question_votes')
