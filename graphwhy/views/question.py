@@ -84,7 +84,7 @@ def question_create(request):
         setattr(entry, 'question', form.question.data)
         setattr(entry, 'type', form.type.data)
         #if(form.description.data != "")
-        setattr(entry, 'descripion', form.description.data)
+        setattr(entry, 'description', form.description.data)
    
         query = request.dbsession.query(User)
         query = query.filter(User.name == request.authenticated_userid).first()
