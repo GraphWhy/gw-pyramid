@@ -48,12 +48,30 @@ def upvote(request):
              permission='create')
 def question_option_vote(request):
     option_vote = OptionVote()
-    query = request.dbsession.query(User)
-    query = query.filter(User.name == request.authenticated_userid).first()
-    setattr(option_vote, 'creator_id', query.id)
-    setattr(option_vote, 'option_id', int(request.matchdict.get('optionid', -1)))
-    setattr(option_vote, 'question_id', int(request.matchdict.get('questionid', -1)))
-    request.dbsession.add(option_vote)
+    userQuery = request.dbsession.query(User)
+    userQuery = userQuery.filter(User.name == request.authenticated_userid).first()
+   
+
+    optionQuery = request.dbsession.query(OptionVote)
+ 
+    debugString = pprint.pformat(vars(OptionVote.creator), indent=4)
+    log.debug("\n\n\n\n\n\n\n\n\n\n\n\n %s \n\n\n\n\n", debugString)   
+    
+    optionQuery = optionQuery.filter(OptionVote.creator == userQuery)
+
+    questionQuery = request.dbsession.query(QuestionRecord).filter(QuestionRecord.id == int(request.matchdict.get('questionid',-1))).first()
+    optionQuery = optionQuery.filter(OptionVote.question == questionQuery).first()
+  
+   # potentialVote = currentUser.user_votes.filter(OptionVote.questionid == int(request.matchdict.get('questionid', -1)))
+    if optionQuery:
+        optionQuery.option_id = int(request.matchdict.get('optionid', -1))
+        request.tm.commit()
+    else:    
+        setattr(option_vote, 'creator_id', userQuery.id)
+        setattr(option_vote, 'option_id', int(request.matchdict.get('optionid', -1)))
+        setattr(option_vote, 'question_id', int(request.matchdict.get('questionid', -1)))
+        request.dbsession.add(option_vote)    
+    
     return HTTPFound(location=request.route_url('question_action_new'))
 
 
@@ -72,7 +90,7 @@ def question_create(request):
     form = QuestionCreateForm(request.POST)
     if request.method == 'POST' and form.validate():
 
-        #print("\n\n\n\n\n {} \n\n\n\n\n".format(form))
+        '''
         log.debug("\n\n\n\n\n\n\n\n\n\n\n\n %s \n\n\n\n\n", str(form))
         debugString = pprint.pformat(vars(form), indent=4)
         log.debug("\n\n\n\n\n\n\n\n\n\n\n\n %s \n\n\n\n\n", debugString)
@@ -80,8 +98,8 @@ def question_create(request):
         log.debug("\n\n\n\n\n\n\n\n\n\n\n\n %s \n\n\n\n\n", debugString)
         debugString = pprint.pformat(vars(form.question_option.entries[0].form._fields['question_option']), indent=4)
         log.debug("\n\n\n\n\n\n\n\n\n\n\n\n %s \n\n\n\n\n", debugString)
- 
-        
+        ''' 
+
         '''
         form.description.data (check if empty)
         form.question.data
