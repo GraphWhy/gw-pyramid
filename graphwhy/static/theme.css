@@ -44,13 +44,11 @@ label{
     background-color:#f1f1f1a9;
 }
 
-
-
 .noHover{
     Text-Decoration: None !important;
 }
 .voter-bar{
-    background-color: #ffffff61;
+    background-color: #ffffffc2;
     padding: 1px 7px;
     display: inline-block;
 }
