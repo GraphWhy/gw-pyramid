@@ -10,6 +10,8 @@
         {% endif %}
         {# Question form #}
         <div class="form-group">
+
+            {# question prompt form #}
             <label for="title" class="sg-a1-color">{{ form.question.label }}</label>
             {% for error in form.question.errors %}
                 <div class="alert alert-danger">{{ error }}</div>
@@ -31,11 +33,10 @@
             {{ form.description(class_='form-control', value_='hi') }}
 
             {# Question options form #}
-            <label for="body" class="sg-a1-color">{{ form.question_option.label }}</label>
+            <label for="body" class="sg-a1-color">{{ form.question_option.entries[0].question_option.label }}</label>
             {% for error in form.question_option.errors %}
                 <div class="alert alert-danger">{{ error }}</div>
             {% endfor %}
-
             
             <ol>
                 {% if form.question_option.type == 'FieldList' %}

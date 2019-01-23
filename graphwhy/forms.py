@@ -6,15 +6,15 @@ strip_filter = lambda x: x.strip() if x else None
 
 
 class QuestionOptionForm(Form):
-    question_option = TextAreaField('question_option', [validators.Length(min=1, max=255)], filters=[strip_filter])  
+    question_option = TextAreaField('Answer Options', [validators.Length(min=1, max=255)], filters=[strip_filter])  
 
 # spawned question forms
 class QuestionCreateForm(Form):
-    question = TextAreaField('question', [validators.Length(min=1, max=255)],
+    question = TextAreaField('Question Prompt', [validators.Length(min=1, max=255)],
                         filters=[strip_filter])
-    type = TextAreaField('type', [validators.Length(min=1, max=255)],
+    type = TextAreaField('Subject', [validators.Length(min=1, max=255)],
                         filters=[strip_filter])
-    description = TextAreaField('description', [validators.Length(max=500)],
+    description = TextAreaField('Context', [validators.Length(max=500)],
                          filters=[strip_filter])
     question_option = FieldList(FormField(QuestionOptionForm), min_entries=2, max_entries=101)  
 
