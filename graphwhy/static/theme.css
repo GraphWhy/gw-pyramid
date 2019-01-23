@@ -36,7 +36,14 @@ label{
 .button{
     width:90%;
     margin-bottom:5px;
+    border:none;
+    background-color:#ffffffa9;
+    box-shadow: 1px 1px 3px #777777a9;
 }
+.button:hover{
+    background-color:#f1f1f1a9;
+}
+
 
 
 .noHover{

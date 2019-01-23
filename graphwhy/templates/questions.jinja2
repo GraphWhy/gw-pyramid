@@ -48,12 +48,17 @@
                 {% endif %}
                 <inserthere id="options"></inserthere>
             </ol>
-            <a onclick="appendOption()" style="cursor:pointer; padding-left:20px;">Add Answer Option</a>       
+            <div class="voter-bar" style="margin-left:40px;">
+                <a onclick="removeOption()" style="cursor:pointer;"> - </a>   
+            </div>
+            <div class="voter-bar" style="margin-left:5px;">
+                <a onclick="appendOption()" style="cursor:pointer;"> + </a>       
+            </div>
         </div>
 
         <div class="form-group">
             <label></label>
-            <button type="submit" class="btn btn-default">Submit</button>
+            <button type="submit" class="btn btn-default" style="width:100%;" >Submit</button>
         </div>
     </form>
         
@@ -62,6 +67,7 @@
        iPrime = 2;
        function appendOption() {
           var newItem = document.createElement("LI");
+          newItem.setAttribute("id", "item" + iPrime);
           var optionTextArea = document.createElement("textarea");
           optionTextArea.className = "form-control";
           optionTextArea.setAttribute("name", "question_option-"+iPrime+"-question_option");
@@ -70,6 +76,16 @@
 
           var list = document.getElementById("options");
           list.insertBefore(newItem, list.childNodes[iPrime++]);
+       }
+       function removeOption() {
+          console.log("clicked");
+          if(iPrime > 2){
+              iPrime--;
+              var oldForm = document.getElementById("question_option-"+iPrime+"-question_option");
+              var oldItem = document.getElementById("item" + iPrime);
+              oldForm.remove();
+              oldItem.remove();
+          }
        }
     </script>
 
