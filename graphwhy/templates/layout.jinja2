@@ -99,7 +99,16 @@
                                 {% for option in entry.answer_options %}
                                     <form action="{{ request.route_url('submit_vote', action='create', 
                                                         questionid = entry.id, optionid = option.id) }}">
-                                        <button style="display:inline-block;" type="submit" class="button"> {{ option.option_text }} </button>
+                                
+                                        {% if request.authenticated_userid %}
+                                            <button style="display:inline-block;" type="submit" class="button active"> 
+                                                {{ option.option_text }} 
+                                            </button>
+                                        {% else %}  
+                                           <button disabled style="display:inline-block;" type="submit" class="button"> 
+                                                {{ option.option_text }} 
+                                            </button>
+                                        {% endif %}
                                         <span style="display:inline-block;" >{{ option.votes|length }}</span>
                                     </form>
                                 {% endfor %}
