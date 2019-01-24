@@ -18,13 +18,22 @@ log = logging.getLogger(__name__)
              permission='create')
 def downvote(request):
     vote = VoteRecord()
-    query = request.dbsession.query(User)
-    query = query.filter(User.name == request.authenticated_userid).first()
-    setattr(vote, 'creator_id', query.id)
-    question_id = int(request.matchdict.get('id',-1))
-    setattr(vote, 'question_id', question_id)
-    setattr(vote, 'vote', -1)
-    request.dbsession.add(vote)
+    userQuery = request.dbsession.query(User)
+    userQuery = userQuery.filter(User.name == request.authenticated_userid).first()
+
+    voteQuery = request.dbsession.query(VoteRecord)
+    voteQuery = voteQuery.filter(VoteRecord.question_id == int(request.matchdict.get('id',-1)))
+    voteQuery = voteQuery.filter(VoteRecord.creator_id == userQuery.id).first()
+    
+    if voteQuery:
+        voteQuery.vote = -1
+        request.tm.commit()
+    else:
+        setattr(vote, 'creator_id', userQuery.id)
+        question_id = int(request.matchdict.get('id',-1))
+        setattr(vote, 'question_id', question_id)
+        setattr(vote, 'vote', -1)
+        request.dbsession.add(vote)
     return HTTPFound(location=request.route_url('question_action_new'))
 
 
@@ -33,13 +42,22 @@ def downvote(request):
              permission='create')
 def upvote(request):
     vote = VoteRecord()
-    query = request.dbsession.query(User)
-    query = query.filter(User.name == request.authenticated_userid).first()
-    setattr(vote, 'creator_id', query.id)
-    question_id = int(request.matchdict.get('id',-1))
-    setattr(vote, 'question_id', question_id)
-    setattr(vote, 'vote', 1)
-    request.dbsession.add(vote)
+    userQuery = request.dbsession.query(User)
+    userQuery = userQuery.filter(User.name == request.authenticated_userid).first()
+
+    voteQuery = request.dbsession.query(VoteRecord)
+    voteQuery = voteQuery.filter(VoteRecord.question_id == int(request.matchdict.get('id',-1)))
+    voteQuery = voteQuery.filter(VoteRecord.creator_id == userQuery.id).first()
+    
+    if voteQuery:
+        voteQuery.vote = 1
+        request.tm.commit()
+    else:
+        setattr(vote, 'creator_id', userQuery.id)
+        question_id = int(request.matchdict.get('id',-1))
+        setattr(vote, 'question_id', question_id)
+        setattr(vote, 'vote', 1)
+        request.dbsession.add(vote)
     return HTTPFound(location=request.route_url('question_action_new'))
     
 
@@ -51,18 +69,12 @@ def question_option_vote(request):
     userQuery = request.dbsession.query(User)
     userQuery = userQuery.filter(User.name == request.authenticated_userid).first()
    
-
-    optionQuery = request.dbsession.query(OptionVote)
- 
-    debugString = pprint.pformat(vars(OptionVote.creator), indent=4)
-    log.debug("\n\n\n\n\n\n\n\n\n\n\n\n %s \n\n\n\n\n", debugString)   
-    
+    optionQuery = request.dbsession.query(OptionVote) 
     optionQuery = optionQuery.filter(OptionVote.creator == userQuery)
 
     questionQuery = request.dbsession.query(QuestionRecord).filter(QuestionRecord.id == int(request.matchdict.get('questionid',-1))).first()
     optionQuery = optionQuery.filter(OptionVote.question == questionQuery).first()
   
-   # potentialVote = currentUser.user_votes.filter(OptionVote.questionid == int(request.matchdict.get('questionid', -1)))
     if optionQuery:
         optionQuery.option_id = int(request.matchdict.get('optionid', -1))
         request.tm.commit()
