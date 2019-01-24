@@ -80,7 +80,7 @@
                                 <span class='customDisabled'>-</span>
                               {% endif %} 
                               
-                              <span class='tightSpace'> {{entry.totalVotes}} </span>
+                              <span class='tightSpace'> {{ entry.totalVotes }} </span>
                               {% if request.authenticated_userid %}
                                 <a href="{{ request.route_url('question_upvote', action='create', id=entry.id) }}">
                                     +
