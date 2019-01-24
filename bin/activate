@@ -40,7 +40,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/alex/zdev/gw-pyramid"
+VIRTUAL_ENV="/home/ammc/bGW/gw-pyramid"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

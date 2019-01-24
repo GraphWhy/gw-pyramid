@@ -1,4 +1,4 @@
-#!/Users/alex/zdev/gw-pyramid/bin/python
+#!/home/ammc/bGW/gw-pyramid/bin/python
 
 import sys
 import getopt

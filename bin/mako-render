@@ -1,5 +1,4 @@
-#!/Users/alex/zdev/gw-pyramid/bin/python3.6
-
+#!/home/ammc/bGW/gw-pyramid/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
