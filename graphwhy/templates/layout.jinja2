@@ -20,8 +20,8 @@
     <![endif]-->
   </head>
 
-    
-    <div id=""i class="pin" style="border: 1px;">
+  <body>  
+    <div id=""i class="pin topNavBar" style="margin-left: 0px; margin-right: 0px;">
         <h1 class="sg-p-color"  style="display:inline-block;">
             <a class="noHover" href={{request.route_url('home')}}>
               <img src="{{request.static_url('graphwhy:static/gw_sm_logo.png')}}" alt="logo" style="width:60px;">
@@ -38,97 +38,71 @@
     </div>
    
 
-  <body>
+    <div id="wrapper">
+        <div class="body pin"> 
+          {% block content %}
+              <p>No content</p>
+          {% endblock content %}
         
-        <!-- 
-        {% set navigation_bar = [
-          ('/', 'alias', 'Alias'),
-          ('/question/create', 'question', 'Question'),
-        ] -%}
-      {% set active_page = request.active_page|default('alias') -%}
+        </div>
+        {% if paginator.items %}
+            {% for entry in paginator.items %}
+                <div class="pin">
+                    {# <a href="{{ request.route_url('question', id=entry.id, slug=entry.slug) }}">  #}
+                        <div class="voter-bar pull-right">
+                          {% if request.authenticated_userid %}
+                            <a href="{{ request.route_url('question_downvote', action='create', id=entry.id) }}">
+                                -
+                            </a>
+                          {% else %}
+                            <span class='customDisabled'>-</span>
+                          {% endif %} 
+                          
+                          <span class='tightSpace'> {{ entry.totalVotes }} </span>
+                          {% if request.authenticated_userid %}
+                            <a href="{{ request.route_url('question_upvote', action='create', id=entry.id) }}">
+                                +
+                            </a>
+                          {% else %}
+                            <span class='customDisabled'>+</span>
+                          {% endif %}
+                        </div>
+                        <h5 style="margin:2px 0 0 0; padding:0 0 0px 0;">{{ entry.question }}</h5>
+                        <hr/>
+                        <h6>by <b>{{ entry.author }}</b></h6>
+                        <p>{{ entry.description }}</p>
+                        <h6>{{ entry.type }}</h6>
+                        <hr>
+                        <div class="btn-group">
+                            {% for option in entry.answer_options %}
+                                <form action="{{ request.route_url('submit_vote', action='create', 
+                                                    questionid = entry.id, optionid = option.id) }}">
+                            
+                                    {% if request.authenticated_userid %}
+                                        <button style="display:inline-block;" type="submit" class="button active"> 
+                                            {{ option.option_text }} 
+                                        </button>
+                                    {% else %}  
+                                       <button disabled style="display:inline-block;" type="submit" class="button"> 
+                                            {{ option.option_text }} 
+                                        </button>
+                                    {% endif %}
+                                    <span style="display:inline-block;" >{{ option.votes|length }}</span>
+                                </form>
+                            {% endfor %}
+                        </div>
+                    {# </a> #}
+                </div>
+            {% endfor %}
+        {{ paginator.pager() | safe }}
+        
+        {% elif request.authenticated_userid %}
+        <div class="body pin">
 
-      <div class=""  style="display:inline-block;">
-      {% for href, id, caption in navigation_bar %}
-       
-            {% if id == 'question' %}
-                {% if request.authenticated_userid %}
-                    <a  class="man-tab border-bottom active-color xsmall-header solo sg-a1-color" href="{{ href|e }}">{{ caption|e }}</a>
-                {% else %}
-                <a  class="click-through border-bottom man-tab xsmall-header solo sg-a1-color" style="cursor: not-allowed;pointer-events: none;border-color:gray" href="{{ href|e }}">{{ caption|e }}</a>
-                {% endif %}
-            {% else %}
-            <a  class="man-tab active-color border-bottom xsmall-header solo sg-a1-color" href="{{ href|e }}">{{ caption|e }}</a>
-            {% endif %}
-      {% endfor %}
-      </div>
-      -->
-            
-            <div class="body pin">
-            
-              {% block content %}
-                  <p>No content</p>
-              {% endblock content %}
-            
-            </div>
-                    
-            {% if paginator.items %}
-                {% for entry in paginator.items %}
-                    <div class="pin">
-                        {# <a href="{{ request.route_url('question', id=entry.id, slug=entry.slug) }}">  #}
-                            <div class="voter-bar pull-right">
-                              {% if request.authenticated_userid %}
-                                <a href="{{ request.route_url('question_downvote', action='create', id=entry.id) }}">
-                                    -
-                                </a>
-                              {% else %}
-                                <span class='customDisabled'>-</span>
-                              {% endif %} 
-                              
-                              <span class='tightSpace'> {{ entry.totalVotes }} </span>
-                              {% if request.authenticated_userid %}
-                                <a href="{{ request.route_url('question_upvote', action='create', id=entry.id) }}">
-                                    +
-                                </a>
-                              {% else %}
-                                <span class='customDisabled'>+</span>
-                              {% endif %}
-                            </div>
-                            <h5 style="margin:2px 0 0 0; padding:0 0 0px 0;">{{ entry.question }}</h5>
-                            <hr/>
-                            <h6>by <b>{{ entry.author }}</b></h6>
-                            <p>{{ entry.description }}</p>
-                            <h6>{{ entry.type }}</h6>
-                            <hr>
-                            <div class="btn-group">
-                                {% for option in entry.answer_options %}
-                                    <form action="{{ request.route_url('submit_vote', action='create', 
-                                                        questionid = entry.id, optionid = option.id) }}">
-                                
-                                        {% if request.authenticated_userid %}
-                                            <button style="display:inline-block;" type="submit" class="button active"> 
-                                                {{ option.option_text }} 
-                                            </button>
-                                        {% else %}  
-                                           <button disabled style="display:inline-block;" type="submit" class="button"> 
-                                                {{ option.option_text }} 
-                                            </button>
-                                        {% endif %}
-                                        <span style="display:inline-block;" >{{ option.votes|length }}</span>
-                                    </form>
-                                {% endfor %}
-                            </div>
-                        {# </a> #}
-                    </div>
-                {% endfor %}
-            {{ paginator.pager() | safe }}
-            
-            {% elif request.authenticated_userid %}
-            <div class="body pin">
-
-                <p>No question entries found.</p>
-            </div>
-            {% endif %}
-            
+            <p>No question entries found.</p>
+        </div>
+        {% endif %}
+    </div>      
             
 
     <!-- Bootstrap core JavaScript -->

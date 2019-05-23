@@ -2,15 +2,25 @@
 /*  Mr.Godinez  */
 h1{
     font-size: 40px;
+    color: #222;
 }
+h1 a { 
+    color: #222;
+}
+
+.topNavBar {
+ border-bottom:1;
+ border-right:0;
+ border-left:0;
+ border-top:0;
+}
+
 body {
     background-repeat: no-repeat;
-    width: 100;
     height: 100vh;
-    background: #9fe6e3; /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #ACB6E5, #9fe6e3); /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #ACB6E5, #9fe6e3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    margin: 20px;
+    background: #fefefe; /* fallback for old browsers */
+    /* background: -webkit-linear-gradient(to right, #ACB6E5, #9fe6e3); /* Chrome 10-25, Safari 5.1-6 */
+    /* background: linear-gradient(to right, #ACB6E5, #9fe6e3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     font-family: helvetica;
     font-size: 16px;
 }
@@ -19,7 +29,7 @@ a {
 }
 hr{
     margin: 7px 0px;
-    border-color:#8b94c3;
+    border-color:#aaa;
 }
 label{
     margin-top:6px;
@@ -29,6 +39,9 @@ label{
 /*--------*/
 /*  Mr.McNulty  */
 
+.subHeaderText {
+    size: 20px;
+}
 
 .btn-group{
     width:100%;

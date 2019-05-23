@@ -13,15 +13,18 @@
     <p class="subHeaderTest">
         Please login to use the application.
     </p>
-
+    
+    <br>
+    <hr/>
+    <br>
     {% for error in form.username.errors %}
         <div class="alert alert-danger">{{ error }}</div>
     {% endfor %}
-
     <!-- SIGN UP FORM-->
+    <h4 class="largeText">Sign Up</h4>
     <form action="{{request.route_url('home')}}" method="post" class="form {#sg-form#}">
         <div class="form-group">
-            <label for="title" class="sg-a1-color">{{form.username.label}}</label>
+            <label for="title" class="">{{form.username.label}}</label>
             {{form.username(class_='form-control')}}
             {% for error in form.password.errors %}
                 <div class="alert alert-danger">{{error}}</div>
