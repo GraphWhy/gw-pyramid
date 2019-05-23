@@ -20,46 +20,50 @@
     <![endif]-->
   </head>
 
-  <body>
     
-    <div id="wrapper">
-        <h1 class="sg-p-color">
+    <div id=""i class="pin" style="border: 1px;">
+        <h1 class="sg-p-color"  style="display:inline-block;">
             <a class="noHover" href={{request.route_url('home')}}>
-              <img src="{{request.static_url('graphwhy:static/gw_sm_logo.png')}}" alt="logo" width="60px">
+              <img src="{{request.static_url('graphwhy:static/gw_sm_logo.png')}}" alt="logo" style="width:60px;">
               GraphWhy
             </a>
         </h1>
         {% if request.authenticated_userid %}
-            <h5 class="sg-a1-color">
+            <h5 class="sg-a1-color"  style="display:inline-block; float:right; padding-top:40px;">
                 Welcome <strong>{{request.authenticated_userid}}</strong>
                 ({{paginator.totalUserVotes}})
                 <a href="{{request.route_url('auth',action='out')}}">Sign Out</a>
             </h5>
         {% endif %}
-        
-    {% set navigation_bar = [
-      ('/', 'alias', 'Alias'),
-      ('/question/create', 'question', 'Question'),
-    ] -%}
-  {% set active_page = request.active_page|default('alias') -%}
-
-  <div class="man-tabs">
-  {% for href, id, caption in navigation_bar %}
+    </div>
    
-        {% if id == 'question' %}
-            {% if request.authenticated_userid %}
-                <a  class="man-tab border-bottom active-color xsmall-header solo sg-a1-color" href="{{ href|e }}">{{ caption|e }}</a>
+
+  <body>
+        
+        <!-- 
+        {% set navigation_bar = [
+          ('/', 'alias', 'Alias'),
+          ('/question/create', 'question', 'Question'),
+        ] -%}
+      {% set active_page = request.active_page|default('alias') -%}
+
+      <div class=""  style="display:inline-block;">
+      {% for href, id, caption in navigation_bar %}
+       
+            {% if id == 'question' %}
+                {% if request.authenticated_userid %}
+                    <a  class="man-tab border-bottom active-color xsmall-header solo sg-a1-color" href="{{ href|e }}">{{ caption|e }}</a>
+                {% else %}
+                <a  class="click-through border-bottom man-tab xsmall-header solo sg-a1-color" style="cursor: not-allowed;pointer-events: none;border-color:gray" href="{{ href|e }}">{{ caption|e }}</a>
+                {% endif %}
             {% else %}
-            <a  class="click-through border-bottom man-tab xsmall-header solo sg-a1-color" style="cursor: not-allowed;pointer-events: none;border-color:gray" href="{{ href|e }}">{{ caption|e }}</a>
+            <a  class="man-tab active-color border-bottom xsmall-header solo sg-a1-color" href="{{ href|e }}">{{ caption|e }}</a>
             {% endif %}
-        {% else %}
-        <a  class="man-tab active-color border-bottom xsmall-header solo sg-a1-color" href="{{ href|e }}">{{ caption|e }}</a>
-        {% endif %}
-  {% endfor %}
-  </div>
+      {% endfor %}
+      </div>
+      -->
             
-        <div id="columns">
-            <div class="pin">
+            <div class="body pin">
             
               {% block content %}
                   <p>No content</p>
@@ -117,12 +121,15 @@
                     </div>
                 {% endfor %}
             {{ paginator.pager() | safe }}
-            {% else %}
+            
+            {% elif request.authenticated_userid %}
+            <div class="body pin">
+
                 <p>No question entries found.</p>
+            </div>
             {% endif %}
             
             
-        </div>
 
     <!-- Bootstrap core JavaScript -->
     <script src="//oss.maxcdn.com/libs/jquery/1.10.2/jquery.min.js"></script>

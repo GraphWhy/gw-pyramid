@@ -3,23 +3,33 @@
 {% block content %}
 
     {# <img src="{{request.static_url('graphwhy:static/transparent.png')}}"> #}
-    <!-- REGISTRATION FORM-->
+
+
+    <h3 class="largeText">Welcome to GraphWhy.org</h3>
+    <p class="subHeaderTest">
+        We anonymously visualize our users daily life based on yes/no questions.
+        </br> 
+    </p>
+    <p class="subHeaderTest">
+        Please login to use the application.
+    </p>
+
+    {% for error in form.username.errors %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endfor %}
+
+    <!-- SIGN UP FORM-->
     <form action="{{request.route_url('home')}}" method="post" class="form {#sg-form#}">
-        <h3 class="sg-p-color">Alias</h3>
-        <p class="sg-p-color">Enter a <b>username</b> to interact with the site</p>    <!-- CUSTOM ERROR REGISTRATION FOR NON-UNIQUE ENTRIES -->
-        {% for error in form.username.errors %}
-            <div class="alert alert-danger">{{ error }}</div>
-        {% endfor %}
         <div class="form-group">
             <label for="title" class="sg-a1-color">{{form.username.label}}</label>
             {{form.username(class_='form-control')}}
-        </div>
-        {% for error in form.password.errors %}
-            <div class="alert alert-danger">{{error}}</div>
-        {% endfor %}
-        <div class="form-group" style="display:none">
+            {% for error in form.password.errors %}
+                <div class="alert alert-danger">{{error}}</div>
+            {% endfor %}
             <label for="body">{{form.password.label}}</label>
             {{form.password(class_='form-control', value="badpassword")}}
+            <label for="body">{{form.password.label}}</label>
+            <input class='form-control' value="badpassword"></input>
         </div>
         <div class="form-group">
             <label></label>
