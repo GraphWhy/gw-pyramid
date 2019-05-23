@@ -21,7 +21,7 @@
         <div class="alert alert-danger">{{ error }}</div>
     {% endfor %}
     <!-- SIGN UP FORM-->
-    <h4 class="largeText">Sign Up</h4>
+    <h4 class="largeText">Sign Up/Login</h4>
     <form action="{{request.route_url('home')}}" method="post" class="form {#sg-form#}">
         <div class="form-group">
             <label for="title" class="">{{form.username.label}}</label>
@@ -30,9 +30,7 @@
                 <div class="alert alert-danger">{{error}}</div>
             {% endfor %}
             <label for="body">{{form.password.label}}</label>
-            {{form.password(class_='form-control', value="badpassword")}}
-            <label for="body">{{form.password.label}}</label>
-            <input class='form-control' value="badpassword"></input>
+            {{form.password(class_='form-control', value="")}}
         </div>
         <div class="form-group">
             <label></label>
