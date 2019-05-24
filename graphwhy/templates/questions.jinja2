@@ -3,8 +3,8 @@
 {% block content %}
 
     <form action="{{request.route_url('question_action',action=action)}}" method="post" class="form">
-        <h3 class="sg-p-color">Question</h3>
-        <p class="sg-p-color">Enter a <b>question</b> to contribute to our list.</p>    <!-- CUSTOM ERROR REGISTRATION FOR NON-UNIQUE ENTRIES -->
+        <h3 class="sg-p-color">Create a Daily Question</h3>
+        <br/>
         {% if action =='edit' %}
             {{ form.id() }}
         {% endif %}
@@ -12,47 +12,48 @@
         <div class="form-group">
 
             {# question prompt form #}
-            <label for="title" class="sg-a1-color">{{ form.question.label }}</label>
+            <!-- <label for="title" class="sg-a1-color">{{ form.question.label }}</label> -->
             {% for error in form.question.errors %}
                 <div class="alert alert-danger">{{ error }}</div>
             {% endfor %}
-            {{ form.question(class_='form-control') }}
+            Did I {{ form.question(class_='form-control', default='general') }} Today?
 
-            {# Type form #}
-            <label for="body" class="sg-a1-color">{{ form.type.label }}</label>
-            {% for error in form.type.errors %}
-                <div class="alert alert-danger">{{ error }}</div>
-            {% endfor %}
-            {{ form.type(class_='form-control') }}
 
-            {# Description form #}
-            <label for="body" class="sg-a1-color">{{ form.description.label }}</label>
-            {% for error in form.description.errors %}
-                <div class="alert alert-danger">{{ error }}</div>
-            {% endfor %}
-            {{ form.description(class_='form-control', value_='hi') }}
+            <div style="visibility:hidden; height:0px;">
+                {# Type form #}
+                <label for="body" class="sg-a1-color">{{ form.type.label }}</label>
+                {% for error in form.type.errors %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+                <textarea class="form-control" id="type" name="type">General, Daily Question</textarea>
+                {# Description form #}
+                <label for="body" class="sg-a1-color">{{ form.description.label }}</label>
+                {% for error in form.description.errors %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+                <textarea class="form-control" default="null" id="description" name="description">Generic Question</textarea>
 
-            {# Question options form #}
-            <label for="body" class="sg-a1-color">{{ form.question_option.entries[0].question_option.label }}</label>
-            {% for error in form.question_option.errors %}
-                <div class="alert alert-danger">{{ error }}</div>
-            {% endfor %}
-            
-            <ol>
-                {% if form.question_option.type == 'FieldList' %}
-                    {% for subfield in form.question_option.entries %}
-                        <li> 
-                            {{ subfield.question_option(class_='form-control', value_='hi') }}
-                        </li>
-                    {% endfor %}
-                {% endif %}
-                <inserthere id="options"></inserthere>
-            </ol>
-            <div class="voter-bar" style="margin-left:40px;padding: 0px 9px;">
-                <a onclick="removeOption()" style="cursor:pointer;"> - </a>   
-            </div>
-            <div class="voter-bar" style="margin-left:5px;">
-                <a onclick="appendOption()" style="cursor:pointer;"> + </a>       
+                {# Question options form #}
+                <label for="body" class="sg-a1-color">{{ form.question_option.entries[0].question_option.label }}</label>
+                {% for error in form.question_option.errors %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+                
+                <ol>
+                    <li> 
+                        <textarea class="form-control" default="Yes" id="question_option-0-question_option" name="question_option-0-question_option">Yes</textarea>
+                    </li>
+                    <li> 
+                        <textarea class="form-control" default="Yes" id="question_option-1-question_option" name="question_option-1-question_option">No</textarea>
+                    </li>
+                    <inserthere id="options"></inserthere>
+                </ol>
+                <div class="voter-bar" style="margin-left:40px;padding: 0px 9px;">
+                    <a onclick="removeOption()" style="cursor:pointer;"> - </a>   
+                </div>
+                <div class="voter-bar" style="margin-left:5px;">
+                    <a onclick="appendOption()" style="cursor:pointer;"> + </a>       
+                </div>
             </div>
         </div>
 

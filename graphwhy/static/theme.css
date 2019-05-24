@@ -216,6 +216,12 @@ label{
 	opacity: 0.9;
 }
 
+textarea.form-control#question {
+    display:inline;
+    width:auto;
+    height:34px !important;
+}
+
 /* McNulty's changes to columns */
 .pin div.alert{
     font: 12px/18px Arial, sans-serif;

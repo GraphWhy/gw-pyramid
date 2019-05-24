@@ -11,6 +11,7 @@ from ..services.question_templating import QuestionTemplateService
 
 import pprint
 import logging
+import datetime
 log = logging.getLogger(__name__)    
     
 @view_config(route_name='question_downvote', match_param='action=create',
@@ -42,22 +43,12 @@ def downvote(request):
              permission='create')
 def upvote(request):
     vote = VoteRecord()
-    userQuery = request.dbsession.query(User)
-    userQuery = userQuery.filter(User.name == request.authenticated_userid).first()
-
-    voteQuery = request.dbsession.query(VoteRecord)
-    voteQuery = voteQuery.filter(VoteRecord.question_id == int(request.matchdict.get('id',-1)))
-    voteQuery = voteQuery.filter(VoteRecord.creator_id == userQuery.id).first()
-    
-    if voteQuery:
-        voteQuery.vote = 1
-        request.tm.commit()
-    else:
-        setattr(vote, 'creator_id', userQuery.id)
-        question_id = int(request.matchdict.get('id',-1))
-        setattr(vote, 'question_id', question_id)
-        setattr(vote, 'vote', 1)
-        request.dbsession.add(vote)
+    query = request.dbsession.query(User)
+    query = query.filter(User.name == request.authenticated_userid).first()
+    setattr(option_vote, 'creator_id', query.id)
+    setattr(option_vote, 'option_id', int(request.matchdict.get('optionid', -1)))
+    setattr(option_vote, 'question_id', int(request.matchdict.get('questionid', -1)))
+    request.dbsession.add(option_vote)
     return HTTPFound(location=request.route_url('question_action_new'))
     
 
@@ -73,9 +64,11 @@ def question_option_vote(request):
     optionQuery = optionQuery.filter(OptionVote.creator == userQuery)
 
     questionQuery = request.dbsession.query(QuestionRecord).filter(QuestionRecord.id == int(request.matchdict.get('questionid',-1))).first()
-    optionQuery = optionQuery.filter(OptionVote.question == questionQuery).first()
-  
+    optionQuery = optionQuery.filter(OptionVote.question == questionQuery and OptionVote.question.created.date.day != questionQuery.created.date.day).first()
+ 
+ 
     if optionQuery:
+        optionQuery.created = datetime.datetime.now()
         optionQuery.option_id = int(request.matchdict.get('optionid', -1))
         request.tm.commit()
     else:    
@@ -83,9 +76,7 @@ def question_option_vote(request):
         setattr(option_vote, 'option_id', int(request.matchdict.get('optionid', -1)))
         setattr(option_vote, 'question_id', int(request.matchdict.get('questionid', -1)))
         request.dbsession.add(option_vote)    
-    
     return HTTPFound(location=request.route_url('question_action_new'))
-
 
 
 @view_config(route_name='register-success', match_param='action=create',
@@ -103,8 +94,6 @@ def question_create(request):
     if request.method == 'POST' and form.validate():
 
         '''
-        log.debug("\n\n\n\n\n\n\n\n\n\n\n\n %s \n\n\n\n\n", str(form))
-        debugString = pprint.pformat(vars(form), indent=4)
         log.debug("\n\n\n\n\n\n\n\n\n\n\n\n %s \n\n\n\n\n", debugString)
         debugString = pprint.pformat(vars(form.description), indent=4)
         log.debug("\n\n\n\n\n\n\n\n\n\n\n\n %s \n\n\n\n\n", debugString)
