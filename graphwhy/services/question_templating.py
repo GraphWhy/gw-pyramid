@@ -7,7 +7,7 @@ class QuestionTemplateService(object):
     @classmethod
     def template_prep(cls, request):
         page = int(request.params.get('page', 1))
-        paginator = QuestionRecordService.get_paginator(request, page)
+        paginator = QuestionRecordService.get_user_only_paginator(request, page)
 
         author_list = UserService.all_users(request)
         paginator.totalUserVotes = 0
