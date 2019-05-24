@@ -14,7 +14,7 @@ from ..services.question_templating import QuestionTemplateService
              renderer='graphwhy:templates/register-error.jinja2')
 def index_page(request):
     request.active_page = 'alias'
-    paginator = QuestionTemplateService.template_prep(request)
+    # paginator = QuestionTemplateService.template_prep(request)
     # sign-in form
     form = RegistrationForm(request.POST)
     if request.method == 'POST' and form.validate():
@@ -38,7 +38,8 @@ def index_page(request):
         # if all is successful
         headers = remember(request, username)
         return HTTPFound(location=request.route_url('register-success',action='create'), headers=headers)
-    return {'form': form, 'paginator': paginator}
+    # return {'form': form, 'paginator': paginator}
+    return {'form': form}
 
 
 @view_config(route_name='auth', match_param='action=out', renderer='string')

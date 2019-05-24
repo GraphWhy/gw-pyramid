@@ -45,57 +45,59 @@
           {% endblock content %}
         
         </div>
-        {% if paginator.items %}
-            {% for entry in paginator.items %}
-                <div class="pin">
-                    {# <a href="{{ request.route_url('question', id=entry.id, slug=entry.slug) }}">  #}
-                        <div class="voter-bar pull-right">
-                          {% if request.authenticated_userid %}
-                            <a href="{{ request.route_url('question_downvote', action='create', id=entry.id) }}">
-                                -
-                            </a>
-                          {% else %}
-                            <span class='customDisabled'>-</span>
-                          {% endif %} 
-                          
-                          <span class='tightSpace'> {{ entry.totalVotes }} </span>
-                          {% if request.authenticated_userid %}
-                            <a href="{{ request.route_url('question_upvote', action='create', id=entry.id) }}">
-                                +
-                            </a>
-                          {% else %}
-                            <span class='customDisabled'>+</span>
-                          {% endif %}
-                        </div>
-                        <h5 style="margin:2px 0 0 0; padding:0 0 0px 0;">{{ entry.question }}</h5>
-                        <hr/>
-                        <h6>by <b>{{ entry.author }}</b></h6>
-                        <p>{{ entry.description }}</p>
-                        <h6>{{ entry.type }}</h6>
-                        <hr>
-                        <div class="btn-group">
-                            {% for option in entry.answer_options %}
-                                <form action="{{ request.route_url('submit_vote', action='create', 
-                                                    questionid = entry.id, optionid = option.id) }}">
-                            
-                                    {% if request.authenticated_userid %}
-                                        <button style="display:inline-block;" type="submit" class="button active"> 
-                                            {{ option.option_text }} 
-                                        </button>
-                                    {% else %}  
-                                       <button disabled style="display:inline-block;" type="submit" class="button"> 
-                                            {{ option.option_text }} 
-                                        </button>
-                                    {% endif %}
-                                    <span style="display:inline-block;" >{{ option.votes|length }}</span>
-                                </form>
-                            {% endfor %}
-                        </div>
-                    {# </a> #}
-                </div>
-            {% endfor %}
-        {{ paginator.pager() | safe }}
-        
+
+        {% if paginator %}
+            {% if paginator.items %}
+                {% for entry in paginator.items %}
+                    <div class="pin">
+                        {# <a href="{{ request.route_url('question', id=entry.id, slug=entry.slug) }}">  #}
+                            <div class="voter-bar pull-right">
+                              {% if request.authenticated_userid %}
+                                <a href="{{ request.route_url('question_downvote', action='create', id=entry.id) }}">
+                                    -
+                                </a>
+                              {% else %}
+                                <span class='customDisabled'>-</span>
+                              {% endif %} 
+                              
+                              <span class='tightSpace'> {{ entry.totalVotes }} </span>
+                              {% if request.authenticated_userid %}
+                                <a href="{{ request.route_url('question_upvote', action='create', id=entry.id) }}">
+                                    +
+                                </a>
+                              {% else %}
+                                <span class='customDisabled'>+</span>
+                              {% endif %}
+                            </div>
+                            <h5 style="margin:2px 0 0 0; padding:0 0 0px 0;">{{ entry.question }}</h5>
+                            <hr/>
+                            <h6>by <b>{{ entry.author }}</b></h6>
+                            <p>{{ entry.description }}</p>
+                            <h6>{{ entry.type }}</h6>
+                            <hr>
+                            <div class="btn-group">
+                                {% for option in entry.answer_options %}
+                                    <form action="{{ request.route_url('submit_vote', action='create', 
+                                                        questionid = entry.id, optionid = option.id) }}">
+                                
+                                        {% if request.authenticated_userid %}
+                                            <button style="display:inline-block;" type="submit" class="button active"> 
+                                                {{ option.option_text }} 
+                                            </button>
+                                        {% else %}  
+                                           <button disabled style="display:inline-block;" type="submit" class="button"> 
+                                                {{ option.option_text }} 
+                                            </button>
+                                        {% endif %}
+                                        <span style="display:inline-block;" >{{ option.votes|length }}</span>
+                                    </form>
+                                {% endfor %}
+                            </div>
+                        {# </a> #}
+                    </div>
+                {% endfor %}
+            {{ paginator.pager() | safe }}
+            {% endif %}
         {% elif request.authenticated_userid %}
         <div class="body pin">
 
