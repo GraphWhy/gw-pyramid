@@ -17,10 +17,11 @@ class QuestionRecord(Base):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey(User.id))
     question = Column(Unicode(255), nullable=False)
+    #color = Column(Unicode(255), default=u'#222222')
     description = Column(UnicodeText, default=u'No context given')
     type = Column(Unicode(255), nullable=False)
-    created = Column(DateTime, default=datetime.datetime.utcnow)
-    edited = Column(DateTime, default=datetime.datetime.utcnow)
+    created = Column(DateTime, default=datetime.datetime.now)
+    edited = Column(DateTime, default=datetime.datetime.now)
     __table_args__ = {'extend_existing': True}
 
     @property

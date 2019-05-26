@@ -48,37 +48,15 @@
 
         {% if paginator %}
             {% if paginator.items %}
+                <div class="pin">
                 {% for entry in paginator.items %}
-                    <div class="pin">
                         {# <a href="{{ request.route_url('question', id=entry.id, slug=entry.slug) }}">  #}
-                            <div class="voter-bar pull-right">
-                              {% if request.authenticated_userid %}
-                                <a href="{{ request.route_url('question_downvote', action='create', id=entry.id) }}">
-                                    -
-                                </a>
-                              {% else %}
-                                <span class='customDisabled'>-</span>
-                              {% endif %} 
-                              
-                              <span class='tightSpace'> {{ entry.totalVotes }} </span>
-                              {% if request.authenticated_userid %}
-                                <a href="{{ request.route_url('question_upvote', action='create', id=entry.id) }}">
-                                    +
-                                </a>
-                              {% else %}
-                                <span class='customDisabled'>+</span>
-                              {% endif %}
-                            </div>
-                            <h5 style="margin:2px 0 0 0; padding:0 0 0px 0;">{{ entry.question }}</h5>
-                            <hr/>
-                            <h6>by <b>{{ entry.author }}</b></h6>
-                            <p>{{ entry.description }}</p>
-                            <h6>{{ entry.type }}</h6>
-                            <hr>
-                            <div class="btn-group">
+                            <br/>
+                            <h5 style="display:inline;">{{ entry.question }}</h5>
+                            <div class="btn-group" style="width:60%;display:inline;float:right;background-color:{{entry.color}};">
                                 {% for option in entry.answer_options %}
                                     <form action="{{ request.route_url('submit_vote', action='create', 
-                                                        questionid = entry.id, optionid = option.id) }}">
+                                                        questionid = entry.id, optionid = option.id) }}" style="display:inline;">
                                 
                                         {% if request.authenticated_userid %}
                                             <button style="display:inline-block;" type="submit" class="button active"> 
@@ -89,13 +67,14 @@
                                                 {{ option.option_text }} 
                                             </button>
                                         {% endif %}
-                                        <span style="display:inline-block;" >{{ option.votes|length }}</span>
+                                        <!-- <span style="display:inline-block;" >{{ option.votes|length }}</span> -->
                                     </form>
                                 {% endfor %}
                             </div>
+                            <hr/>
                         {# </a> #}
-                    </div>
                 {% endfor %}
+                </div>
             {{ paginator.pager() | safe }}
             {% endif %}
         {% elif request.authenticated_userid %}
