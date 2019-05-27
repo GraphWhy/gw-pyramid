@@ -57,6 +57,18 @@ def upvote(request):
              renderer='graphwhy:templates/questions.jinja2',
              permission='create')
 def question_option_vote(request):
+
+
+
+    # The string that you get from Javascript
+    # date_string = '2017-12-31'
+    date_format = '%Y-%m-%d'
+    try:
+        date_obj = datetime.datetime.strptime(request.matchdict.get('date', 1994-11-10), date_format)
+    except ValueError:
+        date_obj = datetime.datetime(1999,1,1)
+
+
     option_vote = OptionVote()
     userQuery = request.dbsession.query(User)
     userQuery = userQuery.filter(User.name == request.authenticated_userid).first()
@@ -64,15 +76,20 @@ def question_option_vote(request):
     optionQuery = request.dbsession.query(OptionVote) 
     optionQuery = optionQuery.filter(OptionVote.creator == userQuery)
 
-    questionQuery = request.dbsession.query(QuestionRecord).filter(QuestionRecord.id == int(request.matchdict.get('questionid',-1))).first()
-    optionQuery = optionQuery.filter(OptionVote.question == questionQuery and OptionVote.question.created.date.day != questionQuery.created.date.day).first()
+    questionQuery = request.dbsession.query(QuestionRecord).filter(
+                                        QuestionRecord.id == int(request.matchdict.get('questionid',-1))).first()
+    optionQuery = optionQuery.filter(OptionVote.question == questionQuery and 
+                                     OptionVote.question.created.date == date_obj).first()
+
+
  
  
     if optionQuery:
-        optionQuery.created = datetime.datetime.utcnow()
+        optionQuery.created = date_obj
         optionQuery.option_id = int(request.matchdict.get('optionid', -1))
         request.tm.commit()
-    else:    
+    else:   
+        setattr(option_vote, 'date', date_obj) 
         setattr(option_vote, 'creator_id', userQuery.id)
         setattr(option_vote, 'option_id', int(request.matchdict.get('optionid', -1)))
         setattr(option_vote, 'question_id', int(request.matchdict.get('questionid', -1)))
@@ -108,16 +125,6 @@ def question_create(request):
         form.question_option.entries (array)
         form.type.data               
         '''
-        # The string that you get from Javascript
-        date_string = '2017-12-31'
-        date_format = '%Y-%m-%d'
-        try:
-            date_obj = datetime.datetime.strptime(form.date.data, date_format)
-            setattr(entry, 'date', date_obj)
-        except ValueError:
-            setattr(entry, 'date', datetime.datetime.today() - timedelta(days=3))
-            print("Incorrect data format, should be YYYY-MM-DD")
-
         setattr(entry, 'color', form.color.data)
         setattr(entry, 'question', form.question.data)
         setattr(entry, 'type', form.type.data)

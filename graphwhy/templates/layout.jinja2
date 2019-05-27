@@ -39,12 +39,10 @@
    
 
     <div id="wrapper">
-        <div class="body pin"> 
-          {% block content %}
-              <p>No content</p>
-          {% endblock content %}
+        {% block content %}
+            <p>No content</p>
+        {% endblock content %}
         
-        </div>
 
         {% if paginator %}
             {% if paginator.items %}
@@ -57,7 +55,7 @@
                             <div class="btn-group" style="width:60%;display:inline-block;float:right;">
                                 {% for option in entry.answer_options %}
                                     <form action="{{ request.route_url('submit_vote', action='create', 
-                                                        questionid = entry.id, optionid = option.id) }}" style="display:inline;">
+                                                        questionid = entry.id, optionid = option.id, date = '2000-10-01') }}" style="display:inline;">
                                 
                                         {% if request.authenticated_userid %}
                                             <button style="display:inline-block;" type="submit" class="button active"> 

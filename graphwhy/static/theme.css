@@ -220,16 +220,15 @@ label{
 }
 
 textarea.form-control#question {
-    display:inline;
     width:auto;
-    height:40px !important;
+    display:inline;
 }
 
 textarea.form-control {
-    display:inline;
+    display:block;
     width:auto;
     margin:10px 10px;
-    height:40px !important;
+    height:30px !important;
 }
 
 

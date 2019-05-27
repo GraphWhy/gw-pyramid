@@ -14,7 +14,7 @@ def includeme(config):
     config.add_route('question_action_new', '/question/create',
                      factory='graphwhy.security.QuestionRecordFactory')
     
-    config.add_route('submit_vote', '/vote/{action}/{questionid:\d+}/{optionid:\d+}',
+    config.add_route('submit_vote', '/vote/{action}/{questionid:\d+}/{optionid:\d+}/{date:[^/]+}',
                      factory='graphwhy.security.QuestionRecordFactory')
                  
     config.add_route('question_upvote', '/upvote/{action}/{id:\d+}',
