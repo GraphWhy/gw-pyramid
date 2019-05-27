@@ -2,6 +2,10 @@
 
 {% block content %}
 
+    <script>
+        
+    </script>
+
     <form action="{{request.route_url('question_action',action=action)}}" method="post" class="form">
         <h3 class="sg-p-color">Create a Daily Question</h3>
         <br/>
@@ -11,13 +15,30 @@
         {# Question form #}
         <div class="form-group">
 
-            {# question prompt form #}
-            <!-- <label for="title" class="sg-a1-color">{{ form.question.label }}</label> -->
+
+            {# daily question prompt feild #}
+            <label for="question" class="" style="font-weight:700;color:#555;">{{ form.question.label }}</label>
             {% for error in form.question.errors %}
                 <div class="alert alert-danger">{{ error }}</div>
             {% endfor %}
             Did I {{ form.question(class_='form-control', default='general') }} Today?
+            <br/>
 
+            {# color prompt feild #}
+            {% for error in form.color.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endfor %} 
+            <label for="color" class=""  style="font-weight:700;color:#555;">{{ form.color.label }}</label>
+            {{ form.color(class_='form-control', default='general') }}
+            <br/>
+
+            {# color prompt feild #}
+            {% for error in form.date.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endfor %} 
+            <label for="date" class="r" style="font-weight:700;color:#555;">{{ form.date.label }}</label>
+            {{ form.date(class_='form-control', default='general') }}
+            <br/>            
 
             <div style="visibility:hidden; height:0px;">
                 {# Type form #}

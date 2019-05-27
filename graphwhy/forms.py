@@ -10,8 +10,11 @@ class QuestionOptionForm(Form):
 
 # spawned question forms
 class QuestionCreateForm(Form):
-    question = TextAreaField('Question Prompt', [validators.Length(min=1, max=255)],
+    question = TextAreaField('Daily Prompt :  ', [validators.Length(min=1, max=255)],
                         filters=[strip_filter])
+    color = TextAreaField('Key Color [#111111] :', [validators.Length(min=7, max=7)], filters=[strip_filter])
+    date = TextAreaField('Date :', [validators.Length(min=7, max=200)], filters=[strip_filter])
+
     type = TextAreaField('Subject', [validators.Length(min=1, max=255)],
                         filters=[strip_filter])
     description = TextAreaField('Context', [validators.Length(max=500)],

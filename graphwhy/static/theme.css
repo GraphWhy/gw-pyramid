@@ -222,7 +222,19 @@ label{
 textarea.form-control#question {
     display:inline;
     width:auto;
-    height:34px !important;
+    height:40px !important;
+}
+
+textarea.form-control {
+    display:inline;
+    width:auto;
+    margin:10px 10px;
+    height:40px !important;
+}
+
+
+label{
+font-weight:bold;
 }
 
 /* McNulty's changes to columns */

@@ -12,6 +12,7 @@ from ..services.question_templating import QuestionTemplateService
 import pprint
 import logging
 import datetime
+from datetime import timedelta
 log = logging.getLogger(__name__)    
     
 @view_config(route_name='question_downvote', match_param='action=create',
@@ -107,7 +108,17 @@ def question_create(request):
         form.question_option.entries (array)
         form.type.data               
         '''
-         
+        # The string that you get from Javascript
+        date_string = '2017-12-31'
+        date_format = '%Y-%m-%d'
+        try:
+            date_obj = datetime.datetime.strptime(form.date.data, date_format)
+            setattr(entry, 'date', date_obj)
+        except ValueError:
+            setattr(entry, 'date', datetime.datetime.today() - timedelta(days=3))
+            print("Incorrect data format, should be YYYY-MM-DD")
+
+        setattr(entry, 'color', form.color.data)
         setattr(entry, 'question', form.question.data)
         setattr(entry, 'type', form.type.data)
         #if(form.description.data != "")
