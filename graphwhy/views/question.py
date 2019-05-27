@@ -68,7 +68,7 @@ def question_option_vote(request):
  
  
     if optionQuery:
-        optionQuery.created = datetime.datetime.now()
+        optionQuery.created = datetime.datetime.utcnow()
         optionQuery.option_id = int(request.matchdict.get('optionid', -1))
         request.tm.commit()
     else:    

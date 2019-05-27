@@ -20,8 +20,8 @@ class QuestionRecord(Base):
     color = Column(Unicode(255), default=u'#222222')
     description = Column(UnicodeText, default=u'No context given')
     type = Column(Unicode(255), nullable=False)
-    created = Column(DateTime, default=datetime.datetime.now)
-    edited = Column(DateTime, default=datetime.datetime.now)
+    created = Column(DateTime, default=datetime.datetime.utcnow)
+    edited = Column(DateTime, default=datetime.datetime.utcnow)
     __table_args__ = {'extend_existing': True}
 
     @property

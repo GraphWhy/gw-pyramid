@@ -60,7 +60,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'graphwhy'
-thisyear = datetime.datetime.now().year
+thisyear = datetime.datetime.utcnow().year
 copyright = u'2012-%s, Marcin Lulek' %thisyear
 
 # The version info for the project you're documenting, acts as replacement for
