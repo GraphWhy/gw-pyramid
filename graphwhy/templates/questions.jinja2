@@ -86,7 +86,61 @@
                 <button type="submit" class="btn btn-default" style="width:100%;" >Submit</button>
             </div>
         </form>
-    </div> 
+    </div>
+
+
+
+    
+        {% if paginator %}
+            {% if paginator.items %}
+                <div class="pin">
+                {% for entry in paginator.items %}
+                        {# <a href="{{ request.route_url('question', id=entry.id, slug=entry.slug) }}">  #}
+                          <div style="margin:3px 5px;">
+                            <div style="display:inline-block;width:10px;height:10px;background-color:{{entry.color}}"></div>
+                            <h5 style="display:inline;">{{ entry.question }}</h5>
+                            <div class="btn-group" style="width:60%;display:inline-block;float:right;">
+                                {% for option in entry.answer_options %}
+                                    <form action="{{ request.route_url('submit_vote', action='create', 
+                                                        questionid = entry.id, optionid = option.id, date = '2000-10-05') }}" style="display:inline;">
+                                
+                                        {% if request.authenticated_userid %}
+                                            <button style="display:inline-block;" type="submit" class="button active"> 
+                                                {{ option.option_text }} 
+                                            </button>
+                                        {% else %}  
+                                           <button disabled style="display:inline-block;" type="submit" class="button"> 
+                                                {{ option.option_text }} 
+                                            </button>
+                                        {% endif %}
+                                        <span style="display:inline-block;" >{{ option.votes|length }}</span>
+                                        {% for vote in option.votes %}
+                                            {% if loop.last %}
+                                                <span style="display:inline-block;" >{{ vote.created }}</span>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </form>
+                                {% endfor %}
+                            </div>
+                            <hr style="border-color:#eee;"/>
+
+                          </div>
+                        {# </a> #}
+                {% endfor %}
+                </div>
+            {{ paginator.pager() | safe }}
+            {% endif %}
+        {% elif request.authenticated_userid %}
+        <div class="body pin">
+
+            <p>No question entries found.</p>
+        </div>
+        {% endif %}
+
+
+
+
+ 
     <script>    
        iPrime = 2;
        function appendOption() {

@@ -2,40 +2,39 @@
 
 {% block content %}
 
-    {# <img src="{{request.static_url('graphwhy:static/transparent.png')}}"> #}
-
-
-    <h3 class="largeText">Welcome to GraphWhy.org</h3>
-    <p class="subHeaderTest">
-        We anonymously visualize our users daily life based on yes/no questions.
-        </br> 
-    </p>
-    <p class="subHeaderTest">
-        Please login to use the application.
-    </p>
-    
-    <br>
-    <hr/>
-    <br>
-    {% for error in form.username.errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-    {% endfor %}
-    <!-- SIGN UP FORM-->
-    <h4 class="largeText">Sign Up/Login</h4>
-    <form action="{{request.route_url('home')}}" method="post" class="form {#sg-form#}">
-        <div class="form-group">
-            <label for="title" class="">{{form.username.label}}</label>
-            {{form.username(class_='form-control')}}
-            {% for error in form.password.errors %}
-                <div class="alert alert-danger">{{error}}</div>
-            {% endfor %}
-            <label for="body">{{form.password.label}}</label>
-            {{form.password(class_='form-control', value="")}}
-        </div>
-        <div class="form-group">
-            <label></label>
-            <button type="submit" class="btn btn-default">Submit</button>
-        </div>
-    </form>
-    
+    <div class="body pin">
+        {# <img src="{{request.static_url('graphwhy:static/transparent.png')}}"> #}
+        <h3 class="largeText">Welcome to GraphWhy.org</h3>
+        <p class="subHeaderTest">
+            We anonymously visualize our users daily life based on yes/no questions.
+            </br> 
+        </p>
+        <p class="subHeaderTest">
+            Please login to use the application.
+        </p>
+        
+        <br>
+        <hr/>
+        <br>
+        {% for error in form.username.errors %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endfor %}
+        <!-- SIGN UP FORM-->
+        <h4 class="largeText">Sign Up/Login</h4>
+        <form action="{{request.route_url('home')}}" method="post" class="form {#sg-form#}">
+            <div class="form-group">
+                <label for="title" class="">{{form.username.label}}</label>
+                {{form.username(class_='form-control')}}
+                {% for error in form.password.errors %}
+                    <div class="alert alert-danger">{{error}}</div>
+                {% endfor %}
+                <label for="body">{{form.password.label}}</label>
+                {{form.password(class_='form-control', value="")}}
+            </div>
+            <div class="form-group">
+                <label></label>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+        </form>
+   </div> 
   {% endblock %}
