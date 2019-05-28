@@ -76,13 +76,8 @@ def question_option_vote(request):
     option_vote = OptionVote()
     userQuery = request.dbsession.query(User)
     userQuery = userQuery.filter(User.name == request.authenticated_userid).first()
-   
-#    optionQuery = optionQuery.filter(OptionVote.creator == userQuery)
-
     questionQuery = request.dbsession.query(QuestionRecord).filter(
                                         QuestionRecord.id == int(request.matchdict.get('questionid',-1))).first()
- #   optionQuery = optionQuery.filter(OptionVote.question == questionQuery).first()
-  #  optionQuery = optionQuery.filter(OptionVote.created == datetime.datetime(1900,1,11)).first()
 
     optionQuery = request.dbsession.query(OptionVote).filter_by(creator = userQuery, question = questionQuery, created = date_obj).first()
 
