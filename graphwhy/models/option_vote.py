@@ -14,7 +14,7 @@ class OptionVote(Base):
     """ The SQLAlchemy declarative model class for a Question's answer option Object. """
     __tablename__ = 'option_votes'
     id = Column(Integer, primary_key=True)
-    created = Column(DateTime, default=datetime.datetime.utcnow)
+    created = Column(DateTime, nullable=False)
  
     option_id = Column(ForeignKey('answer_options.id'), nullable=False)
     option = relationship('AnswerOption', backref='votes')

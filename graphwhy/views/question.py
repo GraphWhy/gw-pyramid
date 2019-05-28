@@ -68,32 +68,36 @@ def question_option_vote(request):
     except ValueError:
         date_obj = datetime.datetime(1999,1,1)
 
+    def originalVote(x):
+        if(x.question == questionQuery and x.created == date_obj):
+            return true
+        return false
 
     option_vote = OptionVote()
     userQuery = request.dbsession.query(User)
     userQuery = userQuery.filter(User.name == request.authenticated_userid).first()
    
-    optionQuery = request.dbsession.query(OptionVote) 
-    optionQuery = optionQuery.filter(OptionVote.creator == userQuery)
+#    optionQuery = optionQuery.filter(OptionVote.creator == userQuery)
 
     questionQuery = request.dbsession.query(QuestionRecord).filter(
                                         QuestionRecord.id == int(request.matchdict.get('questionid',-1))).first()
-    optionQuery = optionQuery.filter(OptionVote.question == questionQuery and 
-                                     OptionVote.question.created.date == date_obj).first()
+ #   optionQuery = optionQuery.filter(OptionVote.question == questionQuery).first()
+  #  optionQuery = optionQuery.filter(OptionVote.created == datetime.datetime(1900,1,11)).first()
 
+    optionQuery = request.dbsession.query(OptionVote).filter_by(creator = userQuery, question = questionQuery, created = date_obj).first()
 
- 
- 
-    if optionQuery:
-        optionQuery.created = date_obj
-        optionQuery.option_id = int(request.matchdict.get('optionid', -1))
-        request.tm.commit()
-    else:   
-        setattr(option_vote, 'date', date_obj) 
+    if optionQuery is None:
+        setattr(option_vote, 'created', date_obj) 
         setattr(option_vote, 'creator_id', userQuery.id)
         setattr(option_vote, 'option_id', int(request.matchdict.get('optionid', -1)))
         setattr(option_vote, 'question_id', int(request.matchdict.get('questionid', -1)))
-        request.dbsession.add(option_vote)    
+        request.dbsession.add(option_vote) 
+    else:   
+        optionQuery.created = date_obj
+        optionQuery.option_id = int(request.matchdict.get('optionid', -1))
+        request.tm.commit()
+    
+
     return HTTPFound(location=request.route_url('question_action_new'))
 
 
