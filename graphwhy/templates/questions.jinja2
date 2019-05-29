@@ -98,6 +98,17 @@
                             <h5 style="display:inline;">{{ entry.question }}</h5>
                             <div class="btn-group" style="width:60%;display:inline-block;float:right;">
                                 {% for option in entry.answer_options %}
+
+                                    <script type="text/javascript"> 
+                                        function get_action{{option.id}}(){
+                                            date = new Date();
+                                            month = date.getMonth()+1;
+                                            toReturn = "{{ request.route_url('submit_vote', action='create', questionid = entry.id, optionid = option.id, date = '') }}"+ date.getFullYear() + "-" + month + "-" + date.getDate();
+                                            console.log(toReturn);
+                                            return toReturn;
+                                        }
+                                    </script>
+
                                     <form name="option{{option.id}}" action="" onsubmit="this.action=get_action{{option.id}}();" style="display:inline;">
                                 
                                         {% if request.authenticated_userid %}
@@ -118,12 +129,6 @@
                                     </form>
 
 
-                                    <script type="text/javascript">
-                                        function get_action{{option.id}}(){
-                                            console.log("here2");
-                                            return "{{ request.route_url('submit_vote', action='create', questionid = entry.id, optionid = option.id, date = '') }}2002-10-10";
-                                        }
-                                    </script>
 
                                 {% endfor %}
                             </div>
