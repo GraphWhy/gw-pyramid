@@ -2,9 +2,6 @@
 
 {% block content %}
 
-    <script>
-        
-    </script>
 
     <span style="font-size:35px;color:#666;font-weight:300;">Create a Daily Question</span>
     <div class="pin body">
@@ -88,64 +85,95 @@
         </form>
     </div> 
  
-        {% if paginator %}
-            {% if paginator.items %}
-                <div class="pin">
-                {% for entry in paginator.items %}
-                        {# <a href="{{ request.route_url('question', id=entry.id, slug=entry.slug) }}">  #}
-                          <div style="margin:3px 5px;">
-                            <div style="display:inline-block;width:10px;height:10px;background-color:{{entry.color}}"></div>
-                            <h5 style="display:inline;">{{ entry.question }}</h5>
-                            <div class="btn-group" style="width:60%;display:inline-block;float:right;">
-                                {% for option in entry.answer_options %}
 
-                                    <script type="text/javascript"> 
-                                        function get_action{{option.id}}(){
-                                            date = new Date();
-                                            month = date.getMonth()+1;
-                                            toReturn = "{{ request.route_url('submit_vote', action='create', questionid = entry.id, optionid = option.id, date = '') }}"+ date.getFullYear() + "-" + month + "-" + date.getDate();
-                                            console.log(toReturn);
-                                            return toReturn;
+    <script>
+        var monthMap = new Map();
+        var keyMap = new Map();
+    </script>
+
+
+    {% if paginator %}
+    {% if paginator.items %}
+        <div class="pin">
+        {% for entry in paginator.items %}
+                {# <a href="{{ request.route_url('question', id=entry.id, slug=entry.slug) }}">  #}
+                  <div style="margin:3px 5px;">
+                    <div style="display:inline-block;width:10px;height:10px;background-color:{{entry.color}}"></div>
+                    <h5 style="display:inline;">{{ entry.question }}</h5>
+                    <div class="btn-group" style="width:60%;display:inline-block;float:right;">
+                        {% for option in entry.answer_options %}
+                            <script type="text/javascript"> 
+                                function get_action{{option.id}}(){
+                                    date = new Date();
+                                    month = date.getMonth()+1;
+                                    toReturn = "{{ request.route_url('submit_vote', action='create', questionid = entry.id, optionid = option.id, date = '') }}"+ date.getFullYear() + "-" + month + "-" + date.getDate();
+                                    console.log(toReturn);
+                                    return toReturn;
+                                }
+                            </script>
+                            <form name="option{{option.id}}" 
+                                action="" onsubmit="this.action=get_action{{option.id}}();" style="display:inline;">
+                     
+                                {% if request.authenticated_userid %}
+                                    <button style="display:inline-block;" type="submit" class="button active"> 
+                                        {{ option.option_text }} 
+                                    </button>
+                                {% else %}  
+                                   <button disabled style="display:inline-block;" type="submit" class="button"> 
+                                        {{ option.option_text }} 
+                                    </button>
+                                {% endif %}
+                                <span style="display:inline-block;" >{{ option.votes|length }}</span>
+                                {% for vote in option.votes %}
+                                    {% if loop.last %}
+                                        <span style="display:inline-block;" >{{ vote.created }}</span>
+                                    {% endif %}
+                            
+                                    <script type='text/javascript'>
+                                        if(!monthMap.get('{{vote.created.year}}-{{vote.created.month}}-{{entry.id}}')){
+                                            monthMap.set('{{vote.created.year}}-{{vote.created.month}}-{{entry.id}}', 
+                                                            {
+                                                                questionId:{{entry.id}},
+                                                                question:'{{entry.question}}',
+                                                                year:{{vote.created.year}},
+                                                                month:{{vote.created.month}},
+                                                                days:[{{vote.created.day}}],
+                                                                val: ['{{option.option_text}}']
+                                                            });                                           
+                                        } else {
+                                            var month = monthMap.get('{{vote.created.year}}-{{vote.created.month}}-{{entry.id}}'); 
+                                            month.days.push({{vote.created.day}});
+                                            month.val.push('{{option.option_text}}');
                                         }
                                     </script>
-
-                                    <form name="option{{option.id}}" action="" onsubmit="this.action=get_action{{option.id}}();" style="display:inline;">
-                                
-                                        {% if request.authenticated_userid %}
-                                            <button style="display:inline-block;" type="submit" class="button active"> 
-                                                {{ option.option_text }} 
-                                            </button>
-                                        {% else %}  
-                                           <button disabled style="display:inline-block;" type="submit" class="button"> 
-                                                {{ option.option_text }} 
-                                            </button>
-                                        {% endif %}
-                                        <span style="display:inline-block;" >{{ option.votes|length }}</span>
-                                        {% for vote in option.votes %}
-                                            {% if loop.last %}
-                                                <span style="display:inline-block;" >{{ vote.created }}</span>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </form>
-
-
-
                                 {% endfor %}
-                            </div>
-                            <hr style="border-color:#eee;"/>
+                                <script>
+                                    if(!keyMap.get('{{entry.id}}')){
+                                        keyMap.set('{{entry.id}}', {
+                                                      question:'{{entry.question}}',
+                                                      color:'{{entry.color}}' 
+                                                    })
+                                        console.log(keyMap.get('{{entry.id}}').color);
+                                    } 
+                                </script>
+                            </form>
 
-                          </div>
-                        {# </a> #}
-                {% endfor %}
-                </div>
-            {{ paginator.pager() | safe }}
-            {% endif %}
-        {% elif request.authenticated_userid %}
-        <div class="body pin">
+                        {% endfor %}
+                    </div>
+                    <hr style="border-color:#eee;"/>
 
-            <p>No question entries found.</p>
+                  </div>
+                {# </a> #}
+        {% endfor %}
         </div>
-        {% endif %}
+    {{ paginator.pager() | safe }}
+    {% endif %}
+    {% elif request.authenticated_userid %}
+    <div class="body pin">
+
+        <p>No question entries found.</p>
+    </div>
+    {% endif %}
 
 
 
