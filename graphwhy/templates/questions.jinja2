@@ -2,7 +2,7 @@
 
 {% block content %}
 
-
+    <div id="back">
     <span style="font-size:35px;color:#666;font-weight:300;">Create a Daily Question</span>
     <div class="pin body">
         <form action="{{request.route_url('question_action',action=action)}}" method="post" class="form">
@@ -134,6 +134,7 @@
                                         if(!monthMap.has('{{vote.created.year}}-{{vote.created.month}}-{{entry.id}}')){
                                             monthMap.set('{{vote.created.year}}-{{vote.created.month}}-{{entry.id}}', 
                                                             {
+                                                                color: '{{entry.color}}',
                                                                 questionId:{{entry.id}},
                                                                 question:'{{entry.question}}',
                                                                 year:{{vote.created.year}},
@@ -195,10 +196,33 @@
             }
         </script>
  
+        <span style="font-size:35px;color:#666;font-weight:300;">User Results</span>
+        <script type="text/javascript">
+           for(const key of monthMap.keys()){
+                var div1 = document.createElement("div");
+                div1.classList.add("pin");
+                div1.classList.add("body");
+                document.getElementById("back").appendChild(div1);
+               
+                var days = monthMap.get(key).days;
+                var vals = monthMap.get(key).vals;
+                for(let i=0; i < days.length; i++){
+                    console.log('hi');
+                    var div2 = document.createElement("div"); 
+                    div2.style.width = "10px";
+                    div2.style.height = "10px";
+                    div2.style.display = "inline-block";
+                    div2.style.backgroundColor = monthMap.get(key).color;
+                    div1.appendChild(div2);
 
-
-
-
+                }
+                
+                
+                 
+                
+           }
+        </script>
+    </div>
     {{ paginator.pager() | safe }}
     {% endif %}
     {% elif request.authenticated_userid %}
