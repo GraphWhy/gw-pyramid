@@ -89,6 +89,7 @@
     <script>
         var monthMap = new Map();
         var keyMap = new Map();
+        var monthMapKeys = []
     </script>
 
 
@@ -108,7 +109,6 @@
                                     date = new Date();
                                     month = date.getMonth()+1;
                                     toReturn = "{{ request.route_url('submit_vote', action='create', questionid = entry.id, optionid = option.id, date = '') }}"+ date.getFullYear() + "-" + month + "-" + date.getDate();
-                                    console.log(toReturn);
                                     return toReturn;
                                 }
                             </script>
@@ -141,7 +141,8 @@
                                                                 month:{{vote.created.month}},
                                                                 days:["{{vote.created.day}}"],
                                                                 vals: ['{{option.option_text}}']
-                                                            });                                           
+                                                            });
+                                            monthMapKeys.push('{{vote.created.year}}-{{vote.created.month}}-{{entry.id}}');                                           
                                         } else {
                                             var month = monthMap.get('{{vote.created.year}}-{{vote.created.month}}-{{entry.id}}'); 
                                             month.days.push('{{vote.created.day}}');
@@ -155,7 +156,6 @@
                                                       question:'{{entry.question}}',
                                                       color:'{{entry.color}}' 
                                                     })
-                                        console.log(keyMap.get('{{entry.id}}').color);
                                     } 
                                 </script>
                             </form>
@@ -198,51 +198,63 @@
  
         <span style="font-size:35px;color:#666;font-weight:300;">User Results</span>
         <script type="text/javascript">
-           for(const key of monthMap.keys()){
+
+            
+
+           const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];        
+           monthMapKeys.sort().reverse(); 
+           for(const key of monthMapKeys){
                 var cur =monthMap.get(key);
                 var div1;
-                if(document.getElementById("month"+cur.month) == null){
+                if(document.getElementById("month"+cur.month+"_"+cur.year) == null){
                     var div4 = document.createElement("div");                     
                     div4.classList.add("pin");
                     div4.classList.add("body");
                     div4.style.overflowX= "scroll";
 
                     div1 = document.createElement("div");
-                    div1.style.width= "400px";
-                    div1.setAttribute("id","month" + cur.month);
+                    div1.style.width= "360px";
+                    div1.setAttribute("id","month" + cur.month+"_"+cur.year);
+
+                    var h5 = document.createElement("h5");
+                    h5.innerHTML = monthNames[cur.month-1] + ", " + cur.year;
+
                     document.getElementById("back").appendChild(div4);
+                    div4.appendChild(h5);
                     div4.appendChild(div1);
+
                 } else {
-                    div1 = document.getElementById("month"+cur.month);
+                    div1 = document.getElementById("month"+cur.month+"_"+cur.year);
                 }
                 var days = cur.days;
                 var vals = cur.vals;
-                console.log(days);
                 var date = new Date(cur.year, cur.month, 0);
                 for(let i=0; i <= date.getDate(); i++){ 
                     var div2 = document.createElement("div"); 
                     if(days.includes(String(i))){
-                        console.log(vals[x-1]);
                         var x = days.indexOf(String(i));
+                        console.log(vals[x]);
                         if(vals[x] == 'Yes'){
-                            div2.style.width = "10px";
-                            div2.style.height = "10px";
+                            div2.style.width = "8px";
+                            div2.style.height = "8px";
                             div2.style.margin = "1px";
                             div2.style.backgroundColor = cur.color;
                         } else {
                             div2.style.margin = "1px";
-                            div2.style.width = "10px";
-                            div2.style.height = "10px";
+                            div2.style.width = "8px";
+                            div2.style.height = "8px";
                             var div3 = document.createElement("div");
-                            div3.style.margin = "2px 3px";
-                            div3.style.width = "3px";
-                            div3.style.height = "3px";
+                            div3.style.margin = "2px 2px";
+                            div3.style.width = "2px";
+                            div3.style.height = "2px";
                             div3.style.backgroundColor = cur.color;
                             div2.appendChild(div3); 
                         }
                     } else {
-                        div2.style.width = "10px";
-                        div2.style.height = "10px";
+                        div2.style.width = "8px";
+                        div2.style.height = "8px";
                         div2.style.margin = "1px";
                     }
                     div2.style.border = "solid 1px #aaa";
@@ -284,7 +296,6 @@
           list.insertBefore(newItem, list.childNodes[iPrime++]);
        }
        function removeOption() {
-          console.log("clicked");
           if(iPrime > 2){
               iPrime--;
               var oldForm = document.getElementById("question_option-"+iPrime+"-question_option");
