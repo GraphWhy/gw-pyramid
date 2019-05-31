@@ -18,7 +18,7 @@
                 {% for error in form.question.errors %}
                     <div class="alert alert-danger">{{ error }}</div>
                 {% endfor %}
-                <br/>Did I {{ form.question(class_='form-control', default='general') }} Today?
+                <br/>Did/was I {{ form.question(class_='form-control', default='general') }} Today?
                 <br/><br/>
 
                 {# color prompt feild #}
@@ -139,13 +139,13 @@
                                                                 question:'{{entry.question}}',
                                                                 year:{{vote.created.year}},
                                                                 month:{{vote.created.month}},
-                                                                days:[{{vote.created.day}}],
-                                                                val: ['{{option.option_text}}']
+                                                                days:["{{vote.created.day}}"],
+                                                                vals: ['{{option.option_text}}']
                                                             });                                           
                                         } else {
                                             var month = monthMap.get('{{vote.created.year}}-{{vote.created.month}}-{{entry.id}}'); 
-                                            month.days.push({{vote.created.day}});
-                                            month.val.push('{{option.option_text}}');
+                                            month.days.push('{{vote.created.day}}');
+                                            month.vals.push('{{option.option_text}}');
                                         }
                                     </script>
                                 {% endfor %}
@@ -199,24 +199,62 @@
         <span style="font-size:35px;color:#666;font-weight:300;">User Results</span>
         <script type="text/javascript">
            for(const key of monthMap.keys()){
-                var div1 = document.createElement("div");
-                div1.classList.add("pin");
-                div1.classList.add("body");
-                document.getElementById("back").appendChild(div1);
-               
-                var days = monthMap.get(key).days;
-                var vals = monthMap.get(key).vals;
-                for(let i=0; i < days.length; i++){
-                    console.log('hi');
+                var cur =monthMap.get(key);
+                var div1;
+                if(document.getElementById("month"+cur.month) == null){
+                    var div4 = document.createElement("div");                     
+                    div4.classList.add("pin");
+                    div4.classList.add("body");
+                    div4.style.overflowX= "scroll";
+
+                    div1 = document.createElement("div");
+                    div1.style.width= "400px";
+                    div1.setAttribute("id","month" + cur.month);
+                    document.getElementById("back").appendChild(div4);
+                    div4.appendChild(div1);
+                } else {
+                    div1 = document.getElementById("month"+cur.month);
+                }
+                var days = cur.days;
+                var vals = cur.vals;
+                console.log(days);
+                var date = new Date(cur.year, cur.month, 0);
+                for(let i=0; i <= date.getDate(); i++){ 
                     var div2 = document.createElement("div"); 
-                    div2.style.width = "10px";
-                    div2.style.height = "10px";
+                    if(days.includes(String(i))){
+                        console.log(vals[x-1]);
+                        var x = days.indexOf(String(i));
+                        if(vals[x] == 'Yes'){
+                            div2.style.width = "10px";
+                            div2.style.height = "10px";
+                            div2.style.margin = "1px";
+                            div2.style.backgroundColor = cur.color;
+                        } else {
+                            div2.style.margin = "1px";
+                            div2.style.width = "10px";
+                            div2.style.height = "10px";
+                            var div3 = document.createElement("div");
+                            div3.style.margin = "2px 3px";
+                            div3.style.width = "3px";
+                            div3.style.height = "3px";
+                            div3.style.backgroundColor = cur.color;
+                            div2.appendChild(div3); 
+                        }
+                    } else {
+                        div2.style.width = "10px";
+                        div2.style.height = "10px";
+                        div2.style.margin = "1px";
+                    }
+                    div2.style.border = "solid 1px #aaa";
                     div2.style.display = "inline-block";
-                    div2.style.backgroundColor = monthMap.get(key).color;
                     div1.appendChild(div2);
 
                 }
                 
+                
+                //add break for next key
+                var br = document.createElement("br");
+                div1.appendChild(br);
                 
                  
                 
