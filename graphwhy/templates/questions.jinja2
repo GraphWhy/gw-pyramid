@@ -168,18 +168,13 @@
         {% endfor %}
         </div>
   
-    
         <span style="font-size:35px;color:#666;font-weight:300;">Daily Questions Key</span>
         <div id="key" class="pin body">
-            <div style="display:inline-block;width:10px;height:10px;background-color:#ccc"></div>
-            <h5 style="display:inline;">bae</h5>
-            </br>
         </div>
 
         <script>
             for(const key of keyMap.keys()){
-            
-                console.log(key);
+                //create small color block 
                 var div = document.createElement("div");
                 div.style.width = "10px";
                 div.style.height = "10px";
@@ -187,21 +182,19 @@
                 div.style.backgroundColor = keyMap.get(key).color;
                 document.getElementById("key").appendChild(div);
 
+                //create label
                 var h5 = document.createElement("h5");
                 h5.style.display = "inline";
                 h5.style.margin = "0px 5px";
                 h5.innerHTML = keyMap.get(key).question;
                 document.getElementById("key").appendChild(h5);
 
+                //add break for next key
                 var br = document.createElement("br");
                 document.getElementById("key").appendChild(br);
             }
-        
-            console.log(keys);
-            
-
-
         </script>
+ 
 
 
 
