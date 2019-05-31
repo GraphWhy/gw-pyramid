@@ -92,6 +92,7 @@
     </script>
 
 
+    <span style="font-size:35px;color:#666;font-weight:300;">Answer Daily Questions</span>
     {% if paginator %}
     {% if paginator.items %}
         <div class="pin">
@@ -123,14 +124,14 @@
                                         {{ option.option_text }} 
                                     </button>
                                 {% endif %}
-                                <span style="display:inline-block;" >{{ option.votes|length }}</span>
+                                <!--<span style="display:inline-block;" >{{ option.votes|length }}</span>-->
                                 {% for vote in option.votes %}
                                     {% if loop.last %}
-                                        <span style="display:inline-block;" >{{ vote.created }}</span>
+                                        <!--<span style="display:inline-block;" >{{ vote.created }}</span>-->
                                     {% endif %}
                             
                                     <script type='text/javascript'>
-                                        if(!monthMap.get('{{vote.created.year}}-{{vote.created.month}}-{{entry.id}}')){
+                                        if(!monthMap.has('{{vote.created.year}}-{{vote.created.month}}-{{entry.id}}')){
                                             monthMap.set('{{vote.created.year}}-{{vote.created.month}}-{{entry.id}}', 
                                                             {
                                                                 questionId:{{entry.id}},
@@ -148,7 +149,7 @@
                                     </script>
                                 {% endfor %}
                                 <script>
-                                    if(!keyMap.get('{{entry.id}}')){
+                                    if(!keyMap.has('{{entry.id}}')){
                                         keyMap.set('{{entry.id}}', {
                                                       question:'{{entry.question}}',
                                                       color:'{{entry.color}}' 
@@ -166,18 +167,52 @@
                 {# </a> #}
         {% endfor %}
         </div>
+  
+    
+        <span style="font-size:35px;color:#666;font-weight:300;">Daily Questions Key</span>
+        <div id="key" class="pin body">
+            <div style="display:inline-block;width:10px;height:10px;background-color:#ccc"></div>
+            <h5 style="display:inline;">bae</h5>
+            </br>
+        </div>
+
+        <script>
+            for(const key of keyMap.keys()){
+            
+                console.log(key);
+                var div = document.createElement("div");
+                div.style.width = "10px";
+                div.style.height = "10px";
+                div.style.display = "inline-block";
+                div.style.backgroundColor = keyMap.get(key).color;
+                document.getElementById("key").appendChild(div);
+
+                var h5 = document.createElement("h5");
+                h5.style.display = "inline";
+                h5.style.margin = "0px 5px";
+                h5.innerHTML = keyMap.get(key).question;
+                document.getElementById("key").appendChild(h5);
+
+                var br = document.createElement("br");
+                document.getElementById("key").appendChild(br);
+            }
+        
+            console.log(keys);
+            
+
+
+        </script>
+
+
+
+
     {{ paginator.pager() | safe }}
     {% endif %}
     {% elif request.authenticated_userid %}
     <div class="body pin">
-
-        <p>No question entries found.</p>
+        <p>Create a question to start using your bullet journal.</p>
     </div>
     {% endif %}
-
-
-
-
  
     <script>    
        iPrime = 2;
