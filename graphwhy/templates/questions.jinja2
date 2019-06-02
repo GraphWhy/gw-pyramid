@@ -120,7 +120,7 @@
             questions = " ";
             for(const key of voteOptionsMap.keys()){
                 questions += key + "-";
-                votes += voteOptionsMap[key] + "-";
+                votes += voteOptionsMap.get(key) + "-";
             }
 
             url = "{{request.route_url('submit_vote',action='create',questionid="",optionid="", date='') }}";
@@ -148,9 +148,11 @@
                         {% for option in entry.answer_options %}
                             <div style="display:inline-block;" class="button active" onclick="setVote('{{option.option_text}}', {{option.id}}, {{entry.id}})" > 
                                 {{ option.option_text }}
-                                <input style="display:inline-block;" type="checkbox" onclick="setVote('{{option.option_text}}', {{option.id}}, {{entry.id}})" id="option{{option.id}}question{{entry.id}}"> 
+                                <input style="display:inline-block;" type="checkbox" onclick="setVote('{{option.option_text}}', {{option.id}}, {{entry.id}})" id="option{{option.id}}question{{entry.id}}"/> 
                             </div>
-
+                            <script>
+                                document.getElementById("option{{option.id}}question{{entry.id}}").checked = false;
+                            </script>
                             <!--<span style="display:inline-block;" >{{ option.votes|length }}</span>-->
                             {% for vote in option.votes %}
                                 {% if loop.last %}
