@@ -57,7 +57,7 @@ def upvote(request):
     return HTTPFound(location=request.route_url('question_action_new'))
     
 
-
+import time
 
 @view_config(route_name='submit_vote', match_param='action=create',
              renderer='graphwhy:templates/questions.jinja2',
@@ -75,23 +75,26 @@ def question_option_vote(request):
     option_vote = OptionVote()
     userQuery = request.dbsession.query(User)
     userQuery = userQuery.filter(User.name == request.authenticated_userid).first()
-    questionQuery = request.dbsession.query(QuestionRecord).filter(
-                                        QuestionRecord.id == int(request.matchdict.get('questionid',-1))).first()
-
-    optionQuery = request.dbsession.query(OptionVote).filter_by(creator = userQuery, question = questionQuery, created = date_obj).first()
-
-    if optionQuery is None:
-        setattr(option_vote, 'created', date_obj) 
-        setattr(option_vote, 'creator_id', userQuery.id)
-        setattr(option_vote, 'option_id', int(request.matchdict.get('optionid', -1)))
-        setattr(option_vote, 'question_id', int(request.matchdict.get('questionid', -1)))
-        request.dbsession.add(option_vote) 
-    else:   
-        optionQuery.created = date_obj
-        optionQuery.option_id = int(request.matchdict.get('optionid', -1))
-        request.tm.commit()
+    questionQuery = request.dbsession.query(QuestionRecord)
     
-
+    #cs = client selected
+    csQuestions = request.matchdict.get('questionid',"").split('-')
+    csVoteOptions = request.matchdict.get('optionid', "").split('-')
+   
+    for i in range(0, len(csQuestions)):
+        specificQuestion = questionQuery.filter(QuestionRecord.id == csQuestions[i]).first()
+        optionQuery = request.dbsession.query(OptionVote).filter_by(creator = userQuery, question = specificQuestion, created = date_obj).first()
+        if optionQuery is None:
+            setattr(option_vote, 'created', date_obj) 
+            setattr(option_vote, 'creator_id', userQuery.id)
+            setattr(option_vote, 'option_id', csVoteOptions[i])
+            setattr(option_vote, 'question_id', csQuestions[i])
+            request.dbsession.add(option_vote) 
+        else:   
+            optionQuery.created = date_obj
+            optionQuery.option_id = csVoteOptions[i]
+    request.tm.commit()
+    
     return HTTPFound(location=request.route_url('question_action_new'))
 
 

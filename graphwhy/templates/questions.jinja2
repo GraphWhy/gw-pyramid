@@ -3,7 +3,7 @@
 {% block content %}
     <div id="back">
 
-    <span style="font-size:35px;color:#666;font-weight:300;">Create a Daily Question</span>
+    <span style="font-size:35px;color:#666;font-weight:300;padding-top:15px;">Create a Daily Question</span>
     <div class="pin body">
         <form action="{{request.route_url('question_action',action=action)}}" method="post" class="form">
             {% if action =='edit' %}
@@ -101,12 +101,12 @@
             if(optionText == 'Yes'){
                 document.getElementById("option" + optionId + "question" + questionId).checked = true;  
                 document.getElementById("option" + (optionId+1) + "question" + questionId).checked = false;
-                document.getElementById("option" + (optionId) + "question" + questionId).parentElement.style.backgroundColor = "#ddd";
+                document.getElementById("option" + (optionId) + "question" + questionId).parentElement.style.backgroundColor = "#e4e4e4";
                 document.getElementById("option" + (optionId+1) + "question" + questionId).parentElement.style.backgroundColor = null;
             } else {
                 document.getElementById("option" + optionId + "question" + questionId).checked = true;  
                 document.getElementById("option" + (optionId-1) + "question" + questionId).checked = false;
-                document.getElementById("option" + (optionId) + "question" + questionId).parentElement.style.backgroundColor = "#ddd";
+                document.getElementById("option" + (optionId) + "question" + questionId).parentElement.style.backgroundColor = "#e4e4e4";
                 document.getElementById("option" + (optionId-1) + "question" + questionId).parentElement.style.backgroundColor = null;
             }
             
@@ -138,7 +138,7 @@
     </script>
 
 
-    <span style="font-size:35px;color:#666;font-weight:300;">Answer Daily Questions</span>
+    <span style="font-size:35px;color:#666;font-weight:300;padding-top:15px;">Answer Daily Questions</span>
     {% if paginator %}
     {% if paginator.items %}
         <div class="pin">
@@ -204,7 +204,7 @@
             </form>
         </div>
   
-        <span style="font-size:35px;color:#666;font-weight:300;">Daily Questions Key</span>
+        <span style="font-size:35px;color:#666;font-weight:300;padding-top:15px;">Daily Questions Key</span>
         <div id="key" class="pin body">
         </div>
 
@@ -231,7 +231,7 @@
             }
         </script>
  
-        <span style="font-size:35px;color:#666;font-weight:300;">User Results</span>
+        <span style="font-size:35px;color:#666;font-weight:300;padding-top:15px;">User Results</span>
         <script type="text/javascript">
 
             
@@ -247,7 +247,7 @@
                     var div4 = document.createElement("div");                     
                     div4.classList.add("pin");
                     div4.classList.add("body");
-                    div4.style.overflowX= "scroll";
+                    //div4.style.overflowX= "scroll";
 
                     div1 = document.createElement("div");
                     div1.style.width= "360px";
@@ -281,9 +281,9 @@
                             div2.style.width = "8px";
                             div2.style.height = "8px";
                             var div3 = document.createElement("div");
-                            div3.style.margin = "2px 2px";
-                            div3.style.width = "2px";
-                            div3.style.height = "2px";
+                            div3.style.margin = "1px 1px";
+                            div3.style.width = "4px";
+                            div3.style.height = "4px";
                             div3.style.backgroundColor = cur.color;
                             div2.appendChild(div3); 
                         }
