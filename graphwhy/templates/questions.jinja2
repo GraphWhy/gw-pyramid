@@ -117,11 +117,14 @@
             month = date.getMonth()+1;
             
             votes = "";
-            questions = " ";
+            questions = "";
             for(const key of voteOptionsMap.keys()){
+                console.log(key);
                 questions += key + "-";
                 votes += voteOptionsMap.get(key) + "-";
             }
+            votes = votes.substring(0, votes.length-1);
+            questions = questions.substring(0, questions.length-1);
 
             url = "{{request.route_url('submit_vote',action='create',questionid="",optionid="", date='') }}";
             url = url.substring(0, url.length-3);
