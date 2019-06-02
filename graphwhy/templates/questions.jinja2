@@ -1,8 +1,8 @@
 {% extends "graphwhy:templates/layout.jinja2" %}
 
 {% block content %}
-
     <div id="back">
+
     <span style="font-size:35px;color:#666;font-weight:300;">Create a Daily Question</span>
     <div class="pin body">
         <form action="{{request.route_url('question_action',action=action)}}" method="post" class="form">
@@ -11,8 +11,6 @@
             {% endif %}
             {# Question form #}
             <div class="form-group">
-
-
                 {# daily question prompt feild #}
                 <label for="question" class="" style="font-weight:700;color:#555;">{{ form.question.label }}</label>
                 {% for error in form.question.errors %}
@@ -28,8 +26,7 @@
                 <label for="color" class=""  style="font-weight:700;color:#555;">{{ form.color.label }}</label>
                 {{ form.color(class_='form-control', default='general') }}
                 
-
-              
+ 
                 {# date prompt feild #}
                 {#
                     {% for error in form.date.errors %}
@@ -39,6 +36,7 @@
                     {{ form.date(class_='form-control', default='general') }}
                     <br/>            
                 #}
+
 
                 <div style="visibility:hidden; height:0px;">
                     {# Type form #}
@@ -86,10 +84,54 @@
     </div> 
  
 
+
+
     <script>
-        var monthMap = new Map();
-        var keyMap = new Map();
+        //objects for results component
         var monthMapKeys = []
+        var monthMap = new Map();
+
+        // object for key component
+        var keyMap = new Map();
+
+        //object and method for submitting multiple questions
+        var voteOptionsMap = new Map();
+        function setVote(optionText, optionId, questionId){
+            voteOptionsMap.set(questionId, optionId);
+            if(optionText == 'Yes'){
+                document.getElementById("option" + optionId + "question" + questionId).checked = true;  
+                document.getElementById("option" + (optionId+1) + "question" + questionId).checked = false;
+                document.getElementById("option" + (optionId) + "question" + questionId).parentElement.style.backgroundColor = "#ddd";
+                document.getElementById("option" + (optionId+1) + "question" + questionId).parentElement.style.backgroundColor = null;
+            } else {
+                document.getElementById("option" + optionId + "question" + questionId).checked = true;  
+                document.getElementById("option" + (optionId-1) + "question" + questionId).checked = false;
+                document.getElementById("option" + (optionId) + "question" + questionId).parentElement.style.backgroundColor = "#ddd";
+                document.getElementById("option" + (optionId-1) + "question" + questionId).parentElement.style.backgroundColor = null;
+            }
+            
+        }
+
+        function getSubmitUrl(){ 
+            date = new Date();
+            month = date.getMonth()+1;
+            
+            votes = "";
+            questions = " ";
+            for(const key of voteOptionsMap.keys()){
+                questions += key + "-";
+                votes += voteOptionsMap[key] + "-";
+            }
+
+            url = "{{request.route_url('submit_vote',action='create',questionid="",optionid="", date='') }}";
+            url = url.substring(0, url.length-3);
+            url += "/" + questions; 
+            url += "/" + votes; 
+            url += "/" + date.getFullYear() + "-" + month + "-" + date.getDate(); 
+   
+            return url;
+        }
+
     </script>
 
 
@@ -104,69 +146,57 @@
                     <h5 style="display:inline;">{{ entry.question }}</h5>
                     <div class="btn-group" style="width:60%;display:inline-block;float:right;">
                         {% for option in entry.answer_options %}
-                            <script type="text/javascript"> 
-                                function get_action{{option.id}}(){
-                                    date = new Date();
-                                    month = date.getMonth()+1;
-                                    toReturn = "{{ request.route_url('submit_vote', action='create', questionid = entry.id, optionid = option.id, date = '') }}"+ date.getFullYear() + "-" + month + "-" + date.getDate();
-                                    return toReturn;
-                                }
-                            </script>
-                            <form name="option{{option.id}}" 
-                                action="" onsubmit="this.action=get_action{{option.id}}();" style="display:inline;">
-                     
-                                {% if request.authenticated_userid %}
-                                    <button style="display:inline-block;" type="submit" class="button active"> 
-                                        {{ option.option_text }} 
-                                    </button>
-                                {% else %}  
-                                   <button disabled style="display:inline-block;" type="submit" class="button"> 
-                                        {{ option.option_text }} 
-                                    </button>
-                                {% endif %}
-                                <!--<span style="display:inline-block;" >{{ option.votes|length }}</span>-->
-                                {% for vote in option.votes %}
-                                    {% if loop.last %}
-                                        <!--<span style="display:inline-block;" >{{ vote.created }}</span>-->
-                                    {% endif %}
-                            
-                                    <script type='text/javascript'>
-                                        if(!monthMap.has('{{vote.created.year}}-{{vote.created.month}}-{{entry.id}}')){
-                                            monthMap.set('{{vote.created.year}}-{{vote.created.month}}-{{entry.id}}', 
-                                                            {
-                                                                color: '{{entry.color}}',
-                                                                questionId:{{entry.id}},
-                                                                question:'{{entry.question}}',
-                                                                year:{{vote.created.year}},
-                                                                month:{{vote.created.month}},
-                                                                days:["{{vote.created.day}}"],
-                                                                vals: ['{{option.option_text}}']
-                                                            });
-                                            monthMapKeys.push('{{vote.created.year}}-{{vote.created.month}}-{{entry.id}}');                                           
-                                        } else {
-                                            var month = monthMap.get('{{vote.created.year}}-{{vote.created.month}}-{{entry.id}}'); 
-                                            month.days.push('{{vote.created.day}}');
-                                            month.vals.push('{{option.option_text}}');
-                                        }
-                                    </script>
-                                {% endfor %}
-                                <script>
-                                    if(!keyMap.has('{{entry.id}}')){
-                                        keyMap.set('{{entry.id}}', {
-                                                      question:'{{entry.question}}',
-                                                      color:'{{entry.color}}' 
-                                                    })
-                                    } 
-                                </script>
-                            </form>
+                            <div style="display:inline-block;" class="button active" onclick="setVote('{{option.option_text}}', {{option.id}}, {{entry.id}})" > 
+                                {{ option.option_text }}
+                                <input style="display:inline-block;" type="checkbox" onclick="setVote('{{option.option_text}}', {{option.id}}, {{entry.id}})" id="option{{option.id}}question{{entry.id}}"> 
+                            </div>
 
+                            <!--<span style="display:inline-block;" >{{ option.votes|length }}</span>-->
+                            {% for vote in option.votes %}
+                                {% if loop.last %}
+                                    <!--<span style="display:inline-block;" >{{ vote.created }}</span>-->
+                                {% endif %}
+                        
+                                <script type='text/javascript'>
+                                    if(!monthMap.has('{{vote.created.year}}-{{vote.created.month}}-{{entry.id}}')){
+                                        monthMap.set('{{vote.created.year}}-{{vote.created.month}}-{{entry.id}}', 
+                                                        {
+                                                            color: '{{entry.color}}',
+                                                            questionId:{{entry.id}},
+                                                            question:'{{entry.question}}',
+                                                            year:{{vote.created.year}},
+                                                            month:{{vote.created.month}},
+                                                            days:["{{vote.created.day}}"],
+                                                            vals: ['{{option.option_text}}']
+                                                        });
+                                        monthMapKeys.push('{{vote.created.year}}-{{vote.created.month}}-{{entry.id}}');                                           
+                                    } else {
+                                        var month = monthMap.get('{{vote.created.year}}-{{vote.created.month}}-{{entry.id}}'); 
+                                        month.days.push('{{vote.created.day}}');
+                                        month.vals.push('{{option.option_text}}');
+                                    }
+                                </script>
+                            {% endfor %}
+                            <script>
+                                if(!keyMap.has('{{entry.id}}')){
+                                    keyMap.set('{{entry.id}}', {
+                                                  question:'{{entry.question}}',
+                                                  color:'{{entry.color}}' 
+                                                })
+                                } 
+                            </script>
                         {% endfor %}
                     </div>
                     <hr style="border-color:#eee;"/>
 
                   </div>
                 {# </a> #}
-        {% endfor %}
+            {% endfor %}
+
+            <form name="" 
+                onsubmit="this.action=getSubmitUrl();" style="display:inline;">
+                <button type='submit' class="button" style="padding:10px;width:100%;margin:10px;">Submit</button>
+            </form>
         </div>
   
         <span style="font-size:35px;color:#666;font-weight:300;">Daily Questions Key</span>
@@ -231,7 +261,7 @@
                 var days = cur.days;
                 var vals = cur.vals;
                 var date = new Date(cur.year, cur.month, 0);
-                for(let i=0; i <= date.getDate(); i++){ 
+                for(let i=1; i <= date.getDate(); i++){ 
                     var div2 = document.createElement("div"); 
                     if(days.includes(String(i))){
                         var x = days.indexOf(String(i));

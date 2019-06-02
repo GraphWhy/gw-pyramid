@@ -15,6 +15,8 @@ import datetime
 from datetime import timedelta
 log = logging.getLogger(__name__)    
     
+
+
 @view_config(route_name='question_downvote', match_param='action=create',
              renderer='graphwhy:templates/questions.jinja2',
              permission='create')
@@ -39,6 +41,8 @@ def downvote(request):
     return HTTPFound(location=request.route_url('question_action_new'))
 
 
+
+
 @view_config(route_name='question_upvote', match_param='action=create',
              renderer='graphwhy:templates/questions.jinja2',
              permission='create')
@@ -53,12 +57,12 @@ def upvote(request):
     return HTTPFound(location=request.route_url('question_action_new'))
     
 
+
+
 @view_config(route_name='submit_vote', match_param='action=create',
              renderer='graphwhy:templates/questions.jinja2',
              permission='create')
 def question_option_vote(request):
-
-
 
     # The string that you get from Javascript
     # date_string = '2017-12-31'
@@ -67,11 +71,6 @@ def question_option_vote(request):
         date_obj = datetime.datetime.strptime(request.matchdict.get('date', 1994-11-10), date_format)
     except ValueError:
         date_obj = datetime.datetime(1999,1,1)
-
-    def originalVote(x):
-        if(x.question == questionQuery and x.created == date_obj):
-            return true
-        return false
 
     option_vote = OptionVote()
     userQuery = request.dbsession.query(User)
@@ -94,6 +93,9 @@ def question_option_vote(request):
     
 
     return HTTPFound(location=request.route_url('question_action_new'))
+
+
+
 
 
 @view_config(route_name='register-success', match_param='action=create',
