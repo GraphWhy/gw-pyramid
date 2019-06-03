@@ -72,7 +72,6 @@ def question_option_vote(request):
     except ValueError:
         date_obj = datetime.datetime(1999,1,1)
 
-    option_vote = OptionVote()
     userQuery = request.dbsession.query(User)
     userQuery = userQuery.filter(User.name == request.authenticated_userid).first()
     questionQuery = request.dbsession.query(QuestionRecord)
@@ -85,6 +84,7 @@ def question_option_vote(request):
         specificQuestion = questionQuery.filter(QuestionRecord.id == csQuestions[i]).first()
         optionQuery = request.dbsession.query(OptionVote).filter_by(creator = userQuery, question = specificQuestion, created = date_obj).first()
         if optionQuery is None:
+            option_vote = OptionVote()
             setattr(option_vote, 'created', date_obj) 
             setattr(option_vote, 'creator_id', userQuery.id)
             setattr(option_vote, 'option_id', csVoteOptions[i])
