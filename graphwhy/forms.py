@@ -30,6 +30,6 @@ class QuestionUpdateForm(QuestionCreateForm):
 
 # original registrationForm
 class RegistrationForm(Form):
-    username = StringField('Enter a username here:', [validators.Length(min=1, max=255)],
+    username = StringField('Username:', [validators.Length(min=1, max=255)],
                            filters=[strip_filter], default=u'')
-    password = StringField('Password', [validators.Length(min=3)], default=u'test')
+    password = StringField('Password:', [validators.Length(min=3)], default=u'test')

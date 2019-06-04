@@ -5,7 +5,7 @@
 
     <span style="font-size:35px;color:#666;font-weight:300;padding-top:15px;">Create a Daily Question</span>
     <div class="pin body">
-        <form action="{{request.route_url('question_action',action=action)}}" method="post" class="form">
+        <form action="{{request.route_url('question_action',action=action)}}" id="createQuestion" method="post" class="form">
             {% if action =='edit' %}
                 {{ form.id() }}
             {% endif %}
@@ -24,8 +24,48 @@
                     <div class="alert alert-danger">{{ error }}</div>
                 {% endfor %} 
                 <label for="color" class=""  style="font-weight:700;color:#555;">{{ form.color.label }}</label>
-                {{ form.color(class_='form-control', default='general') }}
+                {{ form.color(id_='newColor', class_='form-control', default='general') }}
+                <div id="colorsPanel1"></div>
+                <div id="colorsPanel2"></div>
                 
+                
+                
+                <script>
+                    var colors1 = ["#FFC312","#C4E538","#12CBC4","#FDA7DF","#ED4C67","#F79F1F","#ED4C67","#F79F1F","#A3CB38","#1289A7","#D980FA","#B53471","#B53471","#EE5A24","#009432","#0652DD","#9980FA","#833471"]
+                    var colors2 = [,"#EA2027","#006266","#1B1464","#5758BB","#6F1E51","#fad390","#f8c291","#6a89cc","#82ccdd","#b8e994","#f6b93b","#e55039","#4a69bd","#60a3bc","#78e08f","#fa983a","#eb2f06","#3c6382","#38ada9","#e58e26","#b71540","#0c2461","#0a3d62","#079992"];
+                        
+                        
+                    for(const color of colors2){
+                        //create small color block 
+                        var div = document.createElement("div");
+                        div.style.width = "15px";
+                        div.style.height = "15px";
+                        div.style.display = "inline-block";
+                        div.style.backgroundColor = color;
+                        div.style.border = "2px solid #fff";
+                        div.style.margin = "2px";
+                        div.onclick = function(){
+                            document.getElementById("createQuestion").elements["color"].value = color; 
+                            div.style.border = "2px solid #111";
+                        }
+                        document.getElementById("colorsPanel2").appendChild(div);
+                    }
+                    for(const color of colors1){
+                        //create small color block 
+                        var div = document.createElement("div");
+                        div.style.width = "15px";
+                        div.style.height = "15px";
+                        div.style.display = "inline-block";
+                        div.style.backgroundColor = color;
+                        div.style.border = "2px solid #fff";
+                        div.style.margin = "2px";
+                        div.onclick = function(){
+                            document.getElementById("createQuestion").elements["color"].value = color; 
+                            div.style.border = "2px solid #111";
+                        }
+                        document.getElementById("colorsPanel1").appendChild(div);
+                    }
+                </script>  
  
                 {# date prompt feild #}
                 {#

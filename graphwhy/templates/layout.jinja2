@@ -30,7 +30,7 @@
         </h1>
         {% if request.authenticated_userid %}
             <h5 class="sg-a1-color"  style="display:inline-block; float:right; padding-top:40px;">
-                <a class="sg-a1-color" href="{{request.route_url('question_action_new')}}">Welcome <strong>{{request.authenticated_userid}}</strong>
+                <a style="margin-right:10px;" class="sg-a1-color" href="{{request.route_url('question_action_new')}}">Welcome <strong>{{request.authenticated_userid}}</strong></a>
                 <a href="{{request.route_url('auth',action='out')}}">Sign Out</a>
             </h5>
         {% endif %}
