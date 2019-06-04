@@ -144,7 +144,7 @@ def question_create(request):
         # populate question_options (answer_options)
         userid = query.id
         query = request.dbsession.query(QuestionRecord)
-        query = query.filter(QuestionRecord.question == request.POST.get('question')).first()
+        query = query.filter(QuestionRecord.question == form.question.data).first()
         for val in form.question_option.entries:
             entry_options = AnswerOption()
             setattr(entry_options, 'option_text', val.form._fields['question_option'].data)
