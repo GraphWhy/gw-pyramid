@@ -175,6 +175,19 @@
             return url;
         }
 
+        function editQuestion(question, color){
+            document.getElementById("modalBackground").style.visibility = "visible";
+            document.getElementById("editQuestionPanel").style.visibility = "visible";
+            document.getElementById("editQuestionField").value = question;
+            document.getElementById("editColorField").value = color;
+            
+        }
+
+        function closeEditModal(){
+            document.getElementById("modalBackground").style.visibility = "hidden";
+            document.getElementById("editQuestionPanel").style.visibility = "hidden";
+        }
+
     </script>
 
 
@@ -230,10 +243,10 @@
                                                 })
                                 } 
                             </script>
-                        {% endfor %}
+                        {% endfor %} 
+                    <i class="fa fa-pencil" onclick="editQuestion('{{entry.question}}','{{entry.color}}')" style="color:#ccc;margin:6px;display:inline;cursor:pointer;" ></i>
                     </div>
                     <hr style="border-color:#eee;"/>
-
                   </div>
                 {# </a> #}
             {% endfor %}
@@ -336,14 +349,11 @@
                     div2.style.display = "inline-block";
                     div1.appendChild(div2);
 
-                }
-                
+                }                
                 
                 //add break for next key
                 var br = document.createElement("br");
-                div1.appendChild(br);
-                
-                 
+                div1.appendChild(br);                                 
                 
            }
         </script>
@@ -381,6 +391,50 @@
        }
     </script>
 
+    <div class="" id="modalBackground" style="width:100%;height:100vh;background-color:#000000d9;position:fixed;left:0px;top:0px;visibility:hidden;z-index:1;" onclick="closeEditModal()">
+    </div>
+    <div class="body pin" style="background-color:#fff;width:92%;margin:auto;display:block;z-index:5;position:fixed;top:30px;visibility:hidden;" id="editQuestionPanel">
+        <span style="font-size:35px;color:#666;font-weight:300;padding-top:15px;">User Results</span>
+        </br>
+        </br>
+        <label for="question" class="" style="width:100px;font-weight:700;color:#555;">question</label>
+        <input id="editQuestionField" /> 
+        </br>
+        <label for="question" class="" style="width:100px;font-weight:700;color:#555;">color</label>
+        <input id="editColorField" />
+        <div id="colorsPanel1b"></div> 
+        <div id="colorsPanel2b"></div> 
+    </div>
 
-
+    <script>
+        for(const color of colors2){
+            //create small color block 
+            var div = document.createElement("div");
+            div.style.width = "15px";
+            div.style.height = "15px";
+            div.style.display = "inline-block";
+            div.style.backgroundColor = color;
+            div.style.border = "2px solid #fff";
+            div.style.margin = "2px";
+            div.onclick = function(){
+                document.getElementById("editColorField").value = color; 
+            }
+            document.getElementById("colorsPanel2b").appendChild(div);
+        }
+        for(const color of colors1){
+            //create small color block 
+            var div = document.createElement("div");
+            div.style.width = "15px";
+            div.style.height = "15px";
+            div.style.display = "inline-block";
+            div.style.backgroundColor = color;
+            div.style.border = "2px solid #fff";
+            div.style.margin = "2px";
+            div.onclick = function(){
+                document.getElementById("editColorField").value = color; 
+            }
+            document.getElementById("colorsPanel1b").appendChild(div);
+        }
+    </script>
+    
 {% endblock %}
