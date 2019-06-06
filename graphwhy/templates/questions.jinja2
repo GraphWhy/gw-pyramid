@@ -174,8 +174,10 @@
    
             return url;
         }
-
-        function editQuestion(question, color){
+        
+        var currentQuestionId;
+        function editQuestion(question, color, id){
+            currentQuestionId = id;
             document.getElementById("modalBackground").style.visibility = "visible";
             document.getElementById("editQuestionPanel").style.visibility = "visible";
             document.getElementById("editQuestionField").value = question;
@@ -244,7 +246,7 @@
                                 } 
                             </script>
                         {% endfor %} 
-                    <i class="fa fa-pencil" onclick="editQuestion('{{entry.question}}','{{entry.color}}')" style="color:#ccc;margin:6px;display:inline;cursor:pointer;" ></i>
+                    <i class="fa fa-pencil" onclick="editQuestion('{{entry.question}}','{{entry.color}}','{{entry.id}}')" style="color:#ccc;margin:6px;display:inline;cursor:pointer;" ></i>
                     </div>
                     <hr style="border-color:#eee;"/>
                   </div>
@@ -393,7 +395,7 @@
 
     <div class="" id="modalBackground" style="width:100%;height:100vh;background-color:#000000d9;position:fixed;left:0px;top:0px;visibility:hidden;z-index:1;" onclick="closeEditModal()">
     </div>
-    <div class="body pin" style="background-color:#fff;width:92%;margin:auto;display:block;z-index:5;position:fixed;top:30px;visibility:hidden;" id="editQuestionPanel">
+    <div class="wrapper body pin" style="background-color:#fff;width:auto;margin:auto;display:block;z-index:5;position:fixed;top:30px;visibility:hidden;" id="editQuestionPanel">
         <span style="font-size:35px;color:#666;font-weight:300;padding-top:15px;">Edit Question</span>
         </br>
         </br>
@@ -405,13 +407,17 @@
         <div id="colorsPanel1b"></div> 
         <div id="colorsPanel2b"></div>
         </br>
-        <button type="submit" class="btn btn-default" style="width:100%;" >Save Changes</button>
+        <form name="" onsubmit="this.action = submitEditedQuestion();" style="display:inline;">
+            <button onclick="submitEditedQuestion()" type="submit" class="btn btn-default" style="width:100%;" >Save Changes</button>
+        </form>
         </br>
         </br>
         <hr/> 
         </br>
         <span style="font-size:35px;color:#666;font-weight:300;padding-top:15px;">Delete Question</span>
-        <button type="submit" class="btn btn-danger" style="width:100%;" >Delete Question</button>
+        <form name="" onsubmit="this.action = submitDeleteQuestion();" style="display:inline;">
+            <button onclick="" type="submit" class="btn btn-danger" style="width:100%;" >Delete Question</button>
+        </form>
         </br>
         </br>
 
@@ -446,6 +452,46 @@
             }
             document.getElementById("colorsPanel1b").appendChild(div);
         }
+
+        function submitEditedQuestion(){
+            var url = "{{request.route_url('question_action',action='edit',questionid="",optionid="", date='') }}";
+            url = url.substring(0, url.length-3);
+            url += "/" + document.getElementById("editQuestionField").value.replace(/ /g,"_");
+            url += "/" + document.getElementById("editColorField").value;
+            url += "/" + currentQuestionId;
+            return url; 
+        }
+        function submitDeleteQuestion(){
+            var url = "{{request.route_url('question_action',action='delete',questionid='',optionid='', date='') }}";
+            url = url.substring(0, url.length-3);
+            url += "/" + currentQuestionId;
+            return url; 
+        }
+
+        function getSubmitUrl(){ 
+            date = new Date();
+            month = date.getMonth()+1;
+            
+            votes = "";
+            questions = "";
+            for(const key of voteOptionsMap.keys()){
+                console.log(key);
+                questions += key + "-";
+                votes += voteOptionsMap.get(key) + "-";
+            }
+            votes = votes.substring(0, votes.length-1);
+            questions = questions.substring(0, questions.length-1);
+
+            url = "{{request.route_url('submit_vote',action='create',questionid="",optionid="", date='') }}";
+            url = url.substring(0, url.length-3);
+            url += "/" + questions; 
+            url += "/" + votes; 
+            url += "/" + date.getFullYear() + "-" + month + "-" + date.getDate(); 
+   
+            return url;
+        }
+
     </script>
     
 {% endblock %}
+
