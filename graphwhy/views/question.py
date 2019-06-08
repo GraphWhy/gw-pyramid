@@ -118,7 +118,7 @@ def question_delete(request):
 def question_edit(request):
     questionId = request.matchdict.get('questionId', -1)
     newColor = request.matchdict.get('questionColor',-1)
-    newQuestion = request.matchdict.get('questionTitle',-1)
+    newQuestion = request.matchdict.get('questionTitle',-1).replace("_", " ")
     questionToEdit = request.dbsession.query(QuestionRecord).filter(QuestionRecord.id == questionId).first()
     questionToEdit.color = '#'+ newColor
     questionToEdit.question = newQuestion
