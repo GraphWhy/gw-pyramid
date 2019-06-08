@@ -454,15 +454,18 @@
         }
 
         function submitEditedQuestion(){
+            var color = document.getElementById("editColorField").value;
             var url = "{{request.route_url('question_edit',action='edit',questionTitle="",questionColor="", questionId="") }}";
             url = url.substring(0, url.length-3);
             url += "/" + document.getElementById("editQuestionField").value.replace(/ /g,"_");
-            url += "/" + document.getElementById("editColorField").value;
+            url += "/" + color.substring(1,color.length);
             url += "/" + currentQuestionId;
             return url; 
         }
         function submitDeleteQuestion(){
-            var url = "{{request.route_url('question_delete',action='delete',questionId="gg") }}";
+            var url = "{{request.route_url('question_delete',action='delete',questionId="") }}";
+            url = url.substring(0, url.length-1);
+            url += "/" + currentQuestionId;
             return url; 
         }
 
