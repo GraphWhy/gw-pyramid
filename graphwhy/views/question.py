@@ -100,10 +100,13 @@ def question_option_vote(request):
 
 
 
-@view_config(route_name='question_delete', match_param='action=delete',
+@view_config(route_name='question_delete',
              renderer='graphwhy:templates/questions.jinja2',
              permission='create')
 def question_delete(request):
+    questionId = request.matchdict.get('questionId', -1)
+    questionToDelete = request.dbsession.query(QuestionRecord).filter(QuestionRecord.id == questionId).delete()
+    request.tm.commit()
     return HTTPFound(location=request.route_url('question_action_new'))
 
 
@@ -113,6 +116,13 @@ def question_delete(request):
              renderer='graphwhy:templates/questions.jinja2',
              permission='create')
 def question_edit(request):
+    questionId = request.matchdict.get('questionId', -1)
+    newColor = request.matchdict.get('questionColor',-1)
+    newQuestion = request.matchdict.get('questionTitle',-1)
+    questionToEdit = request.dbsession.query(QuestionRecord).filter(QuestionRecord.id == questionId).first()
+    questionToEdit.color = '#'+ newColor
+    questionToEdit.question = newQuestion
+    request.tm.commit()
     return HTTPFound(location=request.route_url('question_action_new'))
 
 
