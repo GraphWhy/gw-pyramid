@@ -202,7 +202,7 @@
                   <div style="margin:3px 5px;">
                     <div style="display:inline-block;width:10px;height:10px;background-color:{{entry.color}}"></div>
                     <h5 style="display:inline;">{{ entry.question }}</h5>
-                    <div class="btn-group" style="width:60%;display:inline-block;float:right;">
+                    <div class="btn-group" style="width:66%;display:inline-block;float:right;">
                         {% for option in entry.answer_options %}
                             <div style="display:inline-block;" class="button active" onclick="setVote('{{option.option_text}}', {{option.id}}, {{entry.id}})" > 
                                 {{ option.option_text }}
