@@ -100,6 +100,23 @@ def question_option_vote(request):
 
 
 
+@view_config(route_name='question_delete', match_param='action=delete',
+             renderer='graphwhy:templates/questions.jinja2',
+             permission='create')
+def question_delete(request):
+    return HTTPFound(location=request.route_url('question_action_new'))
+
+
+
+
+@view_config(route_name='question_edit', match_param='action=edit',
+             renderer='graphwhy:templates/questions.jinja2',
+             permission='create')
+def question_edit(request):
+    return HTTPFound(location=request.route_url('question_action_new'))
+
+
+
 
 @view_config(route_name='register-success', match_param='action=create',
              renderer='graphwhy:templates/questions.jinja2',

@@ -407,16 +407,16 @@
         <div id="colorsPanel1b"></div> 
         <div id="colorsPanel2b"></div>
         </br>
-        <form name="" onsubmit="this.action = submitEditedQuestion();" style="display:inline;">
-            <button onclick="submitEditedQuestion()" type="submit" class="btn btn-default" style="width:100%;" >Save Changes</button>
+        <form name="" onsubmit="this.action=submitEditedQuestion();" method="POST" style="display:inline;">
+            <button type="submit" class="btn btn-default" style="width:100%;" >Save Changes</button>
         </form>
         </br>
         </br>
         <hr/> 
         </br>
         <span style="font-size:35px;color:#666;font-weight:300;padding-top:15px;">Delete Question</span>
-        <form name="" onsubmit="this.action = submitDeleteQuestion();" style="display:inline;">
-            <button onclick="" type="submit" class="btn btn-danger" style="width:100%;" >Delete Question</button>
+        <form name="" onsubmit="this.action=submitDeleteQuestion();" method="POST" style="display:inline;">
+            <button  type="submit" class="btn btn-danger" style="width:100%;" >Delete Question</button>
         </form>
         </br>
         </br>
@@ -454,7 +454,7 @@
         }
 
         function submitEditedQuestion(){
-            var url = "{{request.route_url('question_action',action='edit',questionid="",optionid="", date='') }}";
+            var url = "{{request.route_url('question_edit',action='edit',questionTitle="",questionColor="", questionId="") }}";
             url = url.substring(0, url.length-3);
             url += "/" + document.getElementById("editQuestionField").value.replace(/ /g,"_");
             url += "/" + document.getElementById("editColorField").value;
@@ -462,33 +462,8 @@
             return url; 
         }
         function submitDeleteQuestion(){
-            var url = "{{request.route_url('question_action',action='delete',questionid='',optionid='', date='') }}";
-            url = url.substring(0, url.length-3);
-            url += "/" + currentQuestionId;
+            var url = "{{request.route_url('question_delete',action='delete',questionId="gg") }}";
             return url; 
-        }
-
-        function getSubmitUrl(){ 
-            date = new Date();
-            month = date.getMonth()+1;
-            
-            votes = "";
-            questions = "";
-            for(const key of voteOptionsMap.keys()){
-                console.log(key);
-                questions += key + "-";
-                votes += voteOptionsMap.get(key) + "-";
-            }
-            votes = votes.substring(0, votes.length-1);
-            questions = questions.substring(0, questions.length-1);
-
-            url = "{{request.route_url('submit_vote',action='create',questionid="",optionid="", date='') }}";
-            url = url.substring(0, url.length-3);
-            url += "/" + questions; 
-            url += "/" + votes; 
-            url += "/" + date.getFullYear() + "-" + month + "-" + date.getDate(); 
-   
-            return url;
         }
 
     </script>

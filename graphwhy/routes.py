@@ -11,6 +11,12 @@ def includeme(config):
     config.add_route('question_action', '/question/{action}',
                      factory='graphwhy.security.QuestionRecordFactory')
     
+    config.add_route('question_delete', '/question/{action}/{questionId:[^/]+}',
+                     factory='graphwhy.security.QuestionRecordFactory')
+
+    config.add_route('question_edit', '/question/{action}/{questionTitle:[^/]+}/{questionColor:[^/]+}/{questionId:[^/]+}',
+                     factory='graphwhy.security.QuestionRecordFactory')
+    
     config.add_route('question_action_new', '/question/create',
                      factory='graphwhy.security.QuestionRecordFactory')
     
